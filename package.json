@@ -1,0 +1,12 @@
+{
+  "name": "hexo-theme-diversity",
+  "version": "1.0.0",
+  "description": "Hexo Theme Diversity",
+  "repository": "huazie/hexo-theme-diversity",
+  "keywords": [
+    "hexo",
+    "theme",
+    "diversity"
+  ],
+  "license": "MIT"
+}
