@@ -16,6 +16,46 @@ class Util {
         return (0, hexo_fs_1.existsSync)(dest);
 	}
 
+	/**
+	 * 是否是匹配的命令
+	 * 
+	 * @param cmd 命令标识
+	 * @return true： 是，false：不是
+	 */
+	static isMatchCmd(cmd) {
+	    return Util.isServerCmd(cmd) || Util.isGenerateCmd(cmd) || Util.isCleanCmd(cmd);
+	}
+
+	/**
+	 * 是否是 server 命令
+	 * 
+	 * @param cmd 命令标识
+	 * @return true： 是，false：不是
+	 */
+	static isServerCmd(cmd) {
+	    return cmd === 'server';
+	}
+
+	/**
+	 * 是否是 generate 命令
+	 * 
+	 * @param cmd 命令标识
+	 * @return true： 是，false：不是
+	 */
+	static isGenerateCmd(cmd) {
+	    return cmd === 'generate';
+	}
+
+	/**
+	 * 是否是 clean 命令
+	 * 
+	 * @param cmd 命令标识
+	 * @return true： 是，false：不是
+	 */
+	static isCleanCmd(cmd) {
+	    return cmd === 'clean';
+	}
+
 }
 
 module.exports = Util;

@@ -24,7 +24,7 @@ module.exports = function(hexo, args) {
     const addr = server.address();
     const addrString = formatAddress(ip || addr.address, addr.port, root);
 
-    hexo.log.info('Hexo[%s] is running at %s . Press Ctrl+C to stop.', args.theme, underline(addrString));
+    hexo.log.info('Hexo[%s] is running at %s . Press Ctrl+C to stop.', config.theme, underline(addrString));
     hexo.emit('server');
     return server;
   }).catch(err => {
