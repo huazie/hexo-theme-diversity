@@ -11,7 +11,7 @@ git clone --depth 1 https://github.com/huazie/hexo-theme-diversity themes/divers
 
 ``` diff
 _config.yml
-- theme: some-theme
+- theme: other-theme
 + theme: diversity
 ```
 

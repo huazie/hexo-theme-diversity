@@ -39,7 +39,7 @@ let index = 0;
 themes.forEach(function(theme) {
     console.log('##### theme = ' + theme);
     const {args} = hexo.env;
-    const fileName = getConfigFileName(theme);
+    const fileName = '_config.yml';
     args.output = cwd + path_1.sep + 'config' + path_1.sep + theme;
     if (!Util.isExist(args.output, fileName)) {
         console.log('##### Please add the [' + fileName + '] file in [' + args.output + '].');
@@ -48,6 +48,7 @@ themes.forEach(function(theme) {
     args.config = args.output + path_1.sep + fileName;
     if (Util.isMatchCmd(cmd)) {
         const hexo1 = new Hexo(cwd, args);
+        hexo1.init();
         if (Util.isServerCmd(cmd))
             configServer(hexo1, ports, index);
         hexos.push(hexo1);
@@ -60,29 +61,13 @@ themes.forEach(function(theme) {
 hexos.forEach(function(hexo1) {
     const {args} = hexo.env;
     if (Util.isServerCmd(cmd)) {
-        hexo1.init().then(function(){
-            server(hexo1, args);
-        });
+        server(hexo1, args);
     } else if (Util.isGenerateCmd(cmd)) {
-        hexo1.init().then(function(){
-            generate(hexo1, args);
-        });
+        generate(hexo1, args);
     } else if (Util.isCleanCmd(cmd)) {
-        hexo1.init().then(function(){
-            clean(hexo1);
-        });
+        clean(hexo1);
     }
 });
-
-/**
- * 获取用于加载指定主题的Hexo配置文件名
- * 
- * @param theme 主题名
- * @return 指定主题对应的Hexo配置文件名
- */
-function getConfigFileName(theme) {
-    return '_' + theme + '_config.yml';
-}
 
 /**
  * 添加Hexo服务器配置信息

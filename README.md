@@ -3,7 +3,7 @@
 
 [英文说明/English Documentation](README_EN.md)
 
-# 安装
+## 安装
 
 在你的Hexo项目根目录，执行以下命令，并将_config.yml中的theme修改为diversity。
 
@@ -17,7 +17,7 @@ _config.yml
 + theme: diversity
 ```
 
-# 更新
+## 更新
 
 执行以下命令，用以更新 Diversity。
 
@@ -26,7 +26,7 @@ cd themes/diversity
 git pull
 ```
 
-# 配置
+## 配置
 
 
 
