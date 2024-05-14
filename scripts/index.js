@@ -4,9 +4,6 @@
 const path_1 = require("path");
 const Hexo = require('hexo');
 const Util = require('./lib/util');
-const server = require('./lib/server');
-const generate = require('./lib/generate');
-const clean = require('./lib/clean');
 
 // 获取控制台命令的别名
 const { alias } = hexo.extend.console;
@@ -31,8 +28,6 @@ if (!(Array.isArray(themes))) {
     return;
 }
 
-// Hexo实例数组
-const hexos = [];
 // 多主题目录配置的数组索引
 let index = 0;
 // 循环处理配置的多主题列表
@@ -48,25 +43,16 @@ themes.forEach(function(theme) {
     args.config = args.output + path_1.sep + fileName;
     if (Util.isMatchCmd(cmd)) {
         const hexo1 = new Hexo(cwd, args);
-        hexo1.init();
         if (Util.isServerCmd(cmd))
             configServer(hexo1, ports, index);
-        hexos.push(hexo1);
+        hexo1.init()
+            .then(() => require('./helper')(hexo1))
+            .then(() => hexo1.call(cmd, args))
+            .then(() => hexo1.exit())
+            .catch(err => hexo1.exit(err));
     } 
     // 下一个主题
     index++;
-});
-
-// 循环处理多个Hexo实例
-hexos.forEach(function(hexo1) {
-    const {args} = hexo.env;
-    if (Util.isServerCmd(cmd)) {
-        server(hexo1, args);
-    } else if (Util.isGenerateCmd(cmd)) {
-        generate(hexo1, args);
-    } else if (Util.isCleanCmd(cmd)) {
-        clean(hexo1);
-    }
 });
 
 /**
