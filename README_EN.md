@@ -28,6 +28,17 @@ git pull
 
 ### Diversity Theme Config
 
+To modify the `_config.yml` file located in the root directory of your Hexo project, proceed as follows:
+
+``` diff
+_config.yml
+index_generator:
+  path: ''
+- per_page: 10
++ per_page: 0
+  order_by: -date
+```
+
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 
 ```

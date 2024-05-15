@@ -1,9 +1,14 @@
 'use strict';
-
-// 导入hexo模块
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+const bluebird_1 = __importDefault(require("bluebird"));
 const path_1 = require("path");
 const Hexo = require('hexo');
 const Util = require('./lib/util');
+
+// 在生成器解析前执行
+hexo.extend.filter.register('before_generate', () => require('./generator')(hexo), 100);
 
 // 获取控制台命令的别名
 const { alias } = hexo.extend.console;
@@ -77,6 +82,9 @@ function configServer(hexo, ports, index) {
 
 /**
  * 配置服务器端口
+ * 
+ * @param ports 多主题服务器端口列表
+ * @param index 多主题目录配置的数组索引
  */
 function configPort(ports, index) {
     let port = 4001;
