@@ -21,7 +21,7 @@ function innerCssHelper(theme, ...args) {
                 path += '.css';
             }
             result += `<link rel="stylesheet" href="${hexo_util_1.url_for.call(hexo1, path)}">\n`;
-            console.log('#####[' + theme + '] ' path + ' ' + hexo_util_1.url_for.call(hexo1, path));
+            console.log('#####[' + theme + '] ' + path + ' ' + hexo_util_1.url_for.call(hexo1, path));
         }
         else {
             // Custom attributes

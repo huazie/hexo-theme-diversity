@@ -21,7 +21,7 @@ function innerJsHelper(theme, ...args) {
                 path += '.js';
             }
             result += `<script src="${hexo_util_1.url_for.call(hexo1, path)}"></script>\n`;
-            console.log('#####[' + theme + '] ' path + ' ' + hexo_util_1.url_for.call(hexo1, path));
+            console.log('#####[' + theme + '] ' + path + ' ' + hexo_util_1.url_for.call(hexo1, path));
         }
         else {
             // Custom attributes
