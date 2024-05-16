@@ -1,4 +1,4 @@
-# Diversity
+# <img src="source/images/diversity.png" width="80" height="80"> Diversity
 博客多样性，一款多主题自由切换的Hexo主题
 
 [英文说明/English Documentation](README_EN.md)
@@ -29,6 +29,24 @@ git pull
 ## 配置
 
 ### Diversity主题相关配置
+
+`themes/diversity` 目录下的 `_config.yml` 包含如下配置：
+
+```
+title: 主题选择
+
+description: 这是一个主题选择页面
+
+image: /images/diversity.png
+
+favicon: /images/diversity.png
+```
+
+- **title** - 主题选择页面的标题
+- **description** - 网页描述
+- **image** - 当网页链接被分享到社交平台时显示的图片URL
+- **favicon** - Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
+
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 

@@ -1,4 +1,4 @@
-# Diversity
+# <img src="source/images/diversity.png" width="80" height="80"> Diversity
 A multi-theme that allows for free switching for [Hexo].
 
 ## Install
@@ -27,6 +27,23 @@ git pull
 ## Config
 
 ### Diversity Theme Config
+
+The `_config.yml` file located in the `themes/diversity` directory contains the following configuration:
+
+```
+title: Theme Selection
+
+description: This is a theme selection page 
+
+image: /images/diversity.png
+
+favicon: /images/diversity.png
+```
+
+- **title** - The title of the theme selection page
+- **description** - The description of the web page
+- **image** - The URL of the image that will be displayed when the web page link is shared on social platforms
+- **favicon** - The path to the Favicon [A small icon used to identify and distinguish different websites in the browser's tab, address bar, or bookmark bar]
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 

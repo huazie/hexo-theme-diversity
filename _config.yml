@@ -1,0 +1,8 @@
+# 主题选择页面的标题
+title: 主题选择
+# 网页描述
+description: 这是一个主题选择页面
+# 当网页链接被分享到社交平台时显示的图片URL
+image: /images/diversity.png
+# Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
+favicon: /images/diversity.png
