@@ -30,17 +30,6 @@ git pull
 
 ### Diversity主题相关配置
 
-修改你的 **Hexo** 项目根目录下的 `_config.yml`，如下：
-
-``` diff
-_config.yml
-index_generator:
-  path: ''
-- per_page: 10
-+ per_page: 0
-  order_by: -date
-```
-
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
 ```

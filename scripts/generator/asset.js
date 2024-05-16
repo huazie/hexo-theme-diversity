@@ -23,7 +23,6 @@ const process = (name, ctx) => {
         const data = {
             modified: asset.modified
         };
-        console.log('######### ' + source);
         if (asset.renderable && ctx.render.isRenderable(path)) {
             // Replace extension name if the asset is renderable
             const filename = path.substring(0, path.length - (0, path_1.extname)(path).length);
