@@ -1,28 +1,28 @@
 <head>
     <meta charset="utf-8">
-  	<title><%= theme.title%></title>
-  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title><%= theme.title%></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <% if (config.author){ %><meta name="author" content="<%= config.author %>"><% } %>
-  	<% if (theme.description){ %>
-  	<meta name="description" content="<%= theme.description %>">
-  	<% } else if (config.description){ %>
-  	<meta name="description" content="<%= config.description %>">
-  	<% } %>
+    <% if (theme.description){ %>
+    <meta name="description" content="<%= theme.description %>">
+    <% } else if (config.description){ %>
+    <meta name="description" content="<%= config.description %>">
+    <% } %>
     
     <% if (theme.title){ %><meta property="og:title" content="<%= theme.title %>"/><% } %>
-  	<meta property="og:site_name" content="<%= config.title %>"/>
-	<% if(theme.image) { %>
-	<meta property="og:image" content="<%= theme.image %>" />
-	<% } else { %>
-	<meta property="og:image" content="<%= config.image %>"/>
-	<% } %>
+    <meta property="og:site_name" content="<%= config.title %>"/>
+    <% if(theme.image) { %>
+    <meta property="og:image" content="<%= theme.image %>" />
+    <% } else { %>
+    <meta property="og:image" content="<%= config.image %>"/>
+    <% } %>
 
-	<% if (theme.favicon){ %>
+    <% if (theme.favicon){ %>
     <%- favicon_tag(theme.favicon) %>
-  	<% } %>
+    <% } %>
 
-    <%- css('gasp/gasp.css') %>
+    <%- css('css/style.css') %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
-    <%- js('gasp/gasp.js') %>
+    <%- js('js/diversity.js') %>
 </head>
