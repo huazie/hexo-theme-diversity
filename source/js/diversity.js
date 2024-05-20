@@ -12,11 +12,11 @@
         })
         .add(()=>{
             $('.img').on('mouseenter', (e)=>{
-            let current = e.currentTarget;
-            gsap.to('.img', {opacity:(i,t)=>(t==current)? 1:0.5, ease:'power3'})
+                let current = e.currentTarget;
+                gsap.to('.img', {opacity:(i,t)=>(t==current)? 1:0.5, ease:'power3'})
             })
             $('.img').on('mouseleave', (e)=>{
-            gsap.to('.img', {opacity:1, ease:'power2.inOut'})
+                gsap.to('.img', {opacity:1, ease:'power2.inOut'})
             })
         }, '-=0.5')
 

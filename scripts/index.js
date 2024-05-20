@@ -38,15 +38,15 @@ let index = 0;
 // 循环处理配置的多主题列表
 themes.forEach(function(theme) {
     console.log('##### theme = ' + theme);
-    const {args} = hexo.env;
-    const fileName = '_config.yml';
-    args.output = cwd + path_1.sep + 'config' + path_1.sep + theme;
-    if (!Util.isExist(args.output, fileName)) {
-        console.log('##### Please add the [' + fileName + '] file in [' + args.output + '].');
-        return;
-    }
-    args.config = args.output + path_1.sep + fileName;
     if (Util.isMatchCmd(cmd)) {
+        const {args} = hexo.env;
+        const fileName = '_config.yml';
+        args.output = cwd + path_1.sep + 'config' + path_1.sep + theme;
+        if (!Util.isExist(args.output, fileName)) {
+            console.log('##### Please add the [' + fileName + '] file in [' + args.output + '].');
+            return;
+        }
+        args.config = args.output + path_1.sep + fileName;
         const hexo1 = new Hexo(cwd, args);
         if (Util.isServerCmd(cmd))
             configServer(hexo1, ports, index);
