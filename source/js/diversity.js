@@ -53,10 +53,4 @@
         return ( 100-gsap.utils.wrap(0,360,gsap.getProperty('.ring', 'rotationY')-180-i*36)/360*500 )+'px 0px';
     }
 
-    // 为img的div标签添加事件
-    $(document).on('click', '.img', function() {  
-        // 
-        
-    });
-
 })(jQuery);
