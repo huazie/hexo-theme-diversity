@@ -4,16 +4,17 @@
     height 100%
     position absolute
     backface-visibility hidden
-    transition transform 0.5s;
+    transition transform 0.5s ease;
 
-.card-front
-    transform rotateY(0deg)
-
-.card-back
-    transform rotateY(-180deg)
-
-.card:hover .card-front
-    transform rotateY(180deg)
-
-.card:hover .card-back
-    transform rotateY(0deg)
+.card  
+    &:hover .card-front  
+        animation flip 0.5s forwards 
+  
+    &:hover .card-back  
+        animation flip 0.5s reverse forwards  
+  
+@keyframes flip  
+    from  
+        transform rotateY(0deg)  
+    to  
+        transform rotateY(180deg)
