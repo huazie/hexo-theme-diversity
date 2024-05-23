@@ -1,8 +1,4 @@
 'use strict';
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-const bluebird_1 = __importDefault(require("bluebird"));
 const path_1 = require("path");
 const Hexo = require('hexo');
 const Util = require('./lib/util');

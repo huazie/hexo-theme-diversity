@@ -20,7 +20,9 @@
             })
         }, '-=0.5')
 
+    // 当用户按下鼠标按钮或者在触摸屏设备上开始触摸
     $(window).on('mousedown touchstart', dragStart);
+    // 当用户释放鼠标按钮或者在触摸屏设备上结束触摸
     $(window).on('mouseup touchend', dragEnd);
             
     function dragStart(e){ 
@@ -52,5 +54,46 @@
     function getBackgroundPosition(i){ 
         return ( 100-gsap.utils.wrap(0,360,gsap.getProperty('.ring', 'rotationY')-180-i*36)/360*500 )+'px 0px';
     }
+
+    // 主题直达按钮点击事件
+    $('.theme-redirect').on('click', function(){
+        const theme = $(this).parent('p').attr('theme');
+        const href = window.location.href;
+        const hostname = window.location.hostname;
+        const port = window.location.port;
+
+        let url;
+
+        // 本地环境
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            url = href.replace(port, getThemeServerPort(theme));
+        } else { // 静态页面部署环境
+            url = href;
+        }
+
+        if (!url.endsWith("/")) url += "/";
+
+        url += theme;
+
+        // 跳转
+        window.open(url, "_blank");
+    });
+
+    function getThemeServerPort(theme) {
+        var index = config.themes.indexOf(theme);
+        const ports = config.ports;
+        let port = 4001;
+        if (ports && ports[index]) {
+            port = ports[index];
+        } else {
+            port += index;
+        }
+        return port;
+    }
+
+    // 设为默认（主题）按钮点击事件
+    $('.theme-default').on('click', function(){
+        const theme = $(this).parent('p').attr('theme');
+    });
 
 })(jQuery);

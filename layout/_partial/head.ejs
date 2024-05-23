@@ -25,4 +25,18 @@
 
     <%- js('js/jquery-3.6.0.min.js') %>
     <%- js('js/gsap-3.6.1.min.js') %>
+
+    <%
+        var themeConfig = {};
+        for (var i = 0; i < theme.themes.length; i++) {
+            themeConfig[theme.themes[i]] = theme.path[theme.themes[i]];
+        }
+    %>
+
+    <script>
+        // 全局配置数据
+        var config = new Object();
+        config.themes = JSON.parse('<%- JSON.stringify(theme.themes || []) %>');
+        config.ports = JSON.parse('<%- JSON.stringify(theme.ports || []) %>');
+    </script>
 </head>

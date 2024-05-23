@@ -1,5 +1,11 @@
 # 多主题目录列表
-themes: [landscape,light,phase]
+themes: [landscape,phase,light]
 # 多主题服务器端口列表
 # 不配置，默认从4001开始
 #ports: [5000,5001,5002]
+
+# 多主题图片路径
+path:
+  landscape: /images/landscape.jpg
+  phase: /images/phase.png
+  light: /images/light.jpg
