@@ -54,11 +54,18 @@ favicon: /images/diversity.png
 themes: [landscape,light,phase]
 
 #ports: [5000,5001,5002]
+
+path:
+  landscape: /images/landscape.jpg
+  phase: /images/phase.png
+  light: /images/light.jpg
 ```
 
 - **themes** - 多主题列表
 - **ports** - 多主题服务器端口列表（不配置，默认从4001开始），用于本地 `hexo server` 启动各主题对应的HTTP服务
-
+- **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
+  - 如果该图片路径未配置，默认取`/images/landscape.jpg` 或 `/images/landscape.png`
+  - 如果上述默认的也没有取到，则取 `/images/default.png`
 
 ### 多主题相关配置
 

@@ -51,10 +51,18 @@ Copy the `_config.diversity.yml` located in the `themes/diversity` to the root d
 themes: [landscape,light,phase]
 
 #ports: [5000,5001,5002]
+
+path:
+  landscape: /images/landscape.jpg
+  phase: /images/phase.png
+  light: /images/light.jpg
 ```
 
 - **themes** - Multi-theme List
 - **ports** - A list of multi-theme server ports (not configured, default starting from 4001), used for locally starting HTTP services corresponding to each theme with `hexo server`.
+- **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
+  - If the image path is not configured, it will default to `/images/landscape.jpg` or `/images/landscape.png`.
+  - If the above defaults are not available, it will fallback to `/images/default.png`.
 
 
 ### Other Theme Config

@@ -6,6 +6,9 @@ themes: [landscape,phase,light]
 
 # 多主题图片路径
 path:
+  # 以 landscape 主题举例：
+  # 如果该图片路径未配置，默认取/images/landscape.jpg 或 /images/landscape.png
+  # 如果上述默认的也没有取到，则取 /images/default.png
   landscape: /images/landscape.jpg
   phase: /images/phase.png
   light: /images/light.jpg
