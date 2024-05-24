@@ -6,3 +6,18 @@ description: 这是一个主题选择页面
 image: /images/diversity.png
 # Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
 favicon: /images/diversity.ico
+
+# 多主题图片路径
+path:
+  # 以 landscape 主题举例：
+  # 如果该图片路径未配置，默认取/images/landscape.jpg 或 /images/landscape.png
+  # 如果上述默认的也没有取到，则取 /images/default.png
+  landscape: /images/landscape.jpg
+  phase: /images/phase.png
+  light: /images/light.jpg
+
+# 主题项目来源【如果没有配置，则主题来源按钮点击无反应】
+source:
+  landscape: https://github.com/hexojs/hexo-theme-landscape
+  phase: https://github.com/hexojs/hexo-theme-phase
+  light: https://github.com/hexojs/hexo-theme-light

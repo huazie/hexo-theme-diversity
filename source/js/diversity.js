@@ -91,9 +91,12 @@
         return port;
     }
 
-    // 设为默认（主题）按钮点击事件
-    $('.theme-default').on('click', function(){
+    // 主题来源按钮点击事件
+    $('.theme-source').on('click', function(){
         const theme = $(this).parent('p').attr('theme');
+        const source = config.source[theme];
+        if (source)
+            window.open(source, "_blank");
     });
 
 })(jQuery);

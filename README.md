@@ -40,12 +40,26 @@ description: 这是一个主题选择页面
 image: /images/diversity.png
 
 favicon: /images/diversity.png
+
+path:
+  landscape: /images/landscape.jpg
+  phase: /images/phase.png
+  light: /images/light.jpg
+
+source:
+  landscape: https://github.com/hexojs/hexo-theme-landscape
+  phase: https://github.com/hexojs/hexo-theme-phase
+  light: https://github.com/hexojs/hexo-theme-light
 ```
 
 - **title** - 主题选择页面的标题
 - **description** - 网页描述
 - **image** - 当网页链接被分享到社交平台时显示的图片URL
 - **favicon** - Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
+- **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
+  - 如果该图片路径未配置，默认取`/images/landscape.jpg` 或 `/images/landscape.png`
+  - 如果上述默认的也没有取到，则取 `/images/default.png`
+- **source** - 主题项目来源【用于主题来源按钮点击跳转】
 
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
@@ -54,18 +68,10 @@ favicon: /images/diversity.png
 themes: [landscape,light,phase]
 
 #ports: [5000,5001,5002]
-
-path:
-  landscape: /images/landscape.jpg
-  phase: /images/phase.png
-  light: /images/light.jpg
 ```
 
 - **themes** - 多主题列表
 - **ports** - 多主题服务器端口列表（不配置，默认从4001开始），用于本地 `hexo server` 启动各主题对应的HTTP服务
-- **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
-  - 如果该图片路径未配置，默认取`/images/landscape.jpg` 或 `/images/landscape.png`
-  - 如果上述默认的也没有取到，则取 `/images/default.png`
 
 ### 多主题相关配置
 

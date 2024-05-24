@@ -38,12 +38,26 @@ description: This is a theme selection page
 image: /images/diversity.png
 
 favicon: /images/diversity.png
+
+path:
+  landscape: /images/landscape.jpg
+  phase: /images/phase.png
+  light: /images/light.jpg
+
+source:
+  landscape: https://github.com/hexojs/hexo-theme-landscape
+  phase: https://github.com/hexojs/hexo-theme-phase
+  light: https://github.com/hexojs/hexo-theme-light
 ```
 
 - **title** - The title of the theme selection page
 - **description** - The description of the web page
 - **image** - The URL of the image that will be displayed when the web page link is shared on social platforms
 - **favicon** - The path to the Favicon [A small icon used to identify and distinguish different websites in the browser's tab, address bar, or bookmark bar]
+- **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
+  - If the image path is not configured, it will default to `/images/landscape.jpg` or `/images/landscape.png`.
+  - If the above defaults are not available, it will fallback to `/images/default.png`.
+- **source** - Theme Project Source [For button navigation to the source of the theme]
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 
@@ -51,18 +65,10 @@ Copy the `_config.diversity.yml` located in the `themes/diversity` to the root d
 themes: [landscape,light,phase]
 
 #ports: [5000,5001,5002]
-
-path:
-  landscape: /images/landscape.jpg
-  phase: /images/phase.png
-  light: /images/light.jpg
 ```
 
 - **themes** - Multi-theme List
 - **ports** - A list of multi-theme server ports (not configured, default starting from 4001), used for locally starting HTTP services corresponding to each theme with `hexo server`.
-- **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
-  - If the image path is not configured, it will default to `/images/landscape.jpg` or `/images/landscape.png`.
-  - If the above defaults are not available, it will fallback to `/images/default.png`.
 
 
 ### Other Theme Config
