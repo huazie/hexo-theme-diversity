@@ -39,6 +39,8 @@ image: /images/diversity.png
 
 favicon: /images/diversity.png
 
+back_image: /images/back.jpg
+
 path:
   landscape: /images/landscape.jpg
   phase: /images/phase.png
@@ -48,16 +50,22 @@ source:
   landscape: https://github.com/hexojs/hexo-theme-landscape
   phase: https://github.com/hexojs/hexo-theme-phase
   light: https://github.com/hexojs/hexo-theme-light
+
+introduction:
+  landscape: A brand new default theme for Hexo.
+  phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.
+  light: A simple theme for Hexo.
 ```
 
 - **title** - The title of the theme selection page
 - **description** - The description of the web page
 - **image** - The URL of the image that will be displayed when the web page link is shared on social platforms
 - **favicon** - The path to the Favicon [A small icon used to identify and distinguish different websites in the browser's tab, address bar, or bookmark bar]
+- **back_image** - Background image after flipping the theme image
 - **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
-  - If the image path is not configured, it will default to `/images/landscape.jpg` or `/images/landscape.png`.
-  - If the above defaults are not available, it will fallback to `/images/default.png`.
+  - If the image path is not configured, it will default to `/images/default.png`.
 - **source** - Theme Project Source [For button navigation to the source of the theme]
+- **introduction** - Theme Introduction
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 

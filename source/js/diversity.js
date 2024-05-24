@@ -80,7 +80,7 @@
     });
 
     function getThemeServerPort(theme) {
-        var index = config.themes.indexOf(theme);
+        let index = config.themes.indexOf(theme);
         const ports = config.ports;
         let port = 4001;
         if (ports && ports[index]) {

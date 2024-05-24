@@ -41,6 +41,8 @@ image: /images/diversity.png
 
 favicon: /images/diversity.png
 
+back_image: /images/back.jpg
+
 path:
   landscape: /images/landscape.jpg
   phase: /images/phase.png
@@ -50,17 +52,22 @@ source:
   landscape: https://github.com/hexojs/hexo-theme-landscape
   phase: https://github.com/hexojs/hexo-theme-phase
   light: https://github.com/hexojs/hexo-theme-light
+
+introduction:
+  landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
+  phase: 通过 Phase，感受时间流逝，它是 Hexo 最美丽的主题。
+  light: Hexo 中的一个简约主题
 ```
 
 - **title** - 主题选择页面的标题
 - **description** - 网页描述
 - **image** - 当网页链接被分享到社交平台时显示的图片URL
 - **favicon** - Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
+- **back_image** - 主题图片翻转后的背景图片
 - **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
-  - 如果该图片路径未配置，默认取`/images/landscape.jpg` 或 `/images/landscape.png`
-  - 如果上述默认的也没有取到，则取 `/images/default.png`
+  - 如果该图片路径未配置，默认取 `/images/default.png`
 - **source** - 主题项目来源【用于主题来源按钮点击跳转】
-
+- **introduction** - 主题介绍
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
