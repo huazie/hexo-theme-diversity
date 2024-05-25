@@ -1,4 +1,4 @@
-# <img src="source/images/diversity.png" width="80" height="80"> Diversity
+# <img src="source/images/diversity.png" width="80" height="80"> Diversity [![Build and Test](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml/badge.svg)](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml)
 博客多样性，一款多主题自由切换的Hexo主题
 
 [英文说明/English Documentation](README_EN.md)

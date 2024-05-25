@@ -1,4 +1,4 @@
-# <img src="source/images/diversity.png" width="80" height="80"> Diversity
+# <img src="source/images/diversity.png" width="80" height="80"> Diversity [![Build and Test](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml/badge.svg)](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml)
 A multi-theme that allows for free switching for [Hexo].
 
 ## Install
