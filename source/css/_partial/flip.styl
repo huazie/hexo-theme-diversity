@@ -6,12 +6,16 @@
     backface-visibility hidden
     transition transform 0.5s ease;
 
+.card .card-back
+    opacity 0
+
 .card  
     &:hover .card-front  
         animation flip 0.5s forwards 
   
     &:hover .card-back  
         animation flip 0.5s reverse forwards  
+        opacity 1
   
 @keyframes flip  
     from  
