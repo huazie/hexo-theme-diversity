@@ -24,34 +24,67 @@
     $(window).on('mousedown touchstart', dragStart);
     // 当用户释放鼠标按钮或者在触摸屏设备上结束触摸
     $(window).on('mouseup touchend', dragEnd);
+    // 当用户滚动鼠标滚轮时触发
+    $(window).on('wheel', wheel);  
             
-    function dragStart(e){ 
+    function dragStart(e) { 
         if (e.touches) e.clientX = e.touches[0].clientX;
         xPos = Math.round(e.clientX);
         gsap.set('.ring', {cursor:'grabbing'})
         $(window).on('mousemove touchmove', drag);
     }
 
-    function dragEnd(e){
+    function dragEnd(e) {
         $(window).off('mousemove touchmove', drag);
         gsap.set('.ring', {cursor:'grab'});
     }
 
-    function drag(e){
+    function drag(e) {
         if (e.touches) e.clientX = e.touches[0].clientX;        
 
         gsap.to('.ring', {
-            rotationY: '-=' +( (Math.round(e.clientX)-xPos)%360 ),
-            onUpdate:()=>{ gsap.set('.img', { backgroundPosition:(i)=>getBackgroundPosition(i) }) }
+            rotationY: '-=' + ((Math.round(e.clientX) - xPos) % 360),
+            onUpdate: updateBackgroundPosition
         });
 
         xPos = Math.round(e.clientX);
     }
 
     /**
+     * 鼠标滚动事件监听回调
+     */
+    function wheel(e) {
+        // 防止默认滚动行为（如果需要）  
+        e.preventDefault(); 
+      
+        // 获取滚动的方向，deltaY > 0 表示向下滚动，deltaY < 0 表示向上滚动
+        // 根据不同浏览器标准化deltaY 
+        var deltaY = e.originalEvent.deltaY || e.originalEvent.detail * -40;  
+      
+        // 根据滚动的方向设置旋转角度 
+        var rotationAmount = deltaY > 0 ? -30 : 30;
+      
+        gsap.to('.ring', {  
+            rotationY: '+=' + rotationAmount,  
+            onUpdate: updateBackgroundPosition
+        });
+    }
+
+    /**
+     *  
+     */
+    function updateBackgroundPosition() {
+        gsap.set('.img', {  
+            backgroundPosition: function(i) {  
+                return getBackgroundPosition(i);  
+            }
+        });
+    }
+
+    /**
      * 返回background-position属性，以在每个图像中创建视差滚动效果
      */
-    function getBackgroundPosition(i){ 
+    function getBackgroundPosition(i) { 
         return ( 100-gsap.utils.wrap(0,360,gsap.getProperty('.ring', 'rotationY')-180-i*36)/360*500 )+'px 0px';
     }
 
