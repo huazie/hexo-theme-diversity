@@ -71,7 +71,7 @@
     }
 
     /**
-     *  
+     * 设置类名为img的标签的CSS属性backgroundPosition的值
      */
     function updateBackgroundPosition() {
         gsap.set('.img', {  
