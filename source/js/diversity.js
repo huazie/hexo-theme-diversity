@@ -54,9 +54,6 @@
      * 鼠标滚动事件监听回调
      */
     function wheel(e) {
-        // 防止默认滚动行为（如果需要）  
-        e.preventDefault(); 
-      
         // 获取滚动的方向，deltaY > 0 表示向下滚动，deltaY < 0 表示向上滚动
         // 根据不同浏览器标准化deltaY 
         var deltaY = e.originalEvent.deltaY || e.originalEvent.detail * -40;  
