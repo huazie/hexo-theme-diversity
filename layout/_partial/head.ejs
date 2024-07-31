@@ -1,6 +1,13 @@
 <head>
     <meta charset="utf-8">
-    <title><%= theme.title%></title>
+    <% 
+        var title = page.title;
+        var themeName = config.theme.charAt(0).toUpperCase() + config.theme.slice(1);
+        if (title) title += ' | ' + themeName;
+        if (!title) title = theme.title;
+        if (!title) title = config.title;
+    %>
+    <title><%= title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <% if (config.author){ %><meta name="author" content="<%= config.author %>"><% } %>
     <% if (theme.description){ %>
@@ -21,10 +28,13 @@
     <%- favicon_tag(theme.favicon) %>
     <% } %>
 
+    <%- css('css/font-awesome.min.css') %>
     <%- css('css/style.css') %>
 
-    <%- js('js/jquery-3.6.0.min.js') %>
-    <%- js('js/gsap-3.6.1.min.js') %>
+    <%- js('js/jquery-3.6.0.min') %>
+    <%- js('js/jquery.gritter-1.7.4.min') %>
+    <%- js('js/gsap-3.6.1.min') %>
+    <%- js('js/js.cookie-2.2.1.min') %>
 
     <script>
         // 全局配置数据
@@ -32,5 +42,14 @@
         config.themes = JSON.parse('<%- JSON.stringify(theme.themes || []) %>');
         config.ports = JSON.parse('<%- JSON.stringify(theme.ports || []) %>');
         config.source = JSON.parse('<%- JSON.stringify(theme.source || []) %>');
+        config.menu = JSON.parse('<%- JSON.stringify(site.data.diversity_menu || []) %>');
+        config.button = new Object();
+        config.button.theme_default = '<%= __('button.theme-default') %>';
+        config.button.cancel_defalut = '<%= __('button.cancel-defalut') %>';
+        config.gritter = new Object();
+        config.gritter.title_theme = '<%= __('gritter.title-theme') %>';
+        config.gritter.text_configured = '<%= __('gritter.text-configured') %>';
+        config.gritter.text_canceled = '<%= __('gritter.text-canceled') %>';
+        config.gritter.text_clicktojump = '<%= __('gritter.text-click-to-jump') %>';
     </script>
 </head>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>无主题页</title>
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .container {
+                padding: 20px;
+                text-align: center;
+            }
+
+            p {
+                margin-bottom: 25px;
+            }
+
+            .btn {
+                display: inline-block;
+                color: #FFF !important;
+                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+                background-image: none !important;
+                border: 3px solid #FFF;
+                border-radius: 0;
+                box-shadow: none !important;
+                -webkit-transition: all ease .15s;
+                transition: all ease .15s;
+                cursor: pointer;
+                vertical-align: middle;
+                margin: 0;
+                position: relative;
+                padding: 10px 8px;
+                font-size: 14px;
+                font-weight: normal;
+                line-height: 1.428571429;
+                text-align: center;
+                white-space: nowrap
+            }
+
+            .btn-default {
+                background-color: #abbac3 !important;
+                border-color: #abbac3
+            }
+
+            .btn-default:hover {
+                background-color: #8b9aa3 !important;
+                border-color: #abbac3
+            }
+
+            .btn-primary {
+                background-color: #428bca !important;
+                border-color: #abbac3
+            }
+
+            .btn-primary:hover {
+                background-color: #1b6aaa !important;
+                border-color: #abbac3
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <p>您还没有设置默认主题！点击下方按钮前往设置</p>
+            <button id="theme_select" class="btn btn-primary">主 题 选 择</button>
+        </div>
+    </body>
+    <script type="text/javascript">
+        document.getElementById('theme_select').addEventListener('click', function() {  
+            // 父页面跳转
+            window.parent.location.href = '/diversity/theme';
+        });
+    </script>
+</html>

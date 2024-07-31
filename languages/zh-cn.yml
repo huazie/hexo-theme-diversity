@@ -1,0 +1,20 @@
+menu:
+  index: 首页
+  blog: 博客
+  theme: 主题
+  comment: 留言
+  about: 关于
+
+button:
+  theme-default: 设为默认
+  cancel-defalut: 取消默认
+  theme-redirect: 主题直达
+  theme-source: 主题来源
+
+gritter:
+  title-theme: 主题【{0}】
+  text-configured: 已设置
+  text-canceled: 已取消
+  text-click-to-jump: 点击跳转
+
+  

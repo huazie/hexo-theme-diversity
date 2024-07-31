@@ -1,7 +1,16 @@
-<header id="header">
-	<div class="center">
-		<h1>
-			<img class="no-margin no-padding" src="/images/header-logo.png">
+<header id="header" class="wrapper">
+	<div id="header-inner" class="inner">
+		<h1 id="logo-wrap">
+		  	<a href="/" id="logo">Diversity</a>
 		</h1>
+		<ul id="main-nav">
+			<%- header_menu('main-nav') %>
+		</ul>
+
+		<a id="mobile-nav-toggle">
+			<span class="mobile-nav-toggle-bar"></span>
+			<span class="mobile-nav-toggle-bar"></span>
+			<span class="mobile-nav-toggle-bar"></span>
+		</a>
 	</div>
 </header>

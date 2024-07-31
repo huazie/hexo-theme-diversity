@@ -1,0 +1,124 @@
+.theme-wrap, .ring, .img
+    position absolute
+    width 100%
+    height 100% 
+    transform-style preserve-3d
+    user-select none
+
+.theme-wrap
+    display flex
+    height 500px
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+    overflow hidden
+
+.theme-inner
+    position absolute
+    pointer-events auto
+    perspective 2000px  
+    width 300px  
+    height 400px
+    left 50%  
+    top 50%  
+    transform translate(-50%, -50%)
+
+.img
+    opacity 1
+    backface-visibility hidden
+    transform-origin 50% 50%
+
+.card-container
+    position relative
+    display flex  
+    flex-direction column  
+    align-items center  
+    text-align center
+    justify-content center
+
+.card-front,
+.card-back
+    width 100%
+    height 100%
+    position absolute
+    backface-visibility hidden
+    transition transform 0.5s ease
+
+.card .card-back
+    opacity 0
+
+.card  
+    &:hover .card-front  
+        animation flip 0.5s forwards 
+  
+    &:hover .card-back  
+        animation flip 0.5s reverse forwards  
+        opacity 1
+  
+@keyframes flip  
+    from  
+        transform rotateY(0deg)  
+    to  
+        transform rotateY(180deg)
+
+.top
+    position absolute
+    top 50px
+
+.bottom
+    position absolute
+    bottom 25px
+
+.middle
+    margin 0 25px 0 25px
+
+.text
+    font-size 18px
+    color #428bca
+
+.arrow-wrap
+    display flex
+    pointer-events auto
+    justify-content space-between
+    align-items center
+    width 100%
+    padding 0 2px
+    @media mq-normal
+        display none
+
+.left-arrow
+    margin-right auto
+    background-image url('/images/arrow-left.png')
+    background-repeat no-repeat
+    background-size contain
+    z-index 1
+    width 50px
+    height 50px
+
+.right-arrow
+    margin-left auto
+    background-image url('/images/arrow-right.png')
+    background-repeat no-repeat
+    background-size contain
+    z-index 1
+    width 50px
+    height 50px
+
+#theme-footer
+    color rgba(255, 255, 255, 0.7)
+    display block
+    width 100%
+    margin 0 auto
+    height auto
+    position absolute
+    text-align center
+    bottom 10px
+
+#theme-footer a
+    color #bbb
+    text-decoration none
+    &:hover
+        color #707070
+
+#theme-footer p
+    margin 15px 0

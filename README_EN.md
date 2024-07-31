@@ -31,13 +31,13 @@ git pull
 The `_config.yml` file located in the `themes/diversity` directory contains the following configuration:
 
 ```
-title: Theme Selection
+title: Diversity
 
-description: This is a theme selection page 
+description: Blog Diversity, A theme that supports free switching between multiple themes for [Hexo].
 
 image: /images/diversity.png
 
-favicon: /images/diversity.png
+favicon: /images/diversity.ico
 
 back_image: /images/back.jpg
 
@@ -57,8 +57,8 @@ introduction:
   light: A simple theme for Hexo.
 ```
 
-- **title** - The title of the theme selection page
-- **description** - The description of the web page
+- **title** - Default Title of Diversity Theme
+- **description** - Default Description of Diversity Theme
 - **image** - The URL of the image that will be displayed when the web page link is shared on social platforms
 - **favicon** - The path to the Favicon [A small icon used to identify and distinguish different websites in the browser's tab, address bar, or bookmark bar]
 - **back_image** - Background image after flipping the theme image
@@ -78,6 +78,7 @@ themes: [landscape,light,phase]
 - **themes** - Multi-theme List
 - **ports** - A list of multi-theme server ports (not configured, default starting from 4001), used for locally starting HTTP services corresponding to each theme with `hexo server`.
 
+Copy or move the directories and files from the `other` directory within the `themes/diversity` directory to your Hexo project root directory.
 
 ### Other Theme Config
 
@@ -97,7 +98,7 @@ And within that configuration directory, add a corresponding `_config.yml` file 
 │  │  ├─_config.yml
 ```
 
-To modify the `_config.yml` file in each theme's directory, taking **landscape** as an example:
+To modify the `_config.yml` file in each theme's config directory, taking **landscape** as an example:
 
 ``` diff
 _config.yml
@@ -110,3 +111,5 @@ _config.yml
 - theme: other-theme
 + theme: landscape
 ```
+
+Within the root directory of your Hexo project, we can still add separate `_config.[theme].yml` files for different themes. For more information, please refer to the official documentation on [Configuration](https://hexo.io/zh-cn/docs/configuration).

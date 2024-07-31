@@ -20,12 +20,14 @@
             })
         }, '-=0.5')
 
-    // 当用户按下鼠标按钮或者在触摸屏设备上开始触摸
-    $(window).on('mousedown touchstart', dragStart);
-    // 当用户释放鼠标按钮或者在触摸屏设备上结束触摸
-    $(window).on('mouseup touchend', dragEnd);
+    // 当用户按下鼠标按钮
+    $(window).on('mousedown', dragStart);
+    // 当用户释放鼠标按钮
+    $(window).on('mouseup', dragEnd);
     // 当用户滚动鼠标滚轮时触发
-    $(window).on('wheel', wheel);  
+    $(window).on('wheel', wheel);
+    // 当用户点击左右箭头时触发
+    $(".left-arrow, .right-arrow").on('click', arrowClick);
             
     function dragStart(e) { 
         if (e.touches) e.clientX = e.touches[0].clientX;
@@ -58,13 +60,43 @@
         // 根据不同浏览器标准化deltaY 
         var deltaY = e.originalEvent.deltaY || e.originalEvent.detail * -40;  
       
+        const angle = getRotateAngle();
+
         // 根据滚动的方向设置旋转角度 
-        var rotationAmount = deltaY > 0 ? -30 : 30;
+        var rotationAmount = deltaY > 0 ? -1 * angle : angle;
       
         gsap.to('.ring', {  
             rotationY: '+=' + rotationAmount,  
             onUpdate: updateBackgroundPosition
         });
+    }
+
+    function arrowClick(event) {
+        const arrow = event.target;
+
+        const angle = getRotateAngle();
+
+        // 根据点击的左右箭头设置旋转角度
+        const rotationAmount = arrow.classList.contains('left-arrow') ? -1 * angle : angle;
+
+        gsap.to('.ring', { 
+            rotationY: '+=' + rotationAmount,  
+            onUpdate: updateBackgroundPosition
+        });
+    }
+
+    /**
+     * 返回每次旋转的角度
+     */
+    function getRotateAngle() {
+        const themeNum = config.themes.length;
+        // 采用10个的旋转图片样式布局
+        const ROTATE_NUM_10 = 10;
+        let angle = 0;
+        if (themeNum <= ROTATE_NUM_10) {
+            angle = 360 / ROTATE_NUM_10;
+        }
+        return angle;
     }
 
     /**
@@ -85,8 +117,90 @@
         return ( 100-gsap.utils.wrap(0,360,gsap.getProperty('.ring', 'rotationY')-180-i*36)/360*500 )+'px 0px';
     }
 
+    const COOKIE_NAME = 'theme';
+
+    // 【设为默认/取消默认】按钮点击事件
+    $('.theme-default').on('click', function() {
+        const thiz = $(this);
+        const theme = Cookies.get(COOKIE_NAME);
+        const curTheme = thiz.parent('p').attr('theme');
+        // Cookie中没有设置默认主题 或者
+        // Cookie中已设置默认主题，但不是当前主题
+        if (!theme || (theme && theme != curTheme)) {
+            // 设置默认主题为当前所在主题
+            Cookies.set(COOKIE_NAME, curTheme);
+            // 按钮文本改为取消默认
+            thiz.text(config.button.cancel_defalut);
+            $.gritter.add({
+                title: convert(config.gritter.title_theme, curTheme),
+                text: config.gritter.text_configured + ' <a class="gritter-link" href="' 
+                    + config.menu.blog + '">' + config.gritter.text_clicktojump + '</a>',
+                time: 4000,
+                image: window.location.origin + '/images/diversity.png',
+                class_name: 'gritter-success gritter-light'
+            });
+        } else if (theme && theme == curTheme) {
+            // Cookie中已设置默认主题，并且就是当前主题，则认为是取消默认
+            Cookies.remove(COOKIE_NAME);
+            // 按钮文本改为设为默认
+            thiz.text(config.button.theme_default);
+            $.gritter.add({
+                title: convert(config.gritter.title_theme, theme),
+                text: config.gritter.text_canceled,
+                time: 4000,
+                image: window.location.origin + '/images/diversity.png',
+                class_name: 'gritter-warning gritter-light'
+            });
+        } 
+        // 遍历所有的含主题的卡片div，设置【设为默认/取消默认】的展示文本
+        initCardButtonText();
+    });
+
+    /**  
+     * 转换带有占位符的字符串。 替换前的字符串包含如{0}、{1}等占位符，
+     * 这些占位符将被相应的 placeholders 数组中的值替换。  
+     *  
+     * @param {string} before - 替换前的原始字符串，包含占位符
+     * @param {...} placeholders - 一个可变数量的参数，用于替换字符串中的占位符
+     * @returns {string} - 替换占位符后的新字符串
+     */
+    function convert(before, ...placeholders) {
+        // 使用正则表达式匹配所有形如{0}、{1}等的占位符；
+        // 'g'标志表示全局匹配，即匹配字符串中所有符合条件的占位符；
+        // \\{ 和 \\} 用于匹配字面量的花括号，因为花括号在正则表达式中有特殊含义；
+        // ([0-${placeholders.length - 1}]) 是一个捕获组，用于捕获占位符中的数字（即索引）。
+        // 使用正则表达式匹配所有占位符，并通过函数动态替换它们  
+        return before.replace(new RegExp(`\\{([0-${placeholders.length - 1}])\\}`, 'g'), (match, index) => {
+            // 在这里，match参数是匹配的整个占位符（如"{0}"），但因为我们使用了捕获组，  
+            // 所以index参数实际上是我们捕获的数字字符串（如"0"）；
+            // 我们将这个数字字符串转换为整数，以便用作 placeholders 数组的索引；  
+            // 然后返回 placeholders 数组中对应索引的元素作为替换值；
+            // 将index（字符串）转换为整数，然后作为索引访问placeholders数组。
+            return placeholders[parseInt(index, 10)];  
+        });  
+    }
+
+    // 遍历所有的含主题的卡片div，设置【设为默认/取消默认】的展示文本
+    initCardButtonText();
+
+    function initCardButtonText() {
+        $('.card').each(function() {
+            const thiz = $(this);
+            const button = thiz.find('button.theme-default');
+            const theme = Cookies.get(COOKIE_NAME);
+            const curTheme = button.parent('p').attr('theme');
+            if (!theme || theme != curTheme) {
+                // 按钮文本改为设为默认
+                button.text(config.button.theme_default);
+            } else {
+                // 按钮文本改为取消默认
+                button.text(config.button.cancel_defalut);
+            }
+        });
+    }
+
     // 主题直达按钮点击事件
-    $('.theme-redirect').on('click', function(){
+    $('.theme-redirect').on('click', function() {
         const theme = $(this).parent('p').attr('theme');
         const href = window.location.href;
         const hostname = window.location.hostname;
@@ -94,12 +208,15 @@
 
         let url;
 
-        // 本地环境
-        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        // 本地环境 localhost 或者 127.0.0.1 或者 同个局域网下带有端口
+        if (port) {
             url = href.replace(port, getThemeServerPort(theme));
         } else { // 静态页面部署环境
             url = href;
         }
+
+        // 主题选择页面路径含其他内容，类似 '/diversity/theme'，直接导航有问题，需要去除
+        url = url.replace(config.menu.theme, '');
 
         if (!url.endsWith("/")) url += "/";
 
@@ -122,7 +239,7 @@
     }
 
     // 主题来源按钮点击事件
-    $('.theme-source').on('click', function(){
+    $('.theme-source').on('click', function() {
         const theme = $(this).parent('p').attr('theme');
         const source = config.source[theme];
         if (source)

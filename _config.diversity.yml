@@ -1,5 +1,5 @@
 # 多主题目录列表
-themes: [landscape,phase,light]
+themes: [phase,landscape,light]
 # 多主题服务器端口列表
 # 不配置，默认从4001开始
 #ports: [5000,5001,5002]

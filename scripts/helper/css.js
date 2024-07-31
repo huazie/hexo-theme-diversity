@@ -29,6 +29,7 @@ function innerCssHelper(theme, ...args) {
             if (!item.href.endsWith('.css'))
                 item.href += '.css';
             result += (0, hexo_util_1.htmlTag)('link', Object.assign({ rel: 'stylesheet' }, item)) + '\n';
+            console.log('#####[' + theme + '] ' + item.href);
         }
     });
     return result;

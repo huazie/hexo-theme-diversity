@@ -29,6 +29,7 @@ function innerJsHelper(theme, ...args) {
             if (!item.src.endsWith('.js'))
                 item.src += '.js';
             result += (0, hexo_util_1.htmlTag)('script', Object.assign({}, item), '') + '\n';
+            console.log('#####[' + theme + '] ' + item.src);
         }
     });
     return result;

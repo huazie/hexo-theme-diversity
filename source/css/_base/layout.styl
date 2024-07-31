@@ -1,64 +1,45 @@
-html, body, .stage, .ring, .img  
-    width 100%  
-    height 100%  
-    transform-style preserve-3d
-    user-select none  
-  
-html, body, .stage  
-    overflow hidden  
+global-reset()
+
+html
+    text-size-adjust 100%
+    -webkit-text-size-adjust 100%
+    -moz-text-size-adjust 100%
+    -ms-text-size-adjust 100%
+    box-sizing border-box
+
+html, body
+    @media screen
+        height 100%
   
 body  
     zoom 1 
-    position relative
-    height 100vh
-    min-height 600px
     background url(../images/body-bg.png) center no-repeat fixed 
     background-size cover
-  
-div  
-    position absolute
-  
-.container
-    perspective 2000px  
-    width 300px  
-    height 400px  
-    left 50%  
-    top 50%  
-    transform translate(-50%, -50%)
+    text-rendering: optimizeLegibility
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    overflow-x hidden
 
-.img
-    opacity 1
-    backface-visibility hidden
-    transform-origin 50% 50%
+#container
+    width 100%
+    height 100%
+    display flex
+    flex-direction column
 
-.card-container
-    position relative
-    display flex  
-    flex-direction column  
-    align-items center  
-    text-align center
-    justify-content center
+.wrapper
+    clearfix()
+    @media screen
+        max-width 100%
+        margin 0 auto
 
-.top
-    position absolute
-    top 30px
+.inner
+    clearfix()
+    @media screen
+        padding 0 gutter-width
 
-.bottom
-    position absolute
-    bottom 10px
+h1
+    font-size 2em
+    font-weight bold
 
-.middle
-    margin 0 25px 0 25px
-
-.text
-    font-size 18px
-    color #428bca
-
-.center
-    text-align center !important
-
-.no-margin
-    margin 0 !important
-
-.no-padding
-    padding 0 !important
+p
+    line-height 1.5

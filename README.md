@@ -33,13 +33,13 @@ git pull
 `themes/diversity` 目录下的 `_config.yml` 包含如下配置：
 
 ```
-title: 主题选择
+title: Diversity
 
-description: 这是一个主题选择页面
+description: 博客多样性，一款多主题自由切换的Hexo主题
 
 image: /images/diversity.png
 
-favicon: /images/diversity.png
+favicon: /images/diversity.ico
 
 back_image: /images/back.jpg
 
@@ -59,8 +59,8 @@ introduction:
   light: Hexo 中的一个简约主题
 ```
 
-- **title** - 主题选择页面的标题
-- **description** - 网页描述
+- **title** - Diversity主题默认标题
+- **description** - Diversity主题默认描述
 - **image** - 当网页链接被分享到社交平台时显示的图片URL
 - **favicon** - Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
 - **back_image** - 主题图片翻转后的背景图片
@@ -80,6 +80,8 @@ themes: [landscape,light,phase]
 - **themes** - 多主题列表
 - **ports** - 多主题服务器端口列表（不配置，默认从4001开始），用于本地 `hexo server` 启动各主题对应的HTTP服务
 
+将 `themes/diversity` 目录下的 `other` 目录中的目录和文件复制或移动到你的 **Hexo** 项目根目录
+
 ### 多主题相关配置
 
 在你的 **Hexo** 项目根目录，添加 **config** 目录，为上述多主题列表中的每个主题添加一个对应主题名的配置目录，
@@ -96,7 +98,7 @@ themes: [landscape,light,phase]
 │  │  ├─_config.yml
 ```
 
-修改上述各主题目录下的 `_config.yml`，以 **landscape** 举例：
+修改上述各主题配置目录下的 `_config.yml`，以 **landscape** 举例：
 
 ``` diff
 _config.yml
@@ -109,3 +111,5 @@ _config.yml
 - theme: other-theme
 + theme: landscape
 ```
+
+在你的 **Hexo** 项目根目录下，我们依旧可以添加不同主题独立的 `_config.[theme].yml` 文件，更多了解请查看官方[《配置》](https://hexo.io/zh-cn/docs/configuration)

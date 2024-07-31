@@ -2,9 +2,12 @@
 <html>
 <%- partial('_partial/head') %>
 <body>
-    <%- partial('_partial/header') %>
-    <%- body %>
-    <%- partial('_partial/footer') %>
+    <div id="container">
+        <%- partial('_partial/header') %>
+        <%- body %>
+    </div>
+    <div id="mobile-nav-dimmer"></div>
+    <%- partial('_partial/mobile_nav') %>
     <%- partial('_partial/after_footer') %>
 </body>
 </html>
