@@ -4,10 +4,11 @@
 })(jQuery);
 
 function showDefaultBlogPage() {
-	const theme = Cookies.get('theme');
+    const theme = Get('theme');
+    const blogIframe = document.getElementById('blog');
 	// 如果没有设置默认主题，则直接跳过处理
 	if (!theme) {
-        $('#blog').attr('src', '/no-theme.html');
+        blogIframe.src = '/no-theme.html';
         return;
     }
     const href = window.location.href;
@@ -30,7 +31,7 @@ function showDefaultBlogPage() {
 
     url += theme;
 
-    $('#blog').attr('src', url);
+    blogIframe.src = url;
 }
 
 function getThemeServerPort(theme) {
