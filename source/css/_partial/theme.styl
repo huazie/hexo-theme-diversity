@@ -88,16 +88,17 @@
 
 .left-arrow
     margin-right auto
-    background-image url('/images/arrow-left.png')
-    background-repeat no-repeat
-    background-size contain
-    z-index 1
-    width 50px
-    height 50px
+    &:active
+        transform translateY(2px)
 
 .right-arrow
     margin-left auto
-    background-image url('/images/arrow-right.png')
+    transform rotate(180deg)
+    &:active
+        transform rotate(180deg) translateY(-2px)
+
+.left-arrow, .right-arrow
+    background-image url('/images/arrow.png')
     background-repeat no-repeat
     background-size contain
     z-index 1

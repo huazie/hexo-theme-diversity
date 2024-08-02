@@ -129,8 +129,6 @@
             var expirationDate = new Date();
             // 设置默认主题为当前所在主题
             Set(COOKIE_NAME, curTheme);
-            // 按钮文本改为取消默认
-            thiz.text(config.button.cancel_defalut);
             $.gritter.add({
                 title: convert(config.gritter.title_theme, curTheme),
                 text: config.gritter.text_configured + ' <a class="gritter-link" href="' 
@@ -142,8 +140,6 @@
         } else if (theme && theme == curTheme) {
             // 已设置默认主题，并且就是当前主题，则认为是取消默认
             Remove(COOKIE_NAME);
-            // 按钮文本改为设为默认
-            thiz.text(config.button.theme_default);
             $.gritter.add({
                 title: convert(config.gritter.title_theme, theme),
                 text: config.gritter.text_canceled,
@@ -192,9 +188,11 @@
             if (!theme || theme != curTheme) {
                 // 按钮文本改为设为默认
                 button.text(config.button.theme_default);
+                button.removeClass('btn-default').addClass('btn-primary');
             } else {
                 // 按钮文本改为取消默认
                 button.text(config.button.cancel_defalut);
+                button.removeClass('btn-primary').addClass('btn-default');
             }
         });
     }
