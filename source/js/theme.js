@@ -122,13 +122,15 @@
     // 【设为默认/取消默认】按钮点击事件
     $('.theme-default').on('click', function() {
         const thiz = $(this);
-        const theme = Get(COOKIE_NAME);
+        const theme = Diversity.data.get(COOKIE_NAME);
         const curTheme = thiz.parent('p').attr('theme');
         // 没有设置默认主题 或者 已设置默认主题，但不是当前主题
         if (!theme || (theme && theme != curTheme)) {
             var expirationDate = new Date();
             // 设置默认主题为当前所在主题
-            Set(COOKIE_NAME, curTheme);
+            Diversity.data.set(COOKIE_NAME, curTheme);
+            // 设置主题标志，1：设置过主题 0：没有设置过
+            Diversity.data.setIfNotAbsent('theme_flag', 1);
             $.gritter.add({
                 title: convert(config.gritter.title_theme, curTheme),
                 text: config.gritter.text_configured + ' <a class="gritter-link" href="' 
@@ -139,7 +141,7 @@
             });
         } else if (theme && theme == curTheme) {
             // 已设置默认主题，并且就是当前主题，则认为是取消默认
-            Remove(COOKIE_NAME);
+            Diversity.data.remove(COOKIE_NAME);
             $.gritter.add({
                 title: convert(config.gritter.title_theme, theme),
                 text: config.gritter.text_canceled,
@@ -183,7 +185,7 @@
         $('.card').each(function() {
             const thiz = $(this);
             const button = thiz.find('button.theme-default');
-            const theme = Get(COOKIE_NAME);
+            const theme = Diversity.data.get(COOKIE_NAME);
             const curTheme = button.parent('p').attr('theme');
             if (!theme || theme != curTheme) {
                 // 按钮文本改为设为默认

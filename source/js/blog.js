@@ -4,11 +4,12 @@
 })(jQuery);
 
 function showDefaultBlogPage() {
-    const theme = Get('theme');
+    const theme = Diversity.data.get('theme');
     const blogIframe = document.getElementById('blog');
-	// 如果没有设置默认主题，则直接跳过处理
+	// 如果没有设置默认主题，则跳转无主题页
 	if (!theme) {
-        blogIframe.src = '/no-theme.html';
+        const flag = Diversity.data.get('theme_flag');
+        blogIframe.src = '/no-theme.html?theme_flag=' + (flag ? flag : 0);
         return;
     }
     const href = window.location.href;
