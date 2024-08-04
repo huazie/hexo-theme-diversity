@@ -1,0 +1,28 @@
+menu:
+  index: Index
+  blog: Blog
+  theme: Theme
+  comment: Comment
+  about: About
+
+button:
+  theme-default: DEFAULT
+  cancel-defalut: CANCEL
+  theme-redirect: REDIRECT
+  theme-source: SOURCE
+
+gritter:
+  title-theme: Theme [{0}]
+  text-configured: Configured
+  text-canceled: Cancelled
+  text-click-to-jump: Click here
+
+no-theme:
+  tip-text: Default theme not set up! Click the button below to configure now.
+  btn-text: Theme Select
+
+introduction:
+  landscape: A brand new default theme for Hexo.
+  phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.
+  light: A simple theme for Hexo.
+  next: A high quality elegant Hexo theme. It is crafted from scratch with love.

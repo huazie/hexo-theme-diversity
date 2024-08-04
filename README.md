@@ -52,11 +52,6 @@ source:
   landscape: https://github.com/hexojs/hexo-theme-landscape
   phase: https://github.com/hexojs/hexo-theme-phase
   light: https://github.com/hexojs/hexo-theme-light
-
-introduction:
-  landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
-  phase: 通过 Phase，感受时间流逝，它是 Hexo 最美丽的主题。
-  light: Hexo 中的一个简约主题
 ```
 
 - **title** - Diversity主题默认标题
@@ -67,7 +62,6 @@ introduction:
 - **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
   - 如果该图片路径未配置，默认取 `/images/default.png`
 - **source** - 主题项目来源【用于主题来源按钮点击跳转】
-- **introduction** - 主题介绍
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 

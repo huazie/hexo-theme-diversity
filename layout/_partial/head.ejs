@@ -47,10 +47,20 @@
         config.button = new Object();
         config.button.theme_default = '<%= __('button.theme-default') %>';
         config.button.cancel_defalut = '<%= __('button.cancel-defalut') %>';
+        config.button.theme_redirect = '<%= __('button.theme-redirect') %>';
+        config.button.theme_source = '<%= __('button.theme-source') %>';
         config.gritter = new Object();
         config.gritter.title_theme = '<%= __('gritter.title-theme') %>';
         config.gritter.text_configured = '<%= __('gritter.text-configured') %>';
         config.gritter.text_canceled = '<%= __('gritter.text-canceled') %>';
         config.gritter.text_clicktojump = '<%= __('gritter.text-click-to-jump') %>';
+        config.introduction = new Object();
+        <% theme.themes.forEach(function(theme) { %>  
+        config.introduction['<%= theme %>'] = '<%= __('introduction.' + theme) %>';
+        <% }); %>
+        config.no_theme = new Object();
+        config.no_theme.back_image = '<%= theme.back_image%>';
+        config.no_theme.tip_text = '<%= __('no-theme.tip-text') %>';
+        config.no_theme.btn_text = '<%= __('no-theme.btn-text') %>';
     </script>
 </head>

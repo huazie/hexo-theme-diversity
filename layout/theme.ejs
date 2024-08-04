@@ -39,7 +39,6 @@
                         if (index >= 0 && index < themeNum) {
                             let themeName = theme.themes[index];
                             let title = themeName.charAt(0).toUpperCase() + themeName.slice(1);
-                            let introduction = theme.introduction[themeName];
                             let path = themeConfig[themeName];
                             if (!path) {
                                 path = '/images/default.png';
@@ -51,7 +50,7 @@
                         <h1><%= title %></h1>
                     </div>
                     <p class="middle text">
-                       <%= introduction %>
+                       <%= __('introduction.' + themeName) %>
                     </p>
                     <p class="bottom" theme="<%= themeName %>">
                         <button class="theme-default btn btn-primary"><%= __('button.theme-default') %></button>

@@ -50,11 +50,6 @@ source:
   landscape: https://github.com/hexojs/hexo-theme-landscape
   phase: https://github.com/hexojs/hexo-theme-phase
   light: https://github.com/hexojs/hexo-theme-light
-
-introduction:
-  landscape: A brand new default theme for Hexo.
-  phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.
-  light: A simple theme for Hexo.
 ```
 
 - **title** - Default Title of Diversity Theme
@@ -65,7 +60,6 @@ introduction:
 - **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
   - If the image path is not configured, it will default to `/images/default.png`.
 - **source** - Theme Project Source [For button navigation to the source of the theme]
-- **introduction** - Theme Introduction
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 
