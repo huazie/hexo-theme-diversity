@@ -12,6 +12,10 @@ function showDefaultBlogPage() {
         blogIframe.src = '/no-theme.html?theme_flag=' + (flag ? flag : 0);
         return;
     }
+
+    // 添加loading效果
+    blogIframe.classList.add('loading');
+
     const href = window.location.href;
     const hostname = window.location.hostname;
     const port = window.location.port;
