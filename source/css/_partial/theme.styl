@@ -47,13 +47,23 @@
 .card .card-back
     opacity 0
 
-.card  
-    &:hover .card-front  
-        animation flip 0.5s forwards 
-  
-    &:hover .card-back  
-        animation flip 0.5s reverse forwards  
-        opacity 1
+.card
+    @media mq-normal
+        &:hover .card-front
+            animation flip 0.5s forwards
+      
+        &:hover .card-back
+            animation flip 0.5s reverse forwards
+            opacity 1
+
+.card.active
+    @media mq-mobile
+        .card-front
+            animation flip 0.5s forwards
+      
+        .card-back
+            animation flip 0.5s reverse forwards
+            opacity 1
   
 @keyframes flip  
     from  

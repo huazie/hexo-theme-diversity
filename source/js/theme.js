@@ -28,16 +28,23 @@
     $(window).on('wheel', wheel);
     // 当用户点击左右箭头时触发
     $(".left-arrow, .right-arrow").on('click', arrowClick);
+
+    // 采用10个的旋转图片样式布局
+    const ROTATE_NUM = 10;
+    let middle = ROTATE_NUM / 2;
+    const rotateNumClass = "rotate-" + ROTATE_NUM + "-";
+    // 一开始将中间的图片设置为激活
+    $("." + rotateNumClass + middle).addClass('active');
             
     function dragStart(e) { 
         if (e.touches) e.clientX = e.touches[0].clientX;
         xPos = Math.round(e.clientX);
         gsap.set('.ring', {cursor:'grabbing'})
-        $(window).on('mousemove touchmove', drag);
+        $(window).on('mousemove', drag);
     }
 
     function dragEnd(e) {
-        $(window).off('mousemove touchmove', drag);
+        $(window).off('mousemove', drag);
         gsap.set('.ring', {cursor:'grab'});
     }
 
@@ -65,23 +72,33 @@
         // 根据滚动的方向设置旋转角度 
         var rotationAmount = deltaY > 0 ? -1 * angle : angle;
       
-        gsap.to('.ring', {  
+        gsap.to('.ring', {
             rotationY: '+=' + rotationAmount,  
             onUpdate: updateBackgroundPosition
         });
     }
 
+    let isRotating = false; // 添加一个状态变量
+
     function arrowClick(event) {
+        if (isRotating) return; // 如果正在旋转，直接返回，不执行后续操作
+
         const arrow = event.target;
-
         const angle = getRotateAngle();
-
         // 根据点击的左右箭头设置旋转角度
         const rotationAmount = arrow.classList.contains('left-arrow') ? -1 * angle : angle;
 
-        gsap.to('.ring', { 
-            rotationY: '+=' + rotationAmount,  
-            onUpdate: updateBackgroundPosition
+        isRotating = true; // 设置旋转状态为true
+
+        gsap.to('.ring', {
+            rotationY: '+=' + rotationAmount,
+            onUpdate: updateBackgroundPosition,
+            onComplete: function() {
+                // 激活下一个包含img的div展示，实现切换后自动翻转
+                activeNext(rotationAmount < 0 ? true : false);
+                // 旋转完成后，将状态设置为false
+                isRotating = false;
+            }
         });
     }
 
@@ -90,11 +107,9 @@
      */
     function getRotateAngle() {
         const themeNum = config.themes.length;
-        // 采用10个的旋转图片样式布局
-        const ROTATE_NUM_10 = 10;
         let angle = 0;
-        if (themeNum <= ROTATE_NUM_10) {
-            angle = 360 / ROTATE_NUM_10;
+        if (themeNum <= ROTATE_NUM) {
+            angle = 360 / ROTATE_NUM;
         }
         return angle;
     }
@@ -115,6 +130,35 @@
      */
     function getBackgroundPosition(i) { 
         return ( 100-gsap.utils.wrap(0,360,gsap.getProperty('.ring', 'rotationY')-180-i*36)/360*500 )+'px 0px';
+    }
+
+    /**
+     * 激活下一个包含img的div展示，实现切换后自动翻转
+     */  
+    function activeNext(leftFlag) {
+        const classList = document.querySelector('.img.active').classList;
+        let rotateNumId; // 例如：rotate-10-5, 则 rotateNumId = 5
+        for (var i = 0; i < classList.length; i++) {  
+            if (classList[i].includes(rotateNumClass)) {
+                rotateNumId = parseInt(classList[i].replace(rotateNumClass, '').trim());
+                break;
+            }
+        }
+        let nextRotateNumId = rotateNumId;
+        if (leftFlag)
+            nextRotateNumId--;
+        else 
+            nextRotateNumId++;
+
+        if (nextRotateNumId < 0)
+            nextRotateNumId = ROTATE_NUM - 1;
+        else if (nextRotateNumId >= ROTATE_NUM)
+            nextRotateNumId = 0;
+
+        // 去除当前已激活的div
+        document.querySelector("." + rotateNumClass + rotateNumId).classList.remove('active');
+        // 添加要切换激活的div
+        document.querySelector("." + rotateNumClass + nextRotateNumId).classList.add('active');
     }
 
     const COOKIE_NAME = 'theme';
