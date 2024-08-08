@@ -59,6 +59,9 @@
         xPos = Math.round(e.clientX);
     }
 
+    // 旋转角度
+    const angle = getRotateAngle();
+
     /**
      * 鼠标滚动事件监听回调
      */
@@ -67,8 +70,6 @@
         // 根据不同浏览器标准化deltaY 
         var deltaY = e.originalEvent.deltaY || e.originalEvent.detail * -40;  
       
-        const angle = getRotateAngle();
-
         // 根据滚动的方向设置旋转角度 
         var rotationAmount = deltaY > 0 ? -1 * angle : angle;
       
@@ -78,29 +79,42 @@
         });
     }
 
-    let isRotating = false; // 添加一个状态变量
+    let isRotating = false; // 旋转状态（true：正在旋转中 false：旋转结束）
 
     function arrowClick(event) {
         if (isRotating) return; // 如果正在旋转，直接返回，不执行后续操作
 
         const arrow = event.target;
-        const angle = getRotateAngle();
-        // 根据点击的左右箭头设置旋转角度
-        const rotationAmount = arrow.classList.contains('left-arrow') ? -1 * angle : angle;
-
-        isRotating = true; // 设置旋转状态为true
-
-        gsap.to('.ring', {
-            rotationY: '+=' + rotationAmount,
-            onUpdate: updateBackgroundPosition,
-            onComplete: function() {
-                // 激活下一个包含img的div展示，实现切换后自动翻转
-                activeNext(rotationAmount < 0 ? true : false);
-                // 旋转完成后，将状态设置为false
-                isRotating = false;
-            }
-        });
+        // 根据点击的左右箭头，向左或向右旋转主题卡片
+        rotateThemeCard(arrow.classList.contains('left-arrow'));
     }
+
+    let startX;
+    let diffX;
+    let isSliding = false; // 滑动状态（true：正在滑动 false：停止滑动 ）
+
+    $(window).on('touchstart', function(e) {
+        diffX = 0;
+        startX = e.touches[0].clientX;
+        isSliding = true;
+    });
+
+    $(window).on('touchmove', function(e) {
+        if (!isSliding) return;
+        let moveX = e.touches[0].clientX;
+        diffX = moveX - startX;
+    });
+
+    $(window).on('touchend', function() {
+        if (!isSliding) return;
+        if (isRotating) return; // 如果正在旋转，直接返回，不执行后续操作
+
+        if (Math.abs(diffX) > 50) { // 设定一个阈值，防止轻微移动也触发
+            rotateThemeCard(diffX < 0);
+        }
+        diffX = 0;
+        isSliding = false; // 确保touchend时重置状态
+    });
 
     /**
      * 返回每次旋转的角度
@@ -130,6 +144,27 @@
      */
     function getBackgroundPosition(i) { 
         return ( 100-gsap.utils.wrap(0,360,gsap.getProperty('.ring', 'rotationY')-180-i*36)/360*500 )+'px 0px';
+    }
+
+    /**
+     * 向左或向右旋转主题卡片
+     */
+    function rotateThemeCard(leftFlag) {
+        // 设置旋转角度
+        const rotationAmount = leftFlag ? -1 * angle : angle;
+
+        isRotating = true; // 设置旋转状态为true
+
+        gsap.to('.ring', {
+            rotationY: '+=' + rotationAmount,
+            onUpdate: updateBackgroundPosition,
+            onComplete: function() {
+                // 激活下一个包含img的div展示，实现切换后自动翻转
+                activeNext(leftFlag);
+                // 旋转完成后，将状态设置为false
+                isRotating = false;
+            }
+        });
     }
 
     /**
