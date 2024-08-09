@@ -110,7 +110,7 @@
         if (isRotating) return; // 如果正在旋转，直接返回，不执行后续操作
 
         if (Math.abs(diffX) > 50) { // 设定一个阈值，防止轻微移动也触发
-            rotateThemeCard(diffX < 0);
+            rotateThemeCard(diffX > 0);
         }
         diffX = 0;
         isSliding = false; // 确保touchend时重置状态
