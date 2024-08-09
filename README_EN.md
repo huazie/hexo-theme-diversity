@@ -30,7 +30,7 @@ git pull
 
 The `_config.yml` file located in the `themes/diversity` directory contains the following configuration:
 
-```
+```yml
 title: Diversity
 
 description: Blog Diversity, A theme that supports free switching between multiple themes for [Hexo].
@@ -63,7 +63,7 @@ source:
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 
-```
+```yml
 themes: [landscape,light,phase]
 
 #ports: [5000,5001,5002]

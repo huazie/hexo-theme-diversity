@@ -32,7 +32,7 @@ git pull
 
 `themes/diversity` 目录下的 `_config.yml` 包含如下配置：
 
-```
+```yml
 title: Diversity
 
 description: 博客多样性，一款多主题自由切换的Hexo主题
@@ -65,7 +65,7 @@ source:
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
-```
+```yml
 themes: [landscape,light,phase]
 
 #ports: [5000,5001,5002]
