@@ -1,9 +1,6 @@
 menu:
-  index: 首页
   blog: 博客
   theme: 主题
-  comment: 留言
-  about: 关于
 
 button:
   theme-default: 设为默认
@@ -26,4 +23,3 @@ introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
   phase: 通过 Phase，感受时间流逝，它是 Hexo 最美丽的主题。
   light: Hexo 中的一个简约主题。
-  next: NexT 是一个高质量且优雅的 Hexo 主题。它从零开始，用心打造。 

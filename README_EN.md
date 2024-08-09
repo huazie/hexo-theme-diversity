@@ -74,6 +74,43 @@ themes: [landscape,light,phase]
 
 Copy or move the directories and files from the `other` directory within the `themes/diversity` directory to your Hexo project root directory.
 
+### Diversity I18N Config
+
+The `en.yml` file in the `languages` directory under the `themes/diversity` folder contains the following configuration:
+
+```yml
+menu:
+  blog: Blog
+  theme: Theme
+
+button:
+  theme-default: DEFAULT
+  cancel-defalut: CANCEL
+  theme-redirect: REDIRECT
+  theme-source: SOURCE
+
+gritter:
+  title-theme: Theme [{0}]
+  text-configured: Configured
+  text-canceled: Cancelled
+  text-click-to-jump: Click here
+
+no-theme:
+  tip-text: Default theme not set up! Click the button below to configure now.
+  btn-text: Theme Select
+
+introduction:
+  landscape: A brand new default theme for Hexo.
+  phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.
+  light: A simple theme for Hexo.
+```
+
+- **menu** - The display name for the navigation bar menu
+- **button** - The button text on the theme selection page
+- **gritter** - The prompt text on the theme selection page
+- **no-theme** - The text for the no theme page
+- **introduction** - Theme introduction [if not configured, then no introduction is displayed]
+
 ### Other Theme Config
 
 Add a `config` directory in the root directory of your Hexo project. 

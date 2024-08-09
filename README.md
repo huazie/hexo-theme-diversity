@@ -28,7 +28,7 @@ git pull
 
 ## 配置
 
-### Diversity主题相关配置
+### 基础配置
 
 `themes/diversity` 目录下的 `_config.yml` 包含如下配置：
 
@@ -75,6 +75,43 @@ themes: [landscape,light,phase]
 - **ports** - 多主题服务器端口列表（不配置，默认从4001开始），用于本地 `hexo server` 启动各主题对应的HTTP服务
 
 将 `themes/diversity` 目录下的 `other` 目录中的目录和文件复制或移动到你的 **Hexo** 项目根目录
+
+### 国际化配置
+
+`themes/diversity` 目录下的 `languages` 目录中的 `zh-CN.yml` 包含如下配置：
+
+```yml
+menu:
+  blog: 博客
+  theme: 主题
+
+button:
+  theme-default: 设为默认
+  cancel-defalut: 取消默认
+  theme-redirect: 主题直达
+  theme-source: 主题来源
+
+gritter:
+  title-theme: 主题【{0}】
+  text-configured: 已设置
+  text-canceled: 已取消
+  text-click-to-jump: 点击跳转
+
+no-theme:
+  tip-text: 您还没有设置默认主题！点击下方按钮前往设置
+  btn-text: 主题选择
+
+introduction:
+  landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
+  phase: 通过 Phase，感受时间流逝，它是 Hexo 最美丽的主题。
+  light: Hexo 中的一个简约主题。
+```
+
+- **menu** - 导航栏菜单展示名称
+- **button** - 主题选择页的按钮文本
+- **gritter** - 主题选择页的提示文本
+- **no-theme** - 无主题页的文本
+- **introduction** - 主题介绍【如果没有配置，则不展示介绍】
 
 ### 多主题相关配置
 
