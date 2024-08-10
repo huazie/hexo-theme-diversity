@@ -1,4 +1,4 @@
-# <img src="source/images/diversity.png" width="80" height="80"> Diversity [![Build and Test](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml/badge.svg)](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml)
+# <img src="source/images/diversity.png" width="80" height="80"> Diversity [![build and deploy](https://img.shields.io/github/actions/workflow/status/huazie/huazie.github.io/pages.yml?branch=main&label=build%20and%20deploy&logo=github)](https://github.com/huazie/huazie.github.io/actions/workflows/pages.yml) [![Hexo version](https://img.shields.io/badge/hexo-%3E=5.3.0-blue?style=flat-square&logo=hexo)](https://hexo.io) [![license](https://img.shields.io/badge/license-MIT-orange)](https://github.com/huazie/hexo-theme-diversity/blob/main/LICENSE)
 A theme that supports free switching between multiple themes for [Hexo].
 
 ## Install
