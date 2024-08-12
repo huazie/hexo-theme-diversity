@@ -37,6 +37,11 @@ function showDefaultBlogPage() {
     url += theme;
 
     blogIframe.src = url;
+
+    blogIframe.addEventListener('load', function() {
+        // 去除loading效果
+        blogIframe.classList.remove('loading');
+    });
 }
 
 function getThemeServerPort(theme) {
