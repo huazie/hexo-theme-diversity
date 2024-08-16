@@ -16,7 +16,9 @@ const process = (name, ctx) => {
         const { source } = asset;
         const relativePath = source.substring(baseDir.length, source.length);
         // 剔除项目根目录source目录下的资源
-        return !relativePath.startsWith('source');
+        // 但保留项目根目录source目录下diversity目录中的资源
+        const sourceDir = ctx.config.source_dir;
+        return !relativePath.startsWith(sourceDir) || relativePath.startsWith(sourceDir + path_1.sep + ctx.config.theme);
     }).map((asset) => {
         const { source } = asset;
         let { path } = asset;
