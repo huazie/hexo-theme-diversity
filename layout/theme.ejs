@@ -43,6 +43,11 @@
                             if (!path) {
                                 path = '/images/default.png';
                             }
+                            const key = 'introduction.' + themeName;
+                            let introduction = __(key);
+                            if (introduction === key) {
+                                introduction = '';
+                            }
             %>
             <div class="img rotate-10-<%= i %> card">
                 <div class="card-back card-container" style="background-image: url(&quot;<%= theme.back_image%>&quot;);">
@@ -50,7 +55,7 @@
                         <h1><%= title %></h1>
                     </div>
                     <p class="middle text">
-                       <%= __('introduction.' + themeName) %>
+                       <%= introduction %>
                     </p>
                     <p class="bottom" theme="<%= themeName %>">
                         <button class="theme-default btn btn-primary"><%= __('button.theme-default') %></button>
