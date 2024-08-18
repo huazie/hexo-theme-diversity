@@ -144,3 +144,28 @@ _config.yml
 ```
 
 Within the root directory of your Hexo project, we can still add separate `_config.[theme].yml` files for different themes. For more information, please refer to the official documentation on [Configuration](https://hexo.io/zh-cn/docs/configuration).
+
+For different themes, the generation of category and tag index pages can be enabled in their respective configurations, as shown below:
+```yml
+category_generator:
+  enable_index_page: true
+  per_page: 10
+  order_by: -date
+```
+
+- **category_generator** - Category Generator Config
+  - **enable_index_page** - true 【enable category index page, usually /categories/index.html]
+  - **per_page** - Categories displayed per page
+  - **order_by** - Categories order. Order by descending date (new to old) by default.
+
+```yml
+tag_generator:
+  enable_index_page: true
+  per_page: 100
+  order_by: -date
+```
+
+- **tag_generator** - Tag Generator Config
+  - **enable_index_page** - true 【enable tag index page, usually /tags/index.html]
+  - **per_page** - Tags displayed per page
+  - **order_by** - Tags order. Order by descending date (new to old) by default.

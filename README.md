@@ -144,3 +144,28 @@ _config.yml
 ```
 
 在你的 **Hexo** 项目根目录下，我们依旧可以添加不同主题独立的 `_config.[theme].yml` 文件，更多了解请查看官方[《配置》](https://hexo.io/zh-cn/docs/configuration)
+
+针对不同主题，可在各自配置中启用分类和标签生成配置
+```yml
+category_generator:
+  enable_index_page: true
+  per_page: 10
+  order_by: -date
+```
+
+- **category_generator** - 分类生成配置
+  - **enable_index_page** - true 【启用分类首页生成, 通常是 /categories/index.html]
+  - **per_page** - 每页展示条数
+  - **order_by** - 默认按日期降序排列（新到旧）
+
+```yml
+tag_generator:
+  enable_index_page: true
+  per_page: 100
+  order_by: -date
+```
+
+- **tag_generator** - 标签生成配置
+  - **enable_index_page** - true 【启用标签首页生成, 通常是 /categories/index.html]
+  - **per_page** - 每页展示条数
+  - **order_by** - 默认按日期降序排列（新到旧）
