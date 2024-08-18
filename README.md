@@ -166,6 +166,6 @@ tag_generator:
 ```
 
 - **tag_generator** - 标签生成配置
-  - **enable_index_page** - true 【启用标签首页生成, 通常是 /categories/index.html]
+  - **enable_index_page** - true 【启用标签首页生成, 通常是 /tags/index.html]
   - **per_page** - 每页展示条数
   - **order_by** - 默认按日期降序排列（新到旧）
