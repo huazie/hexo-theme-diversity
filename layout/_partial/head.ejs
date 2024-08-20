@@ -43,6 +43,7 @@
         config.themes = JSON.parse('<%- JSON.stringify(theme.themes || []) %>');
         config.ports = JSON.parse('<%- JSON.stringify(theme.ports || []) %>');
         config.source = JSON.parse('<%- JSON.stringify(theme.source || []) %>');
+        config.page = JSON.parse('<%- JSON.stringify(theme.page || []) %>');
         config.menu = JSON.parse('<%- JSON.stringify(site.data.diversity_menu || []) %>');
         config.button = new Object();
         config.button.theme_default = '<%= __('button.theme-default') %>';

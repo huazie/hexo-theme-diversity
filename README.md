@@ -52,6 +52,9 @@ source:
   landscape: https://github.com/hexojs/hexo-theme-landscape
   phase: https://github.com/hexojs/hexo-theme-phase
   light: https://github.com/hexojs/hexo-theme-light
+
+page:
+  blog_scroll_height: 200
 ```
 
 - **title** - Diversity主题默认标题
@@ -62,6 +65,10 @@ source:
 - **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
   - 如果该图片路径未配置，默认取 `/images/default.png`
 - **source** - 主题项目来源【用于主题来源按钮点击跳转】
+- **page** - 页面配置
+  - **blog_scroll_height** - 博客页滚动高度【单位：px】
+    - 滚动页面高度大于等于配置高度，隐藏菜单导航栏
+    - 滚动页面高度小于配置高度，显示菜单导航栏
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 

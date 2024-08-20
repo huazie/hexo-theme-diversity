@@ -41,6 +41,25 @@ function showDefaultBlogPage() {
     blogIframe.addEventListener('load', function() {
         // 去除loading效果
         blogIframe.classList.remove('loading');
+        try {
+            // 注意：这块代码本地因为针对不同主题启动不同的http服务，主页面与iframe页面跨域了，无法正常运行
+            // 获取iframe的窗口对象
+            let iframeWindow = blogIframe.contentWindow || blogIframe.contentDocument.defaultView;
+            // 获取header标签
+            let navHeaderClassList = document.getElementById('header').classList;
+            // 添加iframe窗口的滚动事件
+            iframeWindow.addEventListener('scroll', function() {
+                let scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
+                if (scrollHeight >= config.page.blog_scroll_height) {
+                    // 隐藏菜单导航栏
+                    navHeaderClassList.add('hidden');
+                } else {
+                    // 显示菜单导航栏
+                    navHeaderClassList.remove('hidden');
+                }
+            });
+        } catch (error) {
+        }
     });
 }
 

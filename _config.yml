@@ -22,3 +22,10 @@ source:
   landscape: https://github.com/hexojs/hexo-theme-landscape
   phase: https://github.com/hexojs/hexo-theme-phase
   light: https://github.com/hexojs/hexo-theme-light
+
+# 页面配置
+page:
+  # 博客页滚动高度【单位：px】
+  # 滚动页面高度大于等于配置高度，隐藏菜单导航栏
+  # 滚动页面高度小于配置高度，显示菜单导航栏
+  blog_scroll_height: 200
