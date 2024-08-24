@@ -1,3 +1,9 @@
+duration = 0.5s
+card-top = 50px
+card-bottom = 25px
+card-left = 25px
+arrow-size = 50px
+
 .theme-wrap, .ring, .img
     position absolute
     width 100%
@@ -42,7 +48,7 @@
     height 100%
     position absolute
     backface-visibility hidden
-    transition transform 0.5s ease
+    transition transform duration ease
 
 .card .card-back
     opacity 0
@@ -50,19 +56,19 @@
 .card
     @media mq-normal
         &:hover .card-front
-            animation flip 0.5s forwards
+            animation flip duration forwards
       
         &:hover .card-back
-            animation flip 0.5s reverse forwards
+            animation flip duration reverse forwards
             opacity 1
 
 .card.active
     @media mq-mobile
         .card-front
-            animation flip 0.5s forwards
+            animation flip duration forwards
       
         .card-back
-            animation flip 0.5s reverse forwards
+            animation flip duration reverse forwards
             opacity 1
   
 @keyframes flip  
@@ -73,14 +79,14 @@
 
 .top
     position absolute
-    top 50px
+    top card-top
 
 .bottom
     position absolute
-    bottom 25px
+    bottom card-bottom
 
 .middle
-    margin 0 25px 0 25px
+    margin 0 card-left 0 card-left
 
 .text
     font-size 18px
@@ -112,8 +118,8 @@
     background-repeat no-repeat
     background-size contain
     z-index 1
-    width 50px
-    height 50px
+    width arrow-size
+    height arrow-size
 
 #theme-footer
     color rgba(255, 255, 255, 0.7)
