@@ -65,7 +65,7 @@ function showDefaultBlogPage() {
             });
 
             backToTop && backToTop.addEventListener('click', () => {
-                iframeWindow.anime({
+                window.anime({
                     targets  : iframeWindow && iframeWindow.document.scrollingElement,
                     duration : 500,
                     easing   : 'linear',
