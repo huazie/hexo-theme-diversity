@@ -80,7 +80,7 @@ back2top:
   - **enable** - 是否启用，可选值： true | false
   - **scroll_percent** - 返回顶部按钮中是否展示滚动百分比，可选值： true | false
   - **position** - 返回顶部按钮展示位置，可选值： left | right
-  - **color** - 鼠标悬浮或按钮激活时，返回顶部按钮的内容所展示的颜色
+  - **color** - 鼠标悬浮或用户触摸时，返回顶部按钮的内容所展示的颜色
   - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录

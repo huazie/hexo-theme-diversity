@@ -78,7 +78,7 @@ back2top:
   - **enable** - Whether to enable. Available values: true | false
   - **scroll_percent** - Scroll percent label in b2t button. Available values: true | false
   - **position** - B2t button position. Available values: left | right
-  - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is activated.
+  - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is touched.
   - **exclude** - Excluded themes do not display the b2t button.
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
