@@ -8,5 +8,10 @@
     "theme",
     "diversity"
   ],
-  "license": "MIT"
+  "author": "huazie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huazie/hexo-theme-diversity/issues"
+  },
+  "homepage": "https://blog.huazie.com"
 }
