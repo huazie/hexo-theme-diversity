@@ -34,9 +34,12 @@ page:
 back2top:
   # 是否启用，可选值： true | false
   enable: true
-  # 返回顶部按钮中是否展示滚动百分比，可选值： true | false
-  # Scroll percent label in b2t button.
-  scroll_percent: false
+  # 返回顶部按钮中是否启用展示滚动百分比，可选值： true | false
+  # Whether to enable displaying the scroll percent label in b2t button. Available values: true | false
+  enable_scroll_percent: false
+  # 展示返回顶部按钮的最少滚动百分比，建议值： 2 | 3 | 4 | 5
+  # Minimum scroll percentage to display the b2t button, recommended values: 2 | 3 | 4 | 5
+  scroll_percent: 5
   # 返回顶部按钮展示位置，可选值： left | right
   # B2t button position. Available values: left | right
   position: right

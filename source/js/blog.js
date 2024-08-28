@@ -59,7 +59,7 @@ function showDefaultBlogPage() {
                 // 当前滚动位置占总可滚动高度的百分比
                 const scrollPercent = contentHeight > 0 ? Math.min(100 * iframeWindow.scrollY / contentHeight, 100) : 0;
                 if (backToTop) {
-                    backToTop.classList.toggle('back-to-top-on', Math.round(scrollPercent) >= 5);
+                    backToTop.classList.toggle('back-to-top-on', Math.round(scrollPercent) >= config.back2top.scroll_percent);
                     backToTop.querySelector('span').innerText = Math.round(scrollPercent) + '%';
                 }
             });

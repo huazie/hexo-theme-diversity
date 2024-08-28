@@ -56,7 +56,8 @@ page:
 
 back2top:
   enable: true
-  scroll_percent: true
+  enable_scroll_percent: false
+  scroll_percent: 5
   position: right
   color: "#fc6423"
   exclude: [next]
@@ -76,7 +77,8 @@ back2top:
     - Show Menu Navigation Bar when Scroll Height is Less Than Configured Height
 - **back2top** - B2t Configuration
   - **enable** - Whether to enable. Available values: true | false
-  - **scroll_percent** - Scroll percent label in b2t button. Available values: true | false
+  - **enable_scroll_percent** - Whether to enable displaying the scroll percent label in b2t button. Available values: true | false
+  - **scroll_percent** - Minimum scroll percentage to display the b2t button, recommended values: 2 | 3 | 4 | 5
   - **position** - B2t button position. Available values: left | right
   - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is touched.
   - **exclude** - Excluded themes do not display the b2t button.
