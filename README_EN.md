@@ -53,6 +53,13 @@ source:
 
 page:
   blog_scroll_height: 200
+
+back2top:
+  enable: true
+  scroll_percent: true
+  position: right
+  color: "#fc6423"
+  exclude: [next]
 ```
 
 - **title** - Default Title of Diversity Theme
@@ -67,6 +74,12 @@ page:
   - **blog_scroll_height** - Scroll Height for Blog Page (Unit: px)
     - Hide Menu Navigation Bar when Scroll Height is Greater Than or Equal to Configured Height
     - Show Menu Navigation Bar when Scroll Height is Less Than Configured Height
+- **back2top** - B2t Configuration
+  - **enable** - Whether to enable. Available values: true | false
+  - **scroll_percent** - Scroll percent label in b2t button. Available values: true | false
+  - **position** - B2t button position. Available values: left | right
+  - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is activated.
+  - **exclude** - Excluded themes do not display the b2t button.
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 
@@ -95,6 +108,7 @@ button:
   cancel-defalut: CANCEL
   theme-redirect: REDIRECT
   theme-source: SOURCE
+  back-to-top: BACK TO TOP
 
 gritter:
   title-theme: Theme [{0}]
@@ -112,10 +126,10 @@ introduction:
   light: A simple theme for Hexo.
 ```
 
-- **menu** - The display name for the navigation bar menu
-- **button** - The button text on the theme selection page
-- **gritter** - The prompt text on the theme selection page
-- **no-theme** - The text for the no theme page
+- **menu** - Display name for the navigation bar menu
+- **button** - Button Text
+- **gritter** - Prompt text on the theme selection page
+- **no-theme** - Text for the no theme page
 - **introduction** - Theme introduction [if not configured, then no introduction is displayed]
 
 ### Other Theme Config

@@ -1,7 +1,7 @@
-(function($){
+(function(){
 	// 展示默认的主题
 	showDefaultBlogPage();
-})(jQuery);
+})();
 
 function showDefaultBlogPage() {
     const theme = Diversity.data.get('theme');
@@ -44,23 +44,45 @@ function showDefaultBlogPage() {
         try {
             // 注意：这块代码本地因为针对不同主题启动不同的http服务，主页面与iframe页面跨域了，无法正常运行
             // 获取iframe的窗口对象
-            let iframeWindow = blogIframe.contentWindow || blogIframe.contentDocument.defaultView;
+            const iframeWindow = blogIframe.contentWindow || blogIframe.contentDocument.defaultView;
             // 获取header标签
-            let navHeaderClassList = document.getElementById('header').classList;
+            const navHeaderClassList = document.getElementById('header').classList;
+            // 获取返回顶部按钮
+            const backToTop = document.querySelector('.back-to-top');
             // 添加iframe窗口的滚动事件
-            iframeWindow.addEventListener('scroll', function() {
-                let scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
-                if (scrollHeight >= config.page.blog_scroll_height) {
-                    // 隐藏菜单导航栏
-                    navHeaderClassList.add('hidden');
-                } else {
-                    // 显示菜单导航栏
-                    navHeaderClassList.remove('hidden');
+            iframeWindow && iframeWindow.addEventListener('scroll', function() {
+                const scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
+                // 隐藏或显示菜单导航栏
+                navHeaderClassList.toggle('hidden', scrollHeight >= config.page.blog_scroll_height);
+                // 获取页面可以滚动的高度
+                const contentHeight = iframeWindow.document.body.scrollHeight - iframeWindow.innerHeight;
+                // 当前滚动位置占总可滚动高度的百分比
+                const scrollPercent = contentHeight > 0 ? Math.min(100 * iframeWindow.scrollY / contentHeight, 100) : 0;
+                if (backToTop) {
+                    backToTop.classList.toggle('back-to-top-on', Math.round(scrollPercent) >= 5);
+                    backToTop.querySelector('span').innerText = Math.round(scrollPercent) + '%';
                 }
+            });
+
+            backToTop && backToTop.addEventListener('click', () => {
+                iframeWindow.anime({
+                    targets  : iframeWindow && iframeWindow.document.scrollingElement,
+                    duration : 500,
+                    easing   : 'linear',
+                    scrollTop: 0
+                });
             });
         } catch (error) {
         }
     });
+
+    // 获取返回顶部按钮
+    const backToTop = document.querySelector('.back-to-top');
+    // 被排除主题，配置中的主题不展示返回顶部按钮
+    const excludeArr = config.back2top.exclude;
+    if (excludeArr && excludeArr.includes(theme)) {
+        backToTop.parentNode.removeChild(backToTop);
+    }
 }
 
 function getThemeServerPort(theme) {

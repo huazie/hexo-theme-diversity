@@ -7,6 +7,7 @@ button:
   cancel-defalut: CANCEL
   theme-redirect: REDIRECT
   theme-source: SOURCE
+  back-to-top: BACK TO TOP
 
 gritter:
   title-theme: Theme [{0}]

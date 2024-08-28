@@ -1,0 +1,50 @@
+if (hexo-config('back2top.enable')) {
+    $alignment = hexo-config('back2top.position');
+    $color = convert(hexo-config('back2top.color'));
+    .back-to-top {
+        font-size: 12px;
+        span {
+            if ($alignment == 'left') {
+                margin: 0 6px 0 2px;
+            } else {
+                margin: 0 2px 0 6px;
+            }
+            if (not hexo-config('back2top.scroll_percent')) {
+                display: none;
+            }
+        }
+
+        align-items: center;
+        bottom: -100px;
+        color: #fff;
+        display: flex;
+        height: 26px;
+        transition: 0.2s ease-in-out;
+        transition-property: bottom;
+        background: #222;
+        cursor: pointer;
+        opacity: 0.6;
+        position: fixed;
+        z-index: 30;
+        {$alignment}: 30px;
+
+        &:hover {
+            opacity: 0.8;
+            color: $color;
+        }
+
+        &:active {
+            opacity: 0.8;
+            color: $color;
+        }
+
+        &.back-to-top-on {
+            bottom: 30px;
+        }
+
+        @media mq-mobile {
+            opacity: 0.8;
+            {$alignment}: 20px;
+        }
+    }
+}
