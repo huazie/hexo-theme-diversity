@@ -55,6 +55,13 @@ source:
 
 page:
   blog_scroll_height: 200
+
+back2top:
+  enable: true
+  scroll_percent: true
+  position: right
+  color: "#fc6423"
+  exclude: [next]
 ```
 
 - **title** - Diversity主题默认标题
@@ -69,6 +76,12 @@ page:
   - **blog_scroll_height** - 博客页滚动高度【单位：px】
     - 滚动页面高度大于等于配置高度，隐藏菜单导航栏
     - 滚动页面高度小于配置高度，显示菜单导航栏
+- **back2top** - 返回顶部按钮配置
+  - **enable** - 是否启用，可选值： true | false
+  - **scroll_percent** - 返回顶部按钮中是否展示滚动百分比，可选值： true | false
+  - **position** - 返回顶部按钮展示位置，可选值： left | right
+  - **color** - 鼠标悬浮或按钮激活时，返回顶部按钮的内容所展示的颜色
+  - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
@@ -97,6 +110,7 @@ button:
   cancel-defalut: 取消默认
   theme-redirect: 主题直达
   theme-source: 主题来源
+  back-to-top: 返回顶部
 
 gritter:
   title-theme: 主题【{0}】
@@ -115,7 +129,7 @@ introduction:
 ```
 
 - **menu** - 导航栏菜单展示名称
-- **button** - 主题选择页的按钮文本
+- **button** - 按钮文本
 - **gritter** - 主题选择页的提示文本
 - **no-theme** - 无主题页的文本
 - **introduction** - 主题介绍【如果没有配置，则不展示介绍】

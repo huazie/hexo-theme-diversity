@@ -29,3 +29,20 @@ page:
   # 滚动页面高度大于等于配置高度，隐藏菜单导航栏
   # 滚动页面高度小于配置高度，显示菜单导航栏
   blog_scroll_height: 200
+
+# 返回顶部按钮配置
+back2top:
+  # 是否启用，可选值： true | false
+  enable: true
+  # 返回顶部按钮中是否展示滚动百分比，可选值： true | false
+  # Scroll percent label in b2t button.
+  scroll_percent: false
+  # 返回顶部按钮展示位置，可选值： left | right
+  # B2t button position. Available values: left | right
+  position: right
+  # 鼠标悬浮或按钮激活时，返回顶部按钮的内容所展示的颜色
+  # The color displayed when the mouse hovers over b2t button or the b2t button is activated.
+  color: "#fc6423"
+  # 被排除主题不展示返回顶部按钮
+  # Excluded themes do not display the b2t button
+  exclude: [next]

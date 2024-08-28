@@ -1,2 +1,13 @@
 <iframe id="blog" src="" frameborder="0"></iframe>
+<% if (theme.back2top.enable) { %>
+<div class="back-to-top" role="button" aria-label="<%= __('button.back-to-top') %>">
+	<% if (theme.back2top.position == 'right') {%>
+	<span>0%</span>
+	<% } %>
+    <i class="fa fa-arrow-up fa-fw pull-left pull-right"></i>
+    <% if (theme.back2top.position == 'left') {%>
+	<span>0%</span>
+	<% } %>
+</div>
+<% } %>
 <%- js('js/blog') %>
