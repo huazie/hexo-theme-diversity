@@ -56,7 +56,7 @@ page:
 
 back2top:
   enable: true
-  enable_scroll_percent: true
+  enable_scroll_percent: false
   scroll_percent: 5
   position: right
   color: "#fc6423"
