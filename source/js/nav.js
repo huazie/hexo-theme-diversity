@@ -30,7 +30,9 @@
     function navActive(thiz) {
         const a = thiz.querySelector('a');
         if (!a) return; // 如果没有找到 a 元素，则直接返回
-        const href = a.getAttribute('href');
+        let href = a.getAttribute('href');
+        // 如果菜单url没有配置“/” 结尾，则添加。
+        if (!href.endsWith("/")) href += "/";
         if (window.location.href.endsWith(href) || (window.location.pathname === '/' 
             && (href === '/' || href === config.menu.blog))) {
             // 添加激活显示的样式
