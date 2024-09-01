@@ -31,7 +31,7 @@ var Diversity = {
 };
 
 /**
- * 数据的增删改查相关操作
+ * Diversity数据操作
  *
  * @namespace Huazie
  * @class data
@@ -101,9 +101,48 @@ Diversity.data = {
             localStorage.removeItem(name)
         else
             Cookies.remove(name);
+    },
+    /**  
+     * 转换带有占位符的字符串。 替换前的字符串包含如{0}、{1}等占位符，
+     * 这些占位符将被相应的 placeholders 数组中的值替换。  
+     *  
+     * @param {string} before - 替换前的原始字符串，包含占位符
+     * @param {...} placeholders - 一个可变数量的参数，用于替换字符串中的占位符
+     * @returns {string} - 替换占位符后的新字符串
+     */
+    convert: function(before, ...placeholders) {
+        // 使用正则表达式匹配所有形如{0}、{1}等的占位符；
+        // 'g'标志表示全局匹配，即匹配字符串中所有符合条件的占位符；
+        // \\{ 和 \\} 用于匹配字面量的花括号，因为花括号在正则表达式中有特殊含义；
+        // ([0-${placeholders.length - 1}]) 是一个捕获组，用于捕获占位符中的数字（即索引）。
+        // 使用正则表达式匹配所有占位符，并通过函数动态替换它们  
+        return before.replace(new RegExp(`\\{([0-${placeholders.length - 1}])\\}`, 'g'), (match, index) => {
+            // 在这里，match参数是匹配的整个占位符（如"{0}"），但因为我们使用了捕获组，  
+            // 所以index参数实际上是我们捕获的数字字符串（如"0"）；
+            // 我们将这个数字字符串转换为整数，以便用作 placeholders 数组的索引；  
+            // 然后返回 placeholders 数组中对应索引的元素作为替换值；
+            // 将index（字符串）转换为整数，然后作为索引访问placeholders数组。
+            return placeholders[parseInt(index, 10)];  
+        });  
+    },
+    /**  
+     * 获取当前主题名关联的本地端口port  
+     *  
+     * @param {string} theme - 主题名
+     * @returns {string} - 替换占位符后的新字符串
+     */
+    getThemeServerPort: function(theme) {
+        let index = config.themes.indexOf(theme);
+        const ports = config.ports;
+        let port = 4001;
+        if (ports && ports[index]) {
+            port = ports[index];
+        } else {
+            port += index;
+        }
+        return port;
     }
 }
-
 
 /**
  * 浏览器，URL等相关操作
