@@ -24,7 +24,7 @@ function showDefaultBlogPage() {
 
     // 本地环境 localhost 或者 127.0.0.1 或者 同个局域网下带有端口
     if (port) {
-        url = href.replace(port, getThemeServerPort(theme));
+        url = href.replace(port, Diversity.data.getThemeServerPort(theme));
     } else { // 静态页面部署环境
         url = href;
     }
@@ -83,16 +83,4 @@ function showDefaultBlogPage() {
     if (excludeArr && excludeArr.includes(theme)) {
         backToTop.parentNode.removeChild(backToTop);
     }
-}
-
-function getThemeServerPort(theme) {
-    let index = config.themes.indexOf(theme);
-    const ports = config.ports;
-    let port = 4001;
-    if (ports && ports[index]) {
-        port = ports[index];
-    } else {
-        port += index;
-    }
-    return port;
 }
