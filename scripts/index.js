@@ -24,8 +24,7 @@ if (!themeConfig || !themeConfig.themes) {
     console.log('##### The "themes" property must to be configured.');
     return;
 }
-// 获取配置的多主题服务器端口
-const ports = themeConfig.ports;
+themeConfig.cmd = cmd;
 // 获取配置的多主题列表
 const themes = themeConfig.themes;
 if (!(Array.isArray(themes))) {
@@ -38,6 +37,7 @@ if (!(Array.isArray(themes))) {
 let index = 0;
 // 循环处理配置的多主题列表
 themes.forEach(function(theme) {
+    themeConfig.index = index;
     console.log('##### theme = ' + theme);
     if (Util.isMatchCmd(cmd)) {
         const {args} = hexo.env;
@@ -49,8 +49,7 @@ themes.forEach(function(theme) {
         }
         args.config = args.output + path_1.sep + fileName;
         const hexo1 = new Hexo(cwd, args);
-        if (Util.isServerCmd(cmd))
-            configServer(hexo1, ports, index);
+        require('./config')(hexo1, themeConfig);
         hexo1.init()
             .then(() => require('./helper')(hexo1))
             .then(() => require('./generator')(hexo1, themeName))
@@ -61,39 +60,3 @@ themes.forEach(function(theme) {
     // 下一个主题
     index++;
 });
-
-/**
- * 添加Hexo服务器配置信息
- * 
- * @param hexo Hexo实例
- * @param ports 多主题服务器端口列表
- * @param index 多主题目录配置的数组索引
- */
-function configServer(hexo, ports, index) {
-    const port = configPort(ports, index);
-    // 添加服务器配置信息
-    hexo.config.server = Object.assign({
-        port: port,
-        log: false,
-        // `undefined` uses Node's default (try `::` with fallback to `0.0.0.0`)
-        ip: undefined,
-        compress: false,
-        header: true
-    }, hexo.config.server);
-}
-
-/**
- * 配置服务器端口
- * 
- * @param ports 多主题服务器端口列表
- * @param index 多主题目录配置的数组索引
- */
-function configPort(ports, index) {
-    let port = 4001;
-    if (ports && ports[index]) {
-        port = ports[index];
-    } else {
-        port+= index;
-    }
-    return port;
-}
