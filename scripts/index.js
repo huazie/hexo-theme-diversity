@@ -19,19 +19,19 @@ const { alias } = hexo.extend.console;
 const cmd = alias[hexo.env.cmd];
 // 当前项目根目录
 const cwd = process.cwd();
-console.log('##### cmd = ' + cmd);
+hexo.log.info('Cmd =', cmd);
 const themeConfig = hexo.config.theme_config;
 if (!themeConfig || !themeConfig.themes) {
-    console.log('##### Please add the [_config.diversity.yml] file in [' + cwd + '].');
-    console.log('##### The "themes" property must to be configured.');
+    hexo.log.error('Please add the [_config.diversity.yml] file in [' + cwd + '].');
+    hexo.log.error('The "themes" property must to be configured.');
     return;
 }
 themeConfig.cmd = cmd;
 // 获取配置的多主题列表
 const themes = themeConfig.themes;
 if (!(Array.isArray(themes))) {
-    console.log('##### Please check the [_config.diversity.yml] file.');
-    console.log('##### The "themes" property must be an Array.');
+    hexo.log.error('Please check the [_config.diversity.yml] file.');
+    hexo.log.error('The "themes" property must be an Array.');
     return;
 }
 
@@ -40,13 +40,13 @@ let index = 0;
 // 循环处理配置的多主题列表
 themes.forEach(function(theme) {
     themeConfig.index = index;
-    console.log('##### theme = ' + theme);
+    hexo.log.info('Theme', (index + 1), '=', theme);
     if (Util.isMatchCmd(cmd)) {
         const {args} = hexo.env;
         const fileName = '_config.yml';
         args.output = cwd + path_1.sep + 'config' + path_1.sep + theme;
         if (!Util.isExist(args.output, fileName)) {
-            console.log('##### Please add the [' + fileName + '] file in [' + args.output + '].');
+            hexo.log.error('Please add the [' + fileName + '] file in [' + args.output + '].');
             return;
         }
         args.config = args.output + path_1.sep + fileName;

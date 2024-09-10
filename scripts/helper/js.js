@@ -3,9 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const hexo_util_1 = require("hexo-util");
+const hexo_log_1 = __importDefault(require("hexo-log"));
 const moize_1 = __importDefault(require("moize"));
 let relative_link = true;
 let hexo1;
+let LOG;
 
 /**
  * 内部js辅助函数实现
@@ -21,15 +23,16 @@ function innerJsHelper(theme, ...args) {
                 path += '.js';
             }
             result += `<script src="${hexo_util_1.url_for.call(hexo1, path)}"></script>\n`;
-            console.log('#####[' + theme + '] ' + path + ' ' + hexo_util_1.url_for.call(hexo1, path));
+            LOG.info('[' + theme + '] ' + path + ' ' + hexo_util_1.url_for.call(hexo1, path));
         }
         else {
             // Custom attributes
-            item.src = hexo_util_1.url_for.call(hexo1, item.src);
-            if (!item.src.endsWith('.js'))
-                item.src += '.js';
+            let src = item.src;
+            if (!src.endsWith('.js'))
+                src += '.js';
+            item.src = hexo_util_1.url_for.call(hexo1, src);
             result += (0, hexo_util_1.htmlTag)('script', Object.assign({}, item), '') + '\n';
-            console.log('#####[' + theme + '] ' + item.src);
+            LOG.info('[' + theme + '] ' + src + ' ' + item.src);
         }
     });
     return result;
@@ -47,6 +50,7 @@ const memoizedInnerJsHelper = (0, moize_1.default)(innerJsHelper, {
 function jsHelper(...args) {
     relative_link = this.config.relative_link;
     hexo1 = this;
+    LOG = (0, hexo_log_1.default)(this.env);
     return memoizedInnerJsHelper(this.config.theme, args);
 }
 module.exports = jsHelper;
