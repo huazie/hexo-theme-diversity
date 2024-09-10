@@ -6,10 +6,12 @@ const Util = require('./lib/util');
 // Diversity的主题名
 const themeName = hexo.config.theme;
 // 在生成器解析前执行
-hexo.extend.filter.register('before_generate', () => require('./generator')(hexo, themeName), 100);
-
-// 添加辅助函数（Helper）
-require('./helper/helper')(hexo);
+hexo.extend.filter.register('before_generate', () => {
+    // 配置生成器
+    require('./generator')(hexo, themeName);
+    // 添加辅助函数（Helper）
+    require('./helper')(hexo, themeName);
+}, 100);
 
 // 获取控制台命令的别名
 const { alias } = hexo.extend.console;
@@ -51,7 +53,7 @@ themes.forEach(function(theme) {
         const hexo1 = new Hexo(cwd, args);
         require('./config')(hexo1, themeConfig);
         hexo1.init()
-            .then(() => require('./helper')(hexo1))
+            .then(() => require('./helper')(hexo1, themeName))
             .then(() => require('./generator')(hexo1, themeName))
             .then(() => hexo1.call(cmd, args))
             .then(() => hexo1.exit())
