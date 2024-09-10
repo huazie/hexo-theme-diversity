@@ -1,4 +1,5 @@
 ## PR Checklist
+<!-- Remove items that do not apply. For completed items, change [ ] to [x] to select (将 [ ] 换成 [x] 来选择) -->
 
 **Please read and check followings before submitting a PR.**
 
