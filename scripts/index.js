@@ -13,6 +13,12 @@ hexo.extend.filter.register('before_generate', () => {
     require('./helper')(hexo, themeName);
 }, 100);
 
+hexo.on('ready', () => {
+    if (!/^(g|s|v)/.test(hexo.env.cmd)) return;
+    const { version } = require('../package.json');
+    hexo.log.info(`Diversity version ${version}`);
+});
+
 // 获取控制台命令的别名
 const { alias } = hexo.extend.console;
 // 获取hexo执行命令
@@ -40,8 +46,8 @@ let index = 0;
 // 循环处理配置的多主题列表
 themes.forEach(function(theme) {
     themeConfig.index = index;
-    hexo.log.info('Theme', (index + 1), '=', theme);
     if (Util.isMatchCmd(cmd)) {
+        hexo.log.info('Theme', (index + 1), '=', theme);
         const {args} = hexo.env;
         const fileName = '_config.yml';
         args.output = cwd + path_1.sep + 'config' + path_1.sep + theme;
