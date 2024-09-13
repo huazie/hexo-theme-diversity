@@ -4,6 +4,8 @@ const pagination = require('hexo-pagination');
 
 module.exports = function(locals) {
     const config = this.config;
+    // 标签首页布局。 如果不配置，则默认为 tag-index
+    const tLayout = config.category_generator.layout || 'tag-index';
     const perPage = config.tag_generator.per_page;
     const paginationDir = config.pagination_dir || 'page';
     const orderBy = config.tag_generator.order_by || '-date';
@@ -49,7 +51,7 @@ module.exports = function(locals) {
 
         const dataAll = pagination(tagDir, allTagPosts, {
             perPage,
-            layout: ['tag-index', 'tag', 'archive', 'index'],
+            layout: [tLayout, 'tag', 'archive', 'index'],
             format: paginationDir + '/%d/',
             data: {
                 tag: ''
