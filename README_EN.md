@@ -72,14 +72,14 @@ back2top:
   - If the image path is not configured, it will default to `/images/default.png`.
 - **source** - Theme Project Source [For button navigation to the source of the theme]
 - **page** - Page Configuration
-  - **blog_scroll_height** - Scroll Height for Blog Page (Unit: px)
+  - **blog_scroll_height** - Scroll Height for Blog Page (Unit: `px`)
     - Hide Menu Navigation Bar when Scroll Height is Greater Than or Equal to Configured Height
     - Show Menu Navigation Bar when Scroll Height is Less Than Configured Height
 - **back2top** - B2t Configuration
-  - **enable** - Whether to enable. Available values: true | false
-  - **enable_scroll_percent** - Whether to enable displaying the scroll percent label in b2t button. Available values: true | false
+  - **enable** - Whether to enable. Available values: `true` | `false`
+  - **enable_scroll_percent** - Whether to enable displaying the scroll percent label in b2t button. Available values: `true` | `false`
   - **scroll_percent** - Minimum scroll percentage to display the b2t button, recommended values: 2 | 3 | 4 | 5
-  - **position** - B2t button position. Available values: left | right
+  - **position** - B2t button position. Available values: `left` | `right`
   - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is touched.
   - **exclude** - Excluded themes do not display the b2t button.
 
@@ -172,23 +172,27 @@ For different themes, the generation of category and tag index pages can be enab
 ```yml
 category_generator:
   enable_index_page: true
+  layout: category-index  
   per_page: 10
   order_by: -date
 ```
 
 - **category_generator** - Category Generator Config
-  - **enable_index_page** - true 【enable category index page, usually /categories/index.html]
+  - **enable_index_page** - true 【enable category index page, usually `/categories/index.html`]
+  - **layout** - Category index page layout. If not configured, the default is `category-index`
   - **per_page** - Categories displayed per page
-  - **order_by** - Categories order. Order by descending date (new to old) by default.
+  - **order_by** - Categories order. Order by descending date (new to old) by default
 
 ```yml
 tag_generator:
   enable_index_page: true
+  layout: tag-index
   per_page: 100
   order_by: -date
 ```
 
 - **tag_generator** - Tag Generator Config
-  - **enable_index_page** - true 【enable tag index page, usually /tags/index.html]
+  - **enable_index_page** - true 【enable tag index page, usually `/tags/index.html`]
+  - **layout** - Tag index page layout. If not configured, the default is `tag-index`
   - **per_page** - Tags displayed per page
-  - **order_by** - Tags order. Order by descending date (new to old) by default.
+  - **order_by** - Tags order. Order by descending date (new to old) by default

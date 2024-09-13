@@ -74,14 +74,14 @@ back2top:
   - 如果该图片路径未配置，默认取 `/images/default.png`
 - **source** - 主题项目来源【用于主题来源按钮点击跳转】
 - **page** - 页面配置
-  - **blog_scroll_height** - 博客页滚动高度【单位：px】
+  - **blog_scroll_height** - 博客页滚动高度【单位：`px`】
     - 滚动页面高度大于等于配置高度，隐藏菜单导航栏
     - 滚动页面高度小于配置高度，显示菜单导航栏
 - **back2top** - 返回顶部按钮配置
-  - **enable** - 是否启用，可选值： true | false
-  - **enable_scroll_percent** - 返回顶部按钮中是否启用展示滚动百分比，可选值： true | false
+  - **enable** - 是否启用，可选值： `true` | `false`
+  - **enable_scroll_percent** - 返回顶部按钮中是否启用展示滚动百分比，可选值： `true` | `false`
   - **scroll_percent** - 展示返回顶部按钮的最少滚动百分比，建议值： 2 | 3 | 4 | 5
-  - **position** - 返回顶部按钮展示位置，可选值： left | right
+  - **position** - 返回顶部按钮展示位置，可选值： `left` | `right`
   - **color** - 鼠标悬浮或用户触摸时，返回顶部按钮的内容所展示的颜色
   - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
 
@@ -172,23 +172,27 @@ _config.yml
 ```yml
 category_generator:
   enable_index_page: true
+  layout: category-index
   per_page: 10
   order_by: -date
 ```
 
 - **category_generator** - 分类生成配置
-  - **enable_index_page** - true 【启用分类首页生成, 通常是 /categories/index.html]
+  - **enable_index_page** - `true` 【启用分类首页生成, 通常是 `/categories/index.html`]
+  - **layout** - 分类首页布局。 如果不配置，则默认为 `category-index`
   - **per_page** - 每页展示条数
   - **order_by** - 默认按日期降序排列（新到旧）
 
 ```yml
 tag_generator:
   enable_index_page: true
+  layout: tag-index
   per_page: 100
   order_by: -date
 ```
 
 - **tag_generator** - 标签生成配置
-  - **enable_index_page** - true 【启用标签首页生成, 通常是 /tags/index.html]
+  - **enable_index_page** - `true` 【启用标签首页生成, 通常是 `/tags/index.html`]
+  - **layout** - 标签首页布局。 如果不配置，则默认为 `tag-index`
   - **per_page** - 每页展示条数
   - **order_by** - 默认按日期降序排列（新到旧）

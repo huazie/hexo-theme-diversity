@@ -4,6 +4,8 @@ const pagination = require('hexo-pagination');
 
 module.exports = function(locals) {
     const config = this.config;
+    // 分类首页布局。 如果不配置，则默认为 category-index
+    const cLayout = config.category_generator.layout || 'category-index';
     const perPage = config.category_generator.per_page;
     const paginationDir = config.pagination_dir || 'page';
     const orderBy = config.category_generator.order_by || '-date';
@@ -47,7 +49,7 @@ module.exports = function(locals) {
         }
         const dataAll = pagination(categoryDir, allCategoryPosts, {
             perPage,
-            layout: ['category-index', 'category', 'archive', 'index'],
+            layout: [cLayout, 'category', 'archive', 'index'],
             format: paginationDir + '/%d/',
             data: {
                 category: ''
