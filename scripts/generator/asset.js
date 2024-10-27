@@ -7,6 +7,9 @@ const bluebird_1 = __importDefault(require("bluebird"));
 const path_1 = require("path");
 const picocolors_1 = require("picocolors");
 const process = (name, ctx) => {
+    const theme = ctx.config.theme;
+    // 首要主题【即Diversity主题】
+    const primary_theme = ctx.config.primary_theme;
     return bluebird_1.default.filter(ctx.model(name).toArray(), (asset) => {
         if (!(0, hexo_fs_1.exists)(asset.source)) {
             return asset.remove();
@@ -15,10 +18,18 @@ const process = (name, ctx) => {
         const baseDir = ctx.base_dir;
         const { source } = asset;
         const relativePath = source.substring(baseDir.length, source.length);
-        // 剔除项目根目录source目录下的资源
-        // 但保留项目根目录source目录下diversity目录中的资源
         const sourceDir = ctx.config.source_dir;
-        return !relativePath.startsWith(sourceDir) || relativePath.startsWith(path_1.join(sourceDir, ctx.config.theme));
+        const diversityDir = path_1.join(sourceDir, primary_theme);
+        if (theme === primary_theme) {
+            // Diversity主题
+            // 剔除项目根目录source目录下的资源
+            // 但保留项目根目录source目录下diversity目录中的资源
+            return !relativePath.startsWith(sourceDir) || relativePath.startsWith(diversityDir);
+        } else {
+            // 其他主题
+            // 只剔除项目根目录source目录下diversity目录中的资源
+            return !relativePath.startsWith(diversityDir);       
+        }
     }).map((asset) => {
         const { source } = asset;
         let { path } = asset;
@@ -45,8 +56,7 @@ const process = (name, ctx) => {
 function assetGenerator() {
     return bluebird_1.default.all([
         process('Asset', this)
-        // 去除 PostAsset 的资源数据生成
-        // ,process('PostAsset', this)
+        ,process('PostAsset', this)
     ]).then(data => [].concat(...data));
 }
 module.exports = assetGenerator;
