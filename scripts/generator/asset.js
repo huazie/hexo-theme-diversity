@@ -27,9 +27,8 @@ const process = (name, ctx) => {
             return !relativePath.startsWith(sourceDir) || relativePath.startsWith(diversityDir);
         } else {
             // 其他主题
-            // 保留项目根目录source目录下的资源
-            // 但剔除项目根目录source目录下diversity目录中的资源
-            return relativePath.startsWith(sourceDir) && !relativePath.startsWith(diversityDir);       
+            // 只剔除项目根目录source目录下diversity目录中的资源
+            return !relativePath.startsWith(diversityDir);       
         }
     }).map((asset) => {
         const { source } = asset;
