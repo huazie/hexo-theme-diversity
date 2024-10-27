@@ -5,7 +5,6 @@ module.exports = (ctx, theme) => {
     ctx.config.primary_theme = theme;
     // Diversity主题生成器特殊处理
     if (ctx.config.theme === theme) {
-        generator.register('asset', require('./asset'));
         generator.register('post', require('./empty'));
         generator.register('category', require('./empty'));
         generator.register('archive', require('./empty'));
@@ -19,4 +18,5 @@ module.exports = (ctx, theme) => {
         generator.register('tag', require('./tag'));
     }
     generator.register('page', require('./page'));
+    generator.register('asset', require('./asset'));
 };
