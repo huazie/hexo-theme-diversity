@@ -1,15 +1,15 @@
 <div class="ring" style="cursor: grab; transform: rotateY(180deg);">
     <%
         // 如果实际配置的主题较少，保证这些主题展现在样式布局的中间部分
-        let middle = ROTATE_NUM / 2;
+        let middle = rotateNum / 2;
         let themeMiddle = themeNum % 2 ? Math.floor(themeNum / 2) : themeNum / 2 - 1;
 
-        let otherNum = ROTATE_NUM - themeNum;
+        let otherNum = rotateNum - themeNum;
         let numbers = [];
-        for (let i = 1; i <= ROTATE_NUM; i++) {
+        for (let i = 1; i <= rotateNum; i++) {
             numbers.push(i);
         }
-        // 1 到 ROTATE_NUM 内取 otherNum 个不重复的随机数
+        // 1 到 rotateNum 内取 otherNum 个不重复的随机数
         let result = [];
         for (let i = 0; i < otherNum; i++) {
             let randomIndex = Math.floor(Math.random() * numbers.length);
@@ -18,14 +18,14 @@
         }
         let otherCount = 0;
 
-        for (let i = 0; i < ROTATE_NUM; i++) {
+        for (let i = 0; i < rotateNum; i++) {
             let index = i - middle + themeMiddle;
             // 根据样式布局的索引，来匹配配置的多主题列表中的实际索引
             // 如果符合实际索引要求，则添加对应主题布局内容
             if (index >= 0 && index < themeNum) {
                 let themeName = theme.themes[index];
                 let title = themeName.charAt(0).toUpperCase() + themeName.slice(1);
-                let path = themeConfig[themeName];
+                let path = themeImagePath[themeName];
                 if (!path) {
                     path = '/images/default.png';
                 }

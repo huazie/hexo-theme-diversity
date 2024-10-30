@@ -4,9 +4,9 @@
     <div class="theme-inner">
         <%
             // 主题图片路径配置
-            let themeConfig = {};
+            let themeImagePath = {};
             for (let i = 0; i < theme.themes.length; i++) {
-                themeConfig[theme.themes[i]] = theme.path[theme.themes[i]];
+                themeImagePath[theme.themes[i]] = theme.path[theme.themes[i]];
             }
             // 配置的主题个数
             const themeNum = theme.themes.length;
@@ -14,7 +14,7 @@
         %>
         <!-- 配置的主题个数小于等于10，采用10个图片的曲屏环形旋转样式布局-->
         <% if (themeNum <= ROTATE_NUM) { %>
-        <%- partial('_partial/rotate_theme', {themeConfig: themeConfig, themeNum: themeNum, ROTATE_NUM: ROTATE_NUM}) %>
+        <%- partial('_partial/rotate_theme', {themeImagePath: themeImagePath, themeNum: themeNum, rotateNum: ROTATE_NUM}) %>
         <% } %>
     </div>
     <div class="arrow-wrap">
