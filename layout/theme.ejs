@@ -1,5 +1,3 @@
-<%- js('js/jquery.gritter-1.7.4.min') %>
-<%- js('js/gsap-3.6.1.min') %>
 <div class="theme-wrap">
     <div class="theme-inner">
         <%
@@ -15,6 +13,8 @@
         <!-- 配置的主题个数小于等于10，采用10个图片的曲屏环形旋转样式布局-->
         <% if (themeNum <= ROTATE_NUM) { %>
         <%- partial('_partial/rotate_theme', {themeImagePath: themeImagePath, themeNum: themeNum, rotateNum: ROTATE_NUM}) %>
+        <%- js('js/gsap-3.6.1.min') %>
+        <%- js('js/theme-rotate') %>
         <% } %>
     </div>
     <div class="arrow-wrap">
@@ -33,4 +33,5 @@
         Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>, <a href="https://github.com/huazie/hexo-theme-diversity" target="_blank">Diversity</a>
     </p>
 </footer>
+<%- js('js/jquery.gritter-1.7.4.min') %>
 <%- js('js/theme') %>
