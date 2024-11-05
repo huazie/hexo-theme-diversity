@@ -1,40 +1,54 @@
-/* 旋转图片10个以内的样式 */
-.rotate-10-0
-	transform translate3d(0px, 0px, -500px)
-	background-position -400px 0px
+$themes = hexo-config('themes');
+// 配置的主题个数小于等于10
+if ($themes and length($themes) <= 10) {
+	// 采用10张图片的曲屏环形旋转样式
+	.rotate-10-0 {
+		transform : translate3d(0px, 0px, -500px)
+		background-position : -400px 0px
+	}
 
-.rotate-10-1
-	transform translate3d(293.893px, 0px, -404.509px) rotateY(-36deg)
-	background-position -350px 0px;
+	.rotate-10-1 {
+		transform : translate3d(293.893px, 0px, -404.509px) rotateY(-36deg)
+		background-position : -350px 0px;
+	}	
 
-.rotate-10-2
-	transform translate3d(475.528px, 0px, -154.508px) rotateY(-72deg)
-	background-position -300px 0px
+	.rotate-10-2 {
+		transform : translate3d(475.528px, 0px, -154.508px) rotateY(-72deg)
+		background-position : -300px 0px
+	}
 
-.rotate-10-3
-	transform translate3d(475.528px, 0px, 154.508px) rotateY(-108deg)
-	background-position -250px 0px
+	.rotate-10-3 {
+		transform : translate3d(475.528px, 0px, 154.508px) rotateY(-108deg)
+		background-position : -250px 0px
+	}
 
-.rotate-10-4
-	transform translate3d(293.893px, 0px, 404.509px) rotateY(-144deg)
-	background-position -200px 0px
+	.rotate-10-4 {
+		transform : translate3d(293.893px, 0px, 404.509px) rotateY(-144deg)
+		background-position : -200px 0px
+	}
 
-.rotate-10-5
-	transform translate3d(0px, 0px, 500px) rotateY(-180deg)
-	background-position -150px 0px
+	.rotate-10-5 {
+		transform : translate3d(0px, 0px, 500px) rotateY(-180deg)
+		background-position : -150px 0px
+	}
 
-.rotate-10-6
-	transform translate3d(-293.893px, 0px, 404.509px) rotateY(-216deg)
-	background-position -100px 0px
+	.rotate-10-6 {
+		transform : translate3d(-293.893px, 0px, 404.509px) rotateY(-216deg)
+		background-position : -100px 0px
+	}
 
-.rotate-10-7
-	transform translate3d(-475.528px, 0px, 154.508px) rotateY(-252deg)
-	background-position -50px 0px
+	.rotate-10-7 {
+		transform : translate3d(-475.528px, 0px, 154.508px) rotateY(-252deg)
+		background-position : -50px 0px
+	}	
 
-.rotate-10-8
-	transform translate3d(-475.528px, 0px, -154.508px) rotateY(-288deg)
-	background-position 0px 0px 
+	.rotate-10-8 {
+		transform : translate3d(-475.528px, 0px, -154.508px) rotateY(-288deg)
+		background-position : 0px 0px 
+	}
 
-.rotate-10-9
-	transform translate3d(-293.893px, 0px, -404.509px) rotateY(-324deg)
-	background-position 50px 0px
+	.rotate-10-9 {
+		transform : translate3d(-293.893px, 0px, -404.509px) rotateY(-324deg)
+		background-position : 50px 0px
+	}
+}
