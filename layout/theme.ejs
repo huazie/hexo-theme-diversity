@@ -13,8 +13,6 @@
         <% // 配置的主题个数小于等于10，采用10个图片的曲屏环形旋转样式布局 %>
         <% if (themeNum <= ROTATE_NUM) { %>
         <%- partial('_partial/rotate_theme', {themeImagePath: themeImagePath, themeNum: themeNum, rotateNum: ROTATE_NUM}) %>
-        <%- js('js/gsap-3.6.1.min') %>
-        <%- js('js/theme-rotate') %>
         <% } %>
     </div>
     <% // 配置的主题个数小于等于10，添加mobile端主题页左右切换箭头 %>
@@ -23,6 +21,8 @@
         <div class="left-arrow"></div>
         <div class="right-arrow"></div>
     </div>
+    <%- js('js/gsap-3.6.1.min') %>
+    <%- js('js/theme-rotate') %>
     <% } %>
 </div>
 
