@@ -29,12 +29,22 @@ function showDefaultBlogPage() {
         url = href;
     }
 
+    // 获取path参数，blogIframe中的页面链接路径
+    let path = Diversity.browser.getParameter('path');
+
+    // 截取url中非参数的部分【不包含 ? 】
+    url = url.indexOf('?') != -1 ? url.substring(0, url.indexOf('?')) : url;
+
     // 主题选择页面路径含其他内容，类似 '/diversity/theme'，直接导航有问题，需要去除
     url = url.replace(config.menu.blog, '');
 
     if (!url.endsWith("/")) url += "/";
 
     url += theme;
+
+    // 如果存在页面链接路径参数，则追加到博客页访问url中
+    if (path) 
+        url += path;
 
     blogIframe.src = url;
 
