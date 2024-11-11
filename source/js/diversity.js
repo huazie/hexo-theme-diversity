@@ -177,7 +177,7 @@ Diversity.browser = {
         if (reqUrl.indexOf("?") === -1) {
             return null;
         }
-        reqUrl = unescape(reqUrl).substring(reqUrl.indexOf("?") + 1);
+        reqUrl = decodeURIComponent(reqUrl).substring(reqUrl.indexOf("?") + 1);
         if (reqUrl.length === 0) {
             return null;
         }
@@ -187,7 +187,7 @@ Diversity.browser = {
             if (parts[0] === name) {
                 if (parts.length < 2 || typeof (parts[1]) === "undefined" || parts[1] === "null")
                     return '';
-                return parts[1];
+                return decodeURIComponent(parts[1]);
             }
         }
         return null;
