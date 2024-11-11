@@ -50,11 +50,11 @@ function showDefaultBlogPage() {
 
     blogIframe.addEventListener('load', function() {
         // 去除loading效果
-        blogIframe.classList.remove('loading');
+        this.classList.remove('loading');
         try {
             // 注意：这块代码本地因为针对不同主题启动不同的http服务，主页面与iframe页面跨域了，无法正常运行
             // 获取iframe的窗口对象
-            const iframeWindow = blogIframe.contentWindow || blogIframe.contentDocument.defaultView;
+            const iframeWindow = this.contentWindow || this.contentDocument.defaultView;
             // 获取header标签
             const navHeaderClassList = document.getElementById('header').classList;
             // 获取返回顶部按钮
@@ -82,8 +82,22 @@ function showDefaultBlogPage() {
                     scrollTop: 0
                 });
             });
+            
+        } catch (error) {
+        }
+    });
 
-            if (iframeWindow) {
+    // 是否更新标识，默认没有更新
+    let isUpdated = false;
+    // 当 iframe 的 readyState 属性改变时触发。readyState 属性有以下几个可能的值：
+    // loading: 文档仍在加载。
+    // interactive: 文档已被解析，但尚未加载子资源（如图像、样式表等）。
+    // complete: 文档及其所有子资源已经完全加载。
+    blogIframe.addEventListener('readystatechange', function() {
+        try {
+            const iframeWindow = this.contentWindow || this.contentDocument.defaultView;
+            // 还没有加载完成
+            if (iframeWindow && !isUpdated && this.contentDocument.readyState !== 'complete') {
                 // 当前设置的默认主题
                 const theme = Diversity.data.get('theme');
                 // 博客页iframe窗口的pathname，包含主题名的某个路径【例如 /landscape/archives/】
@@ -98,6 +112,7 @@ function showDefaultBlogPage() {
                 const newUrl = window.location.origin + originPath + param;
                 // 使用 pushState 更新博客页主窗口的浏览器URL
                 history && history.pushState({ path: originPath }, '', newUrl);
+                isUpdated = true;
             }
         } catch (error) {
         }
