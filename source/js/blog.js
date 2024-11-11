@@ -82,6 +82,23 @@ function showDefaultBlogPage() {
                     scrollTop: 0
                 });
             });
+
+            if (iframeWindow) {
+                // 当前设置的默认主题
+                const theme = Diversity.data.get('theme');
+                // 博客页iframe窗口的pathname，包含主题名的某个路径【例如 /landscape/archives/】
+                let blogPath = iframeWindow.location.pathname;
+                // 取pathname中，主题名后的部分【如上取 /archives/】
+                blogPath = blogPath.substring(blogPath.indexOf(theme) + theme.length);
+                // 博客页主窗口的pathname
+                const originPath = window.location.pathname;
+                // path参数
+                let param = blogPath === '/' ? '' : '?path=' + blogPath;
+                // 浏览器展示的新地址
+                const newUrl = window.location.origin + originPath + param;
+                // 使用 pushState 更新博客页主窗口的浏览器URL
+                history && history.pushState({ path: originPath }, '', newUrl);
+            }
         } catch (error) {
         }
     });
