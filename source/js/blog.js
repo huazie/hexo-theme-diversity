@@ -96,8 +96,8 @@ function showDefaultBlogPage() {
                 let param = blogPath === '/' ? '' : '?path=' + blogPath;
                 // 浏览器展示的新地址
                 const newUrl = window.location.origin + originPath + param;
-                // 使用 pushState 更新博客页主窗口的浏览器URL
-                history && history.pushState({ path: originPath }, '', newUrl);
+                // 使用 replaceState 替换当前的历史记录条目，并更新博客页主窗口的地址栏
+                history && history.replaceState({ path: originPath }, '', newUrl);
             }
         } catch (error) {
         }
