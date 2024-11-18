@@ -16,7 +16,7 @@ var Diversity = {
      * @method toString
      * @return {String} 'Diversity'
      */
-    toString: function () {
+    toString() {
         return 'Diversity';
     },
     /**
@@ -25,7 +25,7 @@ var Diversity = {
      * @method log
      * @param {String} text
      */
-    log: function (text) {
+    log(text) {
         window.console && console.log(text);
     }
 };
@@ -41,9 +41,9 @@ Diversity.data = {
      * Current object name
      *
      * @method toString
-     * @return {String} 'Huazie.validate'
+     * @return {String} 'Huazie.data'
      */
-    toString: function() {
+    toString() {
         return "Diversity.data";
     },
     /**  
@@ -55,7 +55,7 @@ Diversity.data = {
      * @param {string} name - 要获取的数据项的名称
      * @returns {string|null} - 返回获取到的数据项的值，如果未找到则返回null
      */
-    get: function(name) {
+    get(name) {
         return localStorage ? localStorage.getItem(name) : Cookies.get(name);
     },
     /**  
@@ -67,7 +67,7 @@ Diversity.data = {
      * @param {string} name - 要设置的数据项的名称
      * @param {string} value - 要设置的数据项的值
      */ 
-    set: function(name, value) {
+    set(name, value) {
         if (localStorage)
             localStorage.setItem(name, value);
         else {
@@ -84,7 +84,7 @@ Diversity.data = {
      * @param {string} name - 要设置的数据项的名称 
      * @param {string} value - 要设置的数据项的值 
      */
-    setIfNotAbsent: function(name, value) {
+    setIfNotAbsent(name, value) {
         if (!this.get(name))
             this.set(name, value);
     },
@@ -96,7 +96,7 @@ Diversity.data = {
      * 
      * @param {string} name - 要移除的数据项的名称
      */ 
-    remove: function(name) {
+    remove(name) {
         if (localStorage)
             localStorage.removeItem(name)
         else
@@ -110,7 +110,7 @@ Diversity.data = {
      * @param {...} placeholders - 一个可变数量的参数，用于替换字符串中的占位符
      * @returns {string} - 替换占位符后的新字符串
      */
-    convert: function(before, ...placeholders) {
+    convert(before, ...placeholders) {
         // 使用正则表达式匹配所有形如{0}、{1}等的占位符；
         // 'g'标志表示全局匹配，即匹配字符串中所有符合条件的占位符；
         // \\{ 和 \\} 用于匹配字面量的花括号，因为花括号在正则表达式中有特殊含义；
@@ -131,7 +131,7 @@ Diversity.data = {
      * @param {string} theme - 主题名
      * @returns {string} - 替换占位符后的新字符串
      */
-    getThemeServerPort: function(theme) {
+    getThemeServerPort(theme) {
         let index = config.themes.indexOf(theme);
         const ports = config.ports;
         let port = 4001;
@@ -158,7 +158,7 @@ Diversity.browser = {
      * @method toString
      * @return {String} 'Diversity.browser'
      */
-    toString: function () {
+    toString() {
         return "Diversity.browser";
     },
     /**
@@ -169,7 +169,7 @@ Diversity.browser = {
      * @param {String} url [optional,default=当前URL]URL地址
      * @return {String} 参数值
      */
-    getParameter: function (name, url) {
+    getParameter(name, url) {
         var reqUrl = url || window.location.href;
         if (reqUrl.length === 0) {
             return null;
