@@ -1,3 +1,89 @@
+(function() {
+    const className = 'diversity-config';
+    const staticConfig = {};
+    let otherConfig = {};
+
+    const parse = text => JSON.parse(text || '{}');
+
+    const update = name => {
+        const targetEle = document.querySelector(`.${className}[data-name="${name}"]`);
+        if (!targetEle) return;
+        const parsedConfig = parse(targetEle.text);
+        if (name === 'main') {
+            Object.assign(staticConfig, parsedConfig);
+        } else {
+            otherConfig[name] = parsedConfig;
+        }
+    };
+
+    // 提前获取Diversity主要配置信息
+    update('main');
+
+    window.config = new Proxy({}, {
+        get(overrideConfig, name) {
+            let existing;
+            if (name in staticConfig) {
+                existing = staticConfig[name];
+            } else {
+                if (!(name in otherConfig)) update(name);
+                existing = otherConfig[name];
+            }
+
+            if (!(name in overrideConfig) && Array.isArray(existing)) {
+                overrideConfig[name] = [];
+            }
+
+            if (!(name in overrideConfig) && typeof existing === 'object') {
+                overrideConfig[name] = {};
+            }
+
+            if (name in overrideConfig) {
+                const override = overrideConfig[name];
+
+                // 根据值的类型（数组或对象）来创建对应的代理对象进行相关操作
+                if (Array.isArray(override) && Array.isArray(existing)) {
+                    return createArrayProxy(existing, override);
+                }
+                if (typeof override === 'object' && typeof existing === 'object') {
+                    return createObjectProxy({...existing,...override }, override);
+                }
+
+                return override;
+            }
+
+            return existing;
+        }
+    });
+
+    // 创建数组代理的函数，用于处理数组类型的配置数据获取和设置逻辑
+    const createArrayProxy = (arrayTarget, override) => {
+        return new Proxy(arrayTarget, {
+            set(arrayInnerTarget, index, value, arrayReceiver) {
+                // 同步修改原始数组和override数组
+                arrayInnerTarget[index] = value;
+                override[index] = value;
+                return true;
+            }
+        });
+    };
+
+    // 创建对象代理的函数，用于处理对象类型的配置数据设置逻辑
+    const createObjectProxy = (target, override) => {
+        return new Proxy(target, {
+            set(targetInner, prop, value) {
+                // 同步修改原始数组和override数组
+                targetInner[prop] = value;
+                override[prop] = value;
+                return true;
+            }
+        });
+    };
+
+    document.addEventListener('pjax:success', () => {
+        otherConfig = {};
+    });
+})();
+
 /**
  * Diversity 工具集
  *
@@ -5,13 +91,9 @@
  * @since 2.0.0
  *
  */
-var Diversity = {
+Diversity = {
     /**
-     * @type {String}
-     * @property version
-     */
-    VERSION: '2.0.0',
-    /**
+     * Current object name
      *
      * @method toString
      * @return {String} 'Diversity'
@@ -66,7 +148,7 @@ Diversity.data = {
      * 
      * @param {string} name - 要设置的数据项的名称
      * @param {string} value - 要设置的数据项的值
-     */ 
+     */
     set(name, value) {
         if (localStorage)
             localStorage.setItem(name, value);
@@ -95,7 +177,7 @@ Diversity.data = {
      * 否则，从Cookies中移除。
      * 
      * @param {string} name - 要移除的数据项的名称
-     */ 
+     */
     remove(name) {
         if (localStorage)
             localStorage.removeItem(name)
@@ -122,8 +204,8 @@ Diversity.data = {
             // 我们将这个数字字符串转换为整数，以便用作 placeholders 数组的索引；  
             // 然后返回 placeholders 数组中对应索引的元素作为替换值；
             // 将index（字符串）转换为整数，然后作为索引访问placeholders数组。
-            return placeholders[parseInt(index, 10)];  
-        });  
+            return placeholders[parseInt(index, 10)];
+        });
     },
     /**  
      * 获取当前主题名关联的本地端口port  
@@ -185,7 +267,7 @@ Diversity.browser = {
         for (var i = 0; i < params.length; i++) {
             var parts = params[i].split('=', 2);
             if (parts[0] === name) {
-                if (parts.length < 2 || typeof (parts[1]) === "undefined" || parts[1] === "null")
+                if (parts.length < 2 || typeof(parts[1]) === "undefined" || parts[1] === "null")
                     return '';
                 return decodeURIComponent(parts[1]);
             }
