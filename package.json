@@ -2,6 +2,13 @@
   "name": "hexo-theme-diversity",
   "version": "2.2.8",
   "description": "Hexo Theme Diversity",
+  "files": [
+    "languages",
+    "layout",
+    "scripts",
+    "source",
+    "_config.yml"
+  ],
   "repository": "huazie/hexo-theme-diversity",
   "keywords": [
     "hexo",
