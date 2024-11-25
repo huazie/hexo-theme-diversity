@@ -3,9 +3,7 @@
 const { parse } = require('url');
 
 module.exports = (ctx, theme) => {
-    const {
-        helper
-    } = ctx.extend;
+    const { helper } = ctx.extend;
     // Diversity主题生成器特殊处理
     if (ctx.config.theme === theme) {
         // 导航菜单栏的辅助函数
@@ -46,8 +44,10 @@ function data(name, ...data) {
 function config() {
     const { config, theme, site, __ } = this;
     const exportConfig = {
-        author: config.author,
+        author: this.author,
         hostname: parse(config.url).hostname || config.url,
+        theme: config.theme,
+        version: this.diversity_version,
         themes: theme.themes,
         ports: theme.ports,
         source: theme.source,

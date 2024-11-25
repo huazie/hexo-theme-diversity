@@ -7,6 +7,8 @@ const Util = require('./lib/util');
 const themeName = hexo.config.theme;
 // 在生成器解析前执行
 hexo.extend.filter.register('before_generate', () => {
+    // 添加过滤器
+    require('./filter')(hexo, themeName);
     // 配置生成器
     require('./generator')(hexo, themeName);
     // 添加辅助函数（Helper）
