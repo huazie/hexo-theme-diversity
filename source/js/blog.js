@@ -56,12 +56,19 @@ function showDefaultBlogPage() {
             // 获取iframe的窗口对象
             const iframeWindow = blogIframe.contentWindow || blogIframe.contentDocument.defaultView;
             // 获取header标签
-            const navHeaderClassList = document.getElementById('header').classList;
+            const header = document.getElementById('header');
+            // 获取header标签的类名列表
+            const navHeaderClassList = header.classList;
             // 获取返回顶部按钮
             const backToTop = document.querySelector('.back-to-top');
             // 添加iframe窗口的滚动事件
             iframeWindow && iframeWindow.addEventListener('scroll', function() {
                 const scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
+                // 菜单导航栏处于显示的状态
+                if (!navHeaderClassList.contains('hidden')) {
+                    // 博客页滚动高度要减掉header标签的高度
+                    scrollHeight -= header.clientHeight;
+                }
                 // 隐藏或显示菜单导航栏
                 navHeaderClassList.toggle('hidden', scrollHeight >= config.page.blog_scroll_height);
                 // 获取页面可以滚动的高度
