@@ -63,7 +63,7 @@ function showDefaultBlogPage() {
             const backToTop = document.querySelector('.back-to-top');
             // 添加iframe窗口的滚动事件
             iframeWindow && iframeWindow.addEventListener('scroll', function() {
-                const scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
+                let scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
                 // 菜单导航栏处于显示的状态
                 if (!navHeaderClassList.contains('hidden')) {
                     // 博客页滚动高度要减掉header标签的高度
