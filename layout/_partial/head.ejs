@@ -1,39 +1,37 @@
-<head>
-    <meta charset="utf-8">
-    <% 
-        var title = page.title;
-        var themeName = config.theme.charAt(0).toUpperCase() + config.theme.slice(1);
-        if (title) title += ' | ' + themeName;
-        if (!title) title = theme.title;
-        if (!title) title = config.title;
-    %>
-    <title><%= title %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <% if (config.author){ %><meta name="author" content="<%= config.author %>"><% } %>
-    <% if (theme.description){ %>
-    <meta name="description" content="<%= theme.description %>">
-    <% } else if (config.description){ %>
-    <meta name="description" content="<%= config.description %>">
-    <% } %>
-    
-    <% if (theme.title){ %><meta property="og:title" content="<%= theme.title %>"/><% } %>
-    <meta property="og:site_name" content="<%= config.title %>"/>
-    <% if(theme.image) { %>
-    <meta property="og:image" content="<%= theme.image %>" />
-    <% } else { %>
-    <meta property="og:image" content="<%= config.image %>"/>
-    <% } %>
+<meta charset="utf-8">
+<% 
+    var title = page.title;
+    var themeName = config.theme.charAt(0).toUpperCase() + config.theme.slice(1);
+    if (title) title += ' | ' + themeName;
+    if (!title) title = theme.title;
+    if (!title) title = config.title;
+%>
+<title><%= title %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<% if (config.author){ %><meta name="author" content="<%= config.author %>"><% } %>
+<% if (theme.description){ %>
+<meta name="description" content="<%= theme.description %>">
+<% } else if (config.description){ %>
+<meta name="description" content="<%= config.description %>">
+<% } %>
 
-    <% if (theme.favicon){ %>
-    <%- favicon_tag(theme.favicon) %>
-    <% } %>
+<% if (theme.title){ %><meta property="og:title" content="<%= theme.title %>"/><% } %>
+<meta property="og:site_name" content="<%= config.title %>"/>
+<% if(theme.image) { %>
+<meta property="og:image" content="<%= theme.image %>" />
+<% } else { %>
+<meta property="og:image" content="<%= config.image %>"/>
+<% } %>
 
-    <%- css('css/font-awesome.min.css') %>
-    <%- css('css/style.css') %>
+<% if (theme.favicon){ %>
+<%- favicon_tag(theme.favicon) %>
+<% } %>
 
-    <%- js('js/jquery-3.6.0.min') %>
-    <%- js('js/js.cookie-2.2.1.min') %>
+<%- css('css/font-awesome.min.css') %>
+<%- css('css/style.css') %>
 
-    <%- diversity_data('main', diversity_config()) %>
-    <%- js('js/diversity') %>
-</head>
+<%- js('js/jquery-3.6.0.min') %>
+<%- js('js/js.cookie-2.2.1.min') %>
+
+<%- diversity_data('main', diversity_config()) %>
+<%- js('js/diversity') %>
