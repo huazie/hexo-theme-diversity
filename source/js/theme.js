@@ -1,5 +1,6 @@
 (function($){
-
+    document.body.classList.add('bg');
+    
     const COOKIE_NAME = 'theme';
 
     // 【设为默认/取消默认】按钮点击事件
