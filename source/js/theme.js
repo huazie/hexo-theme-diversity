@@ -1,5 +1,5 @@
 (function($){
-    document.body.classList.add('bg');
+    document.body.classList.add('bg-img');
     
     const COOKIE_NAME = 'theme';
 
