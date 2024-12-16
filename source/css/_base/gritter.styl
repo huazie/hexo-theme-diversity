@@ -1,4 +1,5 @@
-/* the norm */    
+
+
 #gritter-notice-wrapper
     position fixed
     top 70px
@@ -44,7 +45,7 @@
     
 .gritter-item
     display block
-    color color-light-gray
+    color color-pale-gray
     padding 2px 11px 2px 11px
     font-size 11px
     font-family verdana
@@ -107,7 +108,7 @@
     .gritter-bottom,
     .gritter-top,
     .gritter-close
-        color #222
+        color color-deep-gray
     
 .gritter-light .gritter-title
     text-shadow none
@@ -126,31 +127,31 @@
 
 .gritter-item-wrapper.gritter-light
     background rgba(245, 245, 245, 0.95)
-    border 1px solid #BBB
+    border 1px solid color-light-gray
 
 .gritter-item-wrapper.gritter-light.gritter-info
     background rgba(232, 242, 255, 0.95)
 
 .gritter-item-wrapper.gritter-light.gritter-info .gritter-item
-    color #4a577d
+    color color-slate
 
 .gritter-item-wrapper.gritter-light.gritter-error
     background rgba(255, 235, 235, 0.95)
 
 .gritter-item-wrapper.gritter-light.gritter-error .gritter-item
-    color #894a38
+    color color-russet-brown
 
 .gritter-item-wrapper.gritter-light.gritter-success
     background rgba(239, 250, 227, 0.95)
 
 .gritter-item-wrapper.gritter-light.gritter-success .gritter-item
-    color #416131
+    color color-dark-olive-green
 
 .gritter-item-wrapper.gritter-light.gritter-warning
     background rgba(252, 248, 227, 0.95)
 
 .gritter-item-wrapper.gritter-light.gritter-warning .gritter-item
-    color #946446
+    color color-tan-brown
 
 .gritter-item p
     line-height 1.8
@@ -165,16 +166,16 @@
     text-align center
     border 2px solid transparent
     border-radius 16px
-    color #e17b67
+    color color-light-salmon
     &:before
         font-family FontAwesome
         font-size 16px
         content "\f00d"
     &:hover
-        color #FFF !important
+        color color-white !important
 
 .gritter-info .gritter-close
-    color #ffa500
+    color color-orange
 
 .gritter-error .gritter-close,
 .gritter-success .gritter-close,
@@ -187,7 +188,7 @@
     .gritter-top,
     .gritter-close
         background-image none
-        color #444
+        color color-dark-gray
 
     .gritter-title
         text-shadow none
