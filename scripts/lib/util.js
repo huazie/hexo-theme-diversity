@@ -58,4 +58,16 @@ class Util {
 
 }
 
-module.exports = Util;
+// 注入点定义
+const points = {
+	// 视图定义
+    views: [
+        'pageEnd',
+        'comment'
+    ]
+};
+
+module.exports = {
+    Util,
+    points
+};

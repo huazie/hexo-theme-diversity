@@ -63,6 +63,15 @@ back2top:
   position: right
   color: "#fc6423"
   exclude: [next]
+
+comments:
+  lazyload: false
+
+utterances:
+  enable: false
+  repo: user-name/repo-name
+  issue_term: pathname
+  theme: github-light
 ```
 
 - **title** - Diversity主题默认标题
@@ -84,6 +93,19 @@ back2top:
   - **position** - 返回顶部按钮展示位置，可选值： `left` | `right`
   - **color** - 鼠标悬浮或用户触摸时，返回顶部按钮的内容所展示的颜色
   - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
+- **comments** - 评论系统配置
+  - **lazyload** - 是否懒加载评论系统，可选值： `true` | `false`
+- **utterances** - Utterances 配置，更多信息查看：https://utteranc.es
+  - **enable** - 是否启用，可选值： `true` | `false`
+  - **repo** - GitHub仓库所有者和名称
+  - **issue_term** - 指定issue的匹配规则，可选值：pathname | url | title | og:title | issue number | specific term
+    - **pathname** - issue标题包含页面路径名。Utterances 会搜索标题包含页面路径名的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
+    - **url** - issue标题包含页面URL。Utterances 会搜索标题包含页面URL 的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
+    - **title** - issue标题包含页面标题。Utterances 会搜索标题包含页面标题的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
+    - **og:title** - issue标题包含页面 og:title。Utterances 会搜索标题包含页面 Open Graph 标题元数据的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
+    - **issue number** - 特定issue编号。您可以通过编号配置 Utterances 以加载特定issue。不会自动创建issue。
+    - **specific term** - issue标题包含特定术语。您可以配置 Utterances 以搜索标题包含您配置的特定术语的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个，且该issue的标题将是您设置的术语。
+  - **theme** - Utterances主题，可选值：github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
@@ -106,6 +128,7 @@ themes: [landscape,light,phase]
 menu:
   blog: 博客
   theme: 主题
+  comment: 留言
 
 button:
   theme-default: 设为默认

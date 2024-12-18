@@ -1,5 +1,5 @@
 "use strict";
-const Util = require('../lib/util');
+const { Util } = require('../lib/util');
 
 module.exports = (ctx, themeConfig) => {
     const {cmd, index, ports} = themeConfig;
