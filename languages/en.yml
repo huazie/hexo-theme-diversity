@@ -1,6 +1,7 @@
 menu:
   blog: Blog
   theme: Theme
+  comment: Comment
 
 button:
   theme-default: DEFAULT

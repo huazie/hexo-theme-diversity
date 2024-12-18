@@ -1,6 +1,7 @@
 menu:
   blog: 博客
   theme: 主题
+  comment: 留言
 
 button:
   theme-default: 设为默认

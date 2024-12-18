@@ -49,3 +49,23 @@ back2top:
   # 被排除主题不展示返回顶部按钮
   # Excluded themes do not display the b2t button
   exclude: [next]
+
+# 评论系统配置
+comments:
+  # 是否懒加载评论系统【true：是 false：否】
+  lazyload: false
+
+# Utterances
+# 一个由开源社区构建的评论插件，它提供了一种在博客、文章或任何静态网站上添加互动式评论功能的高效解决方案。
+# For more information: https://utteranc.es
+utterances:
+  # 可选值：true（启用） | false（禁用）
+  # Available values: true | false
+  enable: false
+  # GitHub 仓库所有者 user-name 和 名称 repo-name
+  # Github repository owner and name
+  repo: user-name/repo-name
+  # Available values: pathname | url | title | og:title
+  issue_term: pathname
+  # Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
+  theme: github-light

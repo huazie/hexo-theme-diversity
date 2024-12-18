@@ -1,18 +1,21 @@
 'use strict';
+
 const path_1 = require("path");
 const Hexo = require('hexo');
-const Util = require('./lib/util');
+const { Util } = require('./lib/util');
 
 // Diversity的主题名
 const themeName = hexo.config.theme;
+// 添加过滤器
+require('./filter')(hexo, themeName);
+// 添加辅助函数（Helper）
+require('./helper')(hexo, themeName);
 // 在生成器解析前执行
 hexo.extend.filter.register('before_generate', () => {
-    // 添加过滤器
-    require('./filter')(hexo, themeName);
     // 配置生成器
     require('./generator')(hexo, themeName);
-    // 添加辅助函数（Helper）
-    require('./helper')(hexo, themeName);
+    // 添加Diversity主题注入过滤器处理 theme_inject
+    require('./event/injects')(hexo);
 }, 100);
 
 hexo.on('ready', () => {

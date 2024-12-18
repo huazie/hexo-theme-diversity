@@ -12,6 +12,8 @@ module.exports = (ctx, theme) => {
         helper.register('diversity_data', data);
         // 生成Diversity主题的核心配置信息的辅助函数
         helper.register('diversity_config', config);
+        // Diversity主题内容注入的辅助函数
+        helper.register('diversity_inject', inject);
     } else {
         // 其他主题
         // 覆盖原css辅助函数[不同主题引入的css路径和名称可能一样，这里需要按主题名称加js路径和名称记忆]
@@ -53,6 +55,7 @@ function config() {
         source: theme.source,
         page: theme.page,
         back2top: theme.back2top,
+        comments: theme.comments,
         menu: site.data.diversity_menu,
         button: {
             theme_default: __('button.theme-default'),
@@ -79,4 +82,17 @@ function config() {
     });
 
     return exportConfig;
+}
+
+/**
+ * 根据指定的注入点获取并处理主题相关的注入内容，并将处理后的结果合并返回。
+ *
+ * @param {string} point - 注入点标识
+ * @returns {string} - 将查找到的对应注入点下的所有内容项经过渲染处理后拼接而成的字符串
+ *                     
+ */
+function inject(point) {
+    return this.theme.injects[point]
+        .map(item => this.partial(item.layout, item.locals, item.options))
+        .join('');
 }
