@@ -15,6 +15,25 @@ _config.yml
 + theme: diversity
 ```
 
+There are two ways to integrate other themes as follows[Check the configuration of the `themes` property in `_config.diversity.yml`]:
+
+- Download the source code related to the theme to be integrated into the `themes` directory at the root of the project, and name them respectively, as shown below [where `diversity` is the one downloaded as mentioned above]:
+
+```pre
+├─themes
+│  ├─diversity
+│  ├─light
+│  ├─phase
+```
+
+- Import via project dependencies. For example, for the `landscape` theme, it's as follows:
+
+```json
+"dependencies": {
+    "hexo-theme-landscape": "^1.0.0"
+}
+```
+
 ## Update
 
 Execute the following command to update Diversity.
@@ -96,14 +115,14 @@ utterances:
 - **utterances** - Utterances Configuration, For more information: https://utteranc.es
   - **enable** - Whether to enable. Available values: `true` | `false`
   - **repo** - Github repository owner and name
-  - **issue_term** - Issue Matching Rule, Available values: pathname | url | title | og:title | issue number | other value
+  - **issue_term** - Issue Matching Rule, Available values: `pathname` | `url` | `title` | `og:title` | `issue number` | `specific term`
     - **pathname** - Issue title contains page pathname. Utterances will search for an issue whose title contains the blog post's pathname URL component. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **url** - Issue title contains page URL. Utterances will search for an issue whose title contains the blog post's URL. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **title** - Issue title contains page title. Utterances will search for an issue whose title contains the blog post's title. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
-    - **og:title** - Issue title contains page og:title，Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
+    - **og:title** - Issue title contains page `og:title`，Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **issue number** - Specific issue number. You configure Utterances to load a specific issue by number. Issues are not automatically created.
     - **other value** - Issue title contains specific term. You configure Utterances to search for an issue whose title contains a specific term of your choosing. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. The issue's title will be the term you chose.
-  - **theme** - Utterances theme, Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
+  - **theme** - Utterances theme, Available values: `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 
@@ -219,3 +238,7 @@ tag_generator:
   - **layout** - Tag index page layout. If not configured, the default is `tag-index`
   - **per_page** - Tags displayed per page
   - **order_by** - Tags order. Order by descending date (new to old) by default
+
+## Documentation
+
+For a detailed understanding, please refer to the articles in the [[Blog Framework - Hexo]](https://blog.huazie.com/diversity/blog/?path=/categories/%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6-Hexo/) category on Huazie's blog.
