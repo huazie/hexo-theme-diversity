@@ -17,6 +17,25 @@ _config.yml
 + theme: diversity
 ```
 
+接入其他主题，有如下两种方式【查看 `_config.diversity.yml` 中 `themes` 属性配置】：
+
+- 将待接入主题相关的源码下载到项目根目录的 `themes` 目录下，并各自命名，如下所示【其中 `diversity` 是上述所下载的】：
+
+```pre
+├─themes
+│  ├─diversity
+│  ├─light
+│  ├─phase
+```
+
+- 通过项目依赖导入，比如 `landscape` 主题，如下：
+
+```json
+"dependencies": {
+    "hexo-theme-landscape": "^1.0.0"
+}
+```
+
 ## 更新
 
 执行以下命令，用以更新 **Diversity**。
@@ -98,14 +117,14 @@ utterances:
 - **utterances** - Utterances 配置，更多信息查看：https://utteranc.es
   - **enable** - 是否启用，可选值： `true` | `false`
   - **repo** - GitHub仓库所有者和名称
-  - **issue_term** - 指定issue的匹配规则，可选值：pathname | url | title | og:title | issue number | specific term
+  - **issue_term** - 指定issue的匹配规则，可选值： `pathname` | `url` | `title` | `og:title` | `issue number` | `specific term`
     - **pathname** - issue标题包含页面路径名。Utterances 会搜索标题包含页面路径名的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
     - **url** - issue标题包含页面URL。Utterances 会搜索标题包含页面URL 的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
     - **title** - issue标题包含页面标题。Utterances 会搜索标题包含页面标题的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
-    - **og:title** - issue标题包含页面 og:title。Utterances 会搜索标题包含页面 Open Graph 标题元数据的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
+    - **og:title** - issue标题包含页面 `og:title`。Utterances 会搜索标题包含页面 Open Graph 标题元数据的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
     - **issue number** - 特定issue编号。您可以通过编号配置 Utterances 以加载特定issue。不会自动创建issue。
     - **specific term** - issue标题包含特定术语。您可以配置 Utterances 以搜索标题包含您配置的特定术语的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个，且该issue的标题将是您设置的术语。
-  - **theme** - Utterances主题，可选值：github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
+  - **theme** - Utterances主题，可选值： `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
@@ -219,3 +238,7 @@ tag_generator:
   - **layout** - 标签首页布局。 如果不配置，则默认为 `tag-index`
   - **per_page** - 每页展示条数
   - **order_by** - 默认按日期降序排列（新到旧）
+
+## 文档
+
+详细了解，请翻看 **Huazie** 的博客分类之 [博客框架-Hexo](https://blog.huazie.com/diversity/blog/?path=/categories/%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6-Hexo/) 中的文章。
