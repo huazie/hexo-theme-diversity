@@ -1,6 +1,7 @@
 "use strict";
 
 const { parse } = require('url');
+const cheerio = require('cheerio');
 
 module.exports = (ctx, theme) => {
     const { helper } = ctx.extend;
@@ -14,6 +15,8 @@ module.exports = (ctx, theme) => {
         helper.register('diversity_config', config);
         // Diversity主题内容注入的辅助函数
         helper.register('diversity_inject', inject);
+        // 添加页面目录链接锚点的辅助函数
+        helper.register('page_anchor', pageAnchor);
     } else {
         // 其他主题
         // 覆盖原css辅助函数[不同主题引入的css路径和名称可能一样，这里需要按主题名称加js路径和名称记忆]
@@ -96,4 +99,26 @@ function inject(point) {
     return this.theme.injects[point]
         .map(item => this.partial(item.layout, item.locals, item.options))
         .join('');
+}
+
+/**
+ * 为给定的 HTML 字符串中的标题元素（h1 - h6）添加锚点链接功能，并添加相应的类名以方便样式设置和交互操作。
+ * 
+ * @param {string} str - 一个 HTML 字符串，表示需要处理的包含标题元素的 HTML 内容。
+ * @returns {string} - 返回经过处理后的 HTML 字符串，其中标题元素（h1 - h6）已添加了锚点链接相关的类和 HTML 结构。如果传入的 HTML 字符串中不存在标题元素（h1 - h6），则直接返回原传入的字符串。
+ */
+function pageAnchor(str) {
+    const $ = cheerio.load(str, {decodeEntities: false});
+    const headings = $('h1, h2, h3, h4, h5, h6');
+
+    if (!headings.length) return str;
+
+    headings.each(function() {
+        const id = $(this).attr('id');
+        $(this)
+            .addClass('article-heading')
+            .append(`<a class="article-anchor" href="#${id}" aria-hidden="true"></a>`);
+    });
+
+    return $.html();
 }
