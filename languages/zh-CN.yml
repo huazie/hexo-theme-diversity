@@ -20,6 +20,11 @@ no-theme:
   tip-text: 您还没有设置默认主题！点击下方按钮前往设置
   btn-text: 主题选择
 
+page:
+  contents: 目录
+  back_to_top: 回到顶部
+  last_updated: 上次更新：%s
+
 # 主题介绍【如果没有配置，则不展示介绍】
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。

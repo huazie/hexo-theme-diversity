@@ -1,0 +1,37 @@
+<div id="content-wrap">
+    <div id="content" class="wrapper">
+        <div id="content-inner">
+            <article class="article-container" itemscope itemtype="http://schema.org/Article">
+                <div class="article-inner">
+                    <div class="article">
+                        <div class="inner">
+                            <header class="article-header">
+                                <% 
+                                    var title = page.subTitle;
+                                    if (!title) title = page.title;
+                                    if (!title) title = theme.title;
+                                    if (!title) title = config.title;
+                                %>
+                                <h1 class="article-title" itemprop="name"><%= title %></h1>
+                            </header>
+                            <div class="article-content" itemprop="articleBody">
+                                <%- page_anchor(page.content) %>
+                            </div>
+                            <footer class="article-footer">
+                                <time class="article-footer-updated" datetime="<%- date(page.updated) %>" itemprop="dateModified"><%- __('page.last_updated', date(page.updated)) %></time>
+                            </footer>
+                            <%- partial('_partial/comments') %>
+                        </div>
+                    </div>
+                    <aside id="article-toc" role="navigation">
+                        <div id="article-toc-inner">
+                            <strong class="article-toc-title"><%= __('page.contents') %></strong>
+                            <%- toc(page.content, {list_number: false}) %>
+                            <a href="#" id="article-toc-top"><%= __('page.back_to_top') %></a>
+                        </div>
+                    </aside>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>

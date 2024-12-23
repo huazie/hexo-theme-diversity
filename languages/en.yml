@@ -20,6 +20,11 @@ no-theme:
   tip-text: Default theme not set up! Click the button below to configure now.
   btn-text: Theme Select
 
+page:
+  contents: Contents
+  back_to_top: Back to Top
+  last_updated: "Last updated: %s"
+
 introduction:
   landscape: A brand new default theme for Hexo.
   phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.

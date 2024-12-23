@@ -1,4 +1,5 @@
 (function($){
+    document.body.classList.remove('bg-color');
     document.body.classList.add('bg-img');
     
     const COOKIE_NAME = 'theme';
