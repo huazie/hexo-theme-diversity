@@ -33,8 +33,8 @@
         let href = a.getAttribute('href');
         // 如果菜单url没有配置“/” 结尾，则添加。
         if (!href.endsWith("/")) href += "/";
-        if (window.location.href.endsWith(href) || (window.location.pathname === '/' 
-            && (href === '/' || href === config.menu.blog))) {
+        if (window.location.href.includes(href) || (window.location.pathname === '/' 
+            && (href === '/' || href === config.index))) {
             // 添加激活显示的样式
             thiz.classList.add('active');
             // 添加事件监听器阻止默认行为

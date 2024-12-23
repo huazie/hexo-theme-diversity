@@ -45,6 +45,7 @@ function data(name, ...data) {
  */
 function config() {
     const { config, theme, site, __ } = this;
+    const diversity_menu = site.data.diversity_menu;
     const exportConfig = {
         author: this.author,
         hostname: parse(config.url).hostname || config.url,
@@ -56,7 +57,8 @@ function config() {
         page: theme.page,
         back2top: theme.back2top,
         comments: theme.comments,
-        menu: site.data.diversity_menu,
+        menu: diversity_menu,
+        index: diversity_menu[Object.keys(diversity_menu)[0]],
         button: {
             theme_default: __('button.theme-default'),
             cancel_defalut: __('button.cancel-defalut'),
@@ -89,7 +91,6 @@ function config() {
  *
  * @param {string} point - 注入点标识
  * @returns {string} - 将查找到的对应注入点下的所有内容项经过渲染处理后拼接而成的字符串
- *                     
  */
 function inject(point) {
     return this.theme.injects[point]
