@@ -14,11 +14,13 @@ html, body
 body  
     zoom 1 
     background-size cover
-    text-rendering: optimizeLegibility
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
+    text-rendering optimizeLegibility
+    -webkit-font-smoothing antialiased
+    -moz-osx-font-smoothing grayscale
     overflow-x hidden
-    touch-action: none; /* 禁用浏览器默认的触摸行为 */
+
+.touch-none
+    touch-action none /* 禁用浏览器默认的触摸行为 */
 
 .bg-img 
     background url(../images/body-bg.png) center no-repeat fixed

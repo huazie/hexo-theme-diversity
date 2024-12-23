@@ -1,6 +1,7 @@
 (function($){
     document.body.classList.remove('bg-color');
     document.body.classList.add('bg-img');
+    document.body.classList.add('touch-none');
     
     const COOKIE_NAME = 'theme';
 
