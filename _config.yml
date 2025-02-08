@@ -9,6 +9,9 @@ favicon: /images/diversity.ico
 # 主题图片翻转后的背景图片
 back_image: /images/back.jpg
 
+# 深色模式，可选值： 0（关闭） | 1（跟随系统）
+darkmode: 0
+
 # 多主题图片路径
 path:
   # 以 landscape 主题举例：
@@ -65,7 +68,12 @@ utterances:
   # GitHub 仓库所有者 user-name 和 名称 repo-name
   # Github repository owner and name
   repo: user-name/repo-name
+  # 指定GitHub issue的匹配规则
   # Available values: pathname | url | title | og:title
   issue_term: pathname
+  # 默认主题
   # Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
   theme: github-light
+  # 深色主题
+  # Dark Theme
+  dark: github-dark

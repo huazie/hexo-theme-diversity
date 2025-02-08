@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>无主题页</title>
+        <link rel="stylesheet" href="./css/style.css">
         <script src="./js/diversity.js"></script>
         <style>
             body, html {
@@ -13,6 +14,10 @@
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
+            }
+
+            body {
+                background: var(--body-bg-color);
             }
 
             .container {
@@ -31,121 +36,24 @@
                 position: relative;
             }
 
-            .card-container {
-                position: relative;
-                display: flex;
-                -webkit-box-orient: vertical;
-                -moz-box-orient: vertical;
-                -o-box-orient: vertical;
-                -webkit-flex-direction: column;
-                -ms-flex-direction: column;
-                flex-direction: column;
-                -webkit-box-align: center;
-                -moz-box-align: center;
-                -o-box-align: center;
-                -ms-flex-align: center;
-                -webkit-align-items: center;
-                align-items: center;
-                text-align: center;
-                -webkit-box-pack: center;
-                -moz-box-pack: center;
-                -o-box-pack: center;
-                -ms-flex-pack: center;
-                -webkit-justify-content: center;
-                justify-content: center;
-            }
-
-            .card-back {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-            }
-
-            .top {
-                position: absolute;
-                top: 30px;
-            }
-
-            .bottom {
-                position: absolute;
-                bottom: 25px;
-            }
-
-            .middle {
-                margin: 0 20px 0 20px;
-            }
-
-            .text {
-                font-size: 18px;
-                color: #428bca;
-            }
-
-            .btn {
-                display: inline-block;
-                color: #fff !important;
-                text-shadow: 0 -1px 0 rgba(0,0,0,0.25) !important;
-                background-image: none !important;
-                border: 5px solid #fff;
-                border-radius: 0;
-                -webkit-box-shadow: none !important;
-                box-shadow: none !important;
-                -webkit-transition: all ease 0.15s;
-                -webkit-transition: all ease 0.15s;
-                -moz-transition: all ease 0.15s;
-                -o-transition: all ease 0.15s;
-                -ms-transition: all ease 0.15s;
-                transition: all ease 0.15s;
-                cursor: pointer;
-                vertical-align: middle;
-                margin: 0;
-                position: relative;
-                padding: 6px 8px;
-                font-size: 14px;
-                font-weight: normal;
-                line-height: 1.428571429;
-                text-align: center;
-                white-space: nowrap;
-            }
-
-            .btn-primary {
-                background-color: #428bca !important;
-                border-color: #428bca;
-            }
-
-            .btn-primary:hover {
-                background-color: #1b6aaa !important;
-                border-color: #428bca;
-            }
-
             .border-red, .border-red:hover {
                 border: 5px solid red;
-            }        
+            }
 
             #tip_text {
                 margin-top: 30px;
                 margin-bottom: 30px;
+                color: var(--text-color);
             }
 
             .btn-link {
-                display: inline-block;
                 background: rgba(30, 128, 255, 0.05);
+                text-shadow: none !important;
                 border: 1px solid rgba(30, 128, 255, 0.3);
                 border-radius: 4px;
-                box-shadow: none !important;
-                -webkit-transition: all ease .15s;
-                transition: all ease .15s;
-                cursor: pointer;
-                vertical-align: middle;
-                margin: 0;
-                position: relative;
                 padding: 8px 20px;
-                font-size: 14px;
-                font-weight: normal;
-                line-height: 1.428571429;
-                text-align: center;
-                white-space: nowrap;
                 box-sizing: border-box;
-                color: #1e80ff
+                color: #1e80ff !important;
             }
 
             .btn-link:hover {
@@ -177,7 +85,7 @@
                 </div>
             </div>
             <p id="tip_text"></p>
-            <button id="theme_select" class="btn-link"></button>
+            <button id="theme_select" class="btn btn-link"></button>
         </div>
     </body>
     <script type="text/javascript">

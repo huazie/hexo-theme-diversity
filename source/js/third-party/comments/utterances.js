@@ -7,7 +7,7 @@ document.addEventListener('page:loaded', () => {
                 crossOrigin: 'anonymous',
                 'repo': config.utterances.repo,
                 'issue-term': config.utterances.issue_term,
-                'theme': config.utterances.theme
+                'theme': Diversity.utils.isDarkMode() ? config.utterances.dark : config.utterances.theme
             },
             parentNode: document.querySelector('.utterances-container')
         }));
