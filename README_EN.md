@@ -60,6 +60,8 @@ favicon: /images/diversity.ico
 
 back_image: /images/back.jpg
 
+darkmode: 0
+
 path:
   landscape: /images/landscape.jpg
   phase: /images/phase.png
@@ -89,6 +91,7 @@ utterances:
   repo: user-name/repo-name
   issue_term: pathname
   theme: github-light
+  dark: github-dark
 ```
 
 - **title** - Default Title of Diversity Theme
@@ -96,6 +99,7 @@ utterances:
 - **image** - The URL of the image that will be displayed when the web page link is shared on social platforms
 - **favicon** - The path to the Favicon [A small icon used to identify and distinguish different websites in the browser's tab, address bar, or bookmark bar]
 - **back_image** - Background image after flipping the theme image
+- **darkmode** - Dark Mode, Available values: 0 (Off) | 1 (Follow System)
 - **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
   - If the image path is not configured, it will default to `/images/default.png`.
 - **source** - Theme Project Source [For button navigation to the source of the theme]
@@ -122,7 +126,8 @@ utterances:
     - **og:title** - Issue title contains page `og:title`，Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **issue number** - Specific issue number. You configure Utterances to load a specific issue by number. Issues are not automatically created.
     - **other value** - Issue title contains specific term. You configure Utterances to search for an issue whose title contains a specific term of your choosing. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. The issue's title will be the term you chose.
-  - **theme** - Utterances theme, Available values: `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
+  - **theme** - Utterances default theme, Available values: `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
+  - **dark** - Utterances dark theme
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 

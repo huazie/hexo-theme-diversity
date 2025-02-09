@@ -62,6 +62,8 @@ favicon: /images/diversity.ico
 
 back_image: /images/back.jpg
 
+darkmode: 0
+
 path:
   landscape: /images/landscape.jpg
   phase: /images/phase.png
@@ -91,6 +93,7 @@ utterances:
   repo: user-name/repo-name
   issue_term: pathname
   theme: github-light
+  dark: github-dark
 ```
 
 - **title** - Diversity主题默认标题
@@ -98,6 +101,7 @@ utterances:
 - **image** - 当网页链接被分享到社交平台时显示的图片URL
 - **favicon** - Favicon路径【一个小型图标，用于在浏览器的标签页、地址栏或书签栏中标识和区分不同的网站】
 - **back_image** - 主题图片翻转后的背景图片
+- **darkmode** - 深色模式，可选值： 0（关闭） | 1（跟随系统）
 - **path** - 多主题图片路径【主题名 + 图片路径】。 以 `landscape` 主题举例：
   - 如果该图片路径未配置，默认取 `/images/default.png`
 - **source** - 主题项目来源【用于主题来源按钮点击跳转】
@@ -124,7 +128,8 @@ utterances:
     - **og:title** - issue标题包含页面 `og:title`。Utterances 会搜索标题包含页面 Open Graph 标题元数据的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
     - **issue number** - 特定issue编号。您可以通过编号配置 Utterances 以加载特定issue。不会自动创建issue。
     - **specific term** - issue标题包含特定术语。您可以配置 Utterances 以搜索标题包含您配置的特定术语的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个，且该issue的标题将是您设置的术语。
-  - **theme** - Utterances主题，可选值： `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
+  - **theme** - Utterances 默认主题，可选值： `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
+  - **dark** - Utterances 深色主题
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 

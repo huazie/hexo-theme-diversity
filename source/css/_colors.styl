@@ -1,0 +1,21 @@
+:root {
+    --body-bg-color: body-bg-color;
+    --nav-bg-color: nav-bg-color;
+    --content-bg-color: content-bg-color;
+    --text-color: text-color;
+
+    color-scheme: light;
+}
+
+if (hexo-config('darkmode') == 1) {
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --body-bg-color: body-bg-color-dark;
+            --nav-bg-color: nav-bg-color-dark;
+            --content-bg-color: content-bg-color-dark;
+            --text-color: text-color-dark;
+
+            color-scheme: dark;
+        }
+    }
+}

@@ -1,10 +1,8 @@
 // https://github.com/chriskempson/tomorrow-theme
-highlight-background = #fff
-highlight-current-line = #efefef
-highlight-selection = #d6d6d6
+highlight-background = var(--body-bg-color)
 highlight-foreground = #950f0f
 highlight-comment = #8e908c
-highlight-black = #333
+highlight-black = var(--text-color)
 highlight-red = #c82829
 highlight-orange = #f5871f
 highlight-yellow = #eab700
@@ -32,7 +30,7 @@ pre
         padding 0
 
 .highlight
-    background #eee
+    background highlight-background
     padding 10px 15px
     color highlight-foreground
     overflow auto

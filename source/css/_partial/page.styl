@@ -35,7 +35,7 @@ note-warn = hsl(0, 100%, 50%)
 .article-inner
     clearfix()
     box-shadow 0 3px 8px 6px rgba(7, 17, 27, 0.09)
-    background-color color-white
+    background-color var(--content-bg-color)
     border-radius 8px
     margin 10px 0
     @media mq-mobile
@@ -65,10 +65,12 @@ note-warn = hsl(0, 100%, 50%)
     @extend .inner
     overflow-x hidden
     overflow-y auto
-    height calc(100vh - 80px)
+    height auto
+    max-height calc(100vh - 80px)
     width article-toc-width
     box-shadow 0 3px 8px 6px rgba(7, 17, 27, 0.09)
-    background-color color-white
+    background-color var(--content-bg-color)
+    padding-bottom 40px
     margin 0 5px 40px 15px
     border-radius 8px
 
@@ -86,7 +88,7 @@ note-warn = hsl(0, 100%, 50%)
 .toc-link
     font-family font-title
     display block
-    color color-dark-gray
+    color var(--text-color)
     text-decoration none
     padding 7px 5px 5px 7px
     line-height 1
@@ -105,7 +107,7 @@ note-warn = hsl(0, 100%, 50%)
     margin-top 2em
     font-size 0.9em
     text-decoration none
-    color color-dark-gray
+    color var(--text-color)
     display block
     font-family font-title
     &:hover
@@ -121,20 +123,12 @@ note-warn = hsl(0, 100%, 50%)
     font-size 36px
     font-weight 300
     text-decoration none
-    color color-dark-gray
+    color var(--text-color)
     transition 0.2s
     a&:hover
         color color-link-hover
     .post &
         float none
-
-.article-date
-    color color-gray
-    text-decoration none
-    display inline-block
-    margin-top 1em
-    &:hover
-        color color-link-hover
 
 .article-anchor
     margin-left 10px
@@ -148,7 +142,7 @@ note-warn = hsl(0, 100%, 50%)
 
 .article-content
     line-height line-height
-    color color-dark-gray
+    color var(--text-color)
     @media print
       	font-size 12pt
     p, ol, ul, dl, table, blockquote, iframe, .highlight
@@ -177,7 +171,7 @@ note-warn = hsl(0, 100%, 50%)
             color color-link-hover
             text-decoration underline
       	@media print
-            color color-dark-gray
+            color var(--text-color)
             text-decoration underline
             &:after
               content " (" attr(href) ")"
@@ -215,11 +209,11 @@ note-warn = hsl(0, 100%, 50%)
             margin 1em 0
             font-style italic
             cite
-          	&:before
-                content "—"
-                padding 0 0.3em
-          	a
-                color color-gray
+          	    &:before
+                    content "—"
+                    padding 0 0.3em
+                a
+                    color color-gray
     .note
         &.tip
             border-left-color note-tip
@@ -250,7 +244,7 @@ note-warn = hsl(0, 100%, 50%)
     margin 3em 0 2em 0
     border-top 1px solid color-pale-gray1
     text-align center
-    color color-gray
+    color var(--text-color)
     line-height 1em
     padding-top 1em
     position relative
