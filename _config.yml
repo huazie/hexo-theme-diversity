@@ -9,7 +9,7 @@ favicon: /images/diversity.ico
 # 主题图片翻转后的背景图片
 back_image: /images/back.jpg
 
-# 深色模式，可选值： 0（关闭） | 1（跟随系统）
+# 深色模式，可选值： 0（关闭） | 1（跟随系统）| 2（手动切换）
 darkmode: 0
 
 # 多主题图片路径

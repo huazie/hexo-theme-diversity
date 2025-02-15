@@ -56,6 +56,7 @@ function config() {
         version: this.diversity_version,
         themes: theme.themes,
         ports: theme.ports,
+        darkmode: theme.darkmode,
         source: theme.source,
         page: theme.page,
         back2top: theme.back2top,

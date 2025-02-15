@@ -99,7 +99,7 @@ utterances:
 - **image** - The URL of the image that will be displayed when the web page link is shared on social platforms
 - **favicon** - The path to the Favicon [A small icon used to identify and distinguish different websites in the browser's tab, address bar, or bookmark bar]
 - **back_image** - Background image after flipping the theme image
-- **darkmode** - Dark Mode, Available values: 0 (Off) | 1 (Follow System)
+- **darkmode** - Dark Mode, Available values: 0 (Off) | 1 (Follow System) | 2（Manual Switching）
 - **path** - Multi-theme image paths [Theme Name + Image Path]. Taking the `landscape` theme as an example:
   - If the image path is not configured, it will default to `/images/default.png`.
 - **source** - Theme Project Source [For button navigation to the source of the theme]

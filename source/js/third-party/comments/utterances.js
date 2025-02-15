@@ -1,4 +1,4 @@
-document.addEventListener('page:loaded', () => {
+const loadUtterances = () => {
     // 加载评论模块
     Diversity.utils.loadComments('.utterances-container')
         .then(() => Diversity.utils.getScript('https://utteranc.es/client.js', {
@@ -11,4 +11,7 @@ document.addEventListener('page:loaded', () => {
             },
             parentNode: document.querySelector('.utterances-container')
         }));
-});
+}
+
+document.addEventListener('page:loaded', loadUtterances);
+document.addEventListener('comment:refresh', loadUtterances);
