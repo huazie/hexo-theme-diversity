@@ -302,6 +302,8 @@ Diversity.browser = {
  */
 Diversity.utils = {
 
+    // 用于存储每个元素对应的 IntersectionObserver 实例
+    _elementObserverMap: new Map(),
     /**
      * Current object name
      *
@@ -322,8 +324,11 @@ Diversity.utils = {
      * @returns {Promise} - 返回一个Promise对象，该对象在评论加载完成后被解析
      */
     isDarkMode() {
-        var isDarkMode = false;
-        isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let isDarkMode = false;
+        if (config.darkmode === 1)
+            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        else if (config.darkmode === 2)
+            isDarkMode = document.documentElement.classList.contains('dark-theme');
         return isDarkMode;
     },
     /**
@@ -345,17 +350,33 @@ Diversity.utils = {
         // 返回一个新的Promise对象，用于处理异步加载评论的逻辑
         return new Promise(resolve => {
             const element = document.querySelector(selector);
+            // 清空元素里的内容
+            if (element && element.innerHTML.trim() !== '') {
+                element.innerHTML = '';
+            }
             if (!config.comments.lazyload || !element) {
                 resolve();
                 return;
             }
+
+            // 检查该元素是否已经有对应的 IntersectionObserver 实例
+            if (this._elementObserverMap.has(element)) {
+                // 若有，则断开之前的 IntersectionObserver 实例
+                const previousObserver = this._elementObserverMap.get(element);
+                previousObserver.disconnect();
+            }
+
             const intersectionObserver = new IntersectionObserver((entries, observer) => {
                 const entry = entries[0];
                 if (!entry.isIntersecting) return;
                 resolve();
                 observer.disconnect();
+                // 评论加载完成后，从映射中移除该元素对应的记录
+                this._elementObserverMap.delete(element);
             });
             intersectionObserver.observe(element);
+            // 将新的 IntersectionObserver 实例与元素关联起来
+            this._elementObserverMap.set(element, intersectionObserver);
         });
     },
     /**

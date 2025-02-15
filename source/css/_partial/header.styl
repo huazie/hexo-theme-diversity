@@ -87,3 +87,46 @@ logo-left = 100px
     &:hover
         &:after
             opacity 1
+
+transition = all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+
+#color-scheme-toggle
+    background none
+    border none
+    cursor pointer
+    border-radius 50%
+    transition transition
+    margin-right 20px
+    &:hover
+        transform rotate(-15deg)
+    @media mq-mobile
+        position absolute
+        top 0
+        bottom 0
+        right gutter-width
+        margin auto
+
+.color-scheme-icon
+    font-size 1.5rem
+    color var(--color-scheme-icon-color)
+    transition transition
+
+// 太阳图标动画
+.fa-sun, .fa-sun-o
+    display block
+    transform scale(1) rotate(0deg)
+
+// 月亮图标动画
+.fa-moon, .fa-moon-o
+    display none
+    transform scale(0.5) rotate(-90deg)
+
+// 深色主题动画
+.dark-theme
+    .fa-sun, .fa-sun-o
+        display none
+        transform scale(0.5) rotate(90deg)
+    
+    .fa-moon, .fa-moon-o
+        display block
+        transform scale(1) rotate(0deg)
