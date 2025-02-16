@@ -98,9 +98,13 @@
         document.getElementById('theme_source').textContent = window.parent.config.button.theme_source;
         document.getElementById('tip_text').textContent = window.parent.config.no_theme.tip_text;
         document.getElementById('theme_select').textContent = window.parent.config.no_theme.btn_text;
-        if (Diversity.browser.getParameter('theme_flag') === '0')
+        // 主题标识，设置过主题即为1
+        const flag = Diversity.data.get('theme_flag');
+        if (flag === '0')
             document.getElementById('img-wrap').style.display = 'block';
-        if (Diversity.browser.getParameter('color_scheme') === 'dark')
+        // 配色方案
+        const colorScheme = Diversity.data.get('color_scheme');
+        if (colorScheme === 'dark')
             document.documentElement.classList.add("dark-theme");
         document.getElementById('theme_select').addEventListener('click', function() {  
             // 父页面跳转
