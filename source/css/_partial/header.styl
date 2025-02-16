@@ -97,6 +97,9 @@ transition = all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)
     border-radius 50%
     transition transition
     margin-right 20px
+    // 用于去除移动端浏览器在用户点击元素时默认显示的高亮效果
+    -webkit-tap-highlight-color transparent
+    tap-highlight-color transparent
     &:hover
         transform rotate(-15deg)
     @media mq-mobile
