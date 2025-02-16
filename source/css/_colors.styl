@@ -19,11 +19,27 @@ dark-mode-styles() {
     color-scheme: dark;
 }
 
+dark-filter-styles() {
+    filter: brightness(0.5) contrast(0.8);
+}
+
+dark-bg-img-styles() {
+    background: url(../images/body-bg-dark.png) center no-repeat fixed;
+}
+
 // 跟随系统
 if (hexo-config('darkmode') == 1) {
     @media (prefers-color-scheme: dark) {
         :root {
             dark-mode-styles();
+        }
+
+        #logo-wrap, .theme-wrap, .loading, #gritter-notice-wrapper {
+            dark-filter-styles();
+        }
+
+        .bg-img {
+            dark-bg-img-styles();
         }
     }
 }
@@ -32,5 +48,16 @@ if (hexo-config('darkmode') == 1) {
 if (hexo-config('darkmode') == 2) {
     .dark-theme {
         dark-mode-styles();
+    }
+
+    .dark-theme #logo-wrap,
+    .dark-theme .theme-wrap,
+    .dark-theme .loading,
+    .dark-theme #gritter-notice-wrapper {
+        dark-filter-styles();
+    }
+
+    .dark-theme .bg-img {
+        dark-bg-img-styles();
     }
 }

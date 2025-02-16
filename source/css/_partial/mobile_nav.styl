@@ -34,6 +34,9 @@ transition-duration = 0.4s
     margin auto
     opacity 0.5
     cursor pointer
+    // 用于去除移动端浏览器在用户点击元素时默认显示的高亮效果
+    -webkit-tap-highlight-color transparent
+    tap-highlight-color transparent
     transition 0.2s
     &active, .mobile-nav-on &
         opacity 1
