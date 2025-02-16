@@ -50,7 +50,7 @@
         const colorSchemeToggle = document.getElementById("color-scheme-toggle");
 
         const initColorScheme = () => {
-            const savedColorScheme = Diversity.data.get("color-scheme");
+            const savedColorScheme = Diversity.data.get("color_scheme");
             if (savedColorScheme === "dark") {
                 document.documentElement.classList.add("dark-theme");
             }
@@ -59,17 +59,17 @@
         const toggleColorScheme = () => {
             document.documentElement.classList.toggle("dark-theme");
             const isDark = document.documentElement.classList.contains("dark-theme");
-            Diversity.data.set("color-scheme", isDark ? "dark" : "light");
+            Diversity.data.set("color_scheme", isDark ? "dark" : "light");
             document.dispatchEvent(
-                new Event("comment:refresh", {
+                new Event("color-scheme:refresh", {
                     bubbles: true,
-                }),
+                })
             );
         }
 
-
+        // 读取并初始化配色方案
         initColorScheme();
 
-        colorSchemeToggle.addEventListener("click", toggleColorScheme);
+        colorSchemeToggle && colorSchemeToggle.addEventListener("click", toggleColorScheme);
     }
 })();

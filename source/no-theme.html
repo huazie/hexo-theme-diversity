@@ -100,6 +100,8 @@
         document.getElementById('theme_select').textContent = window.parent.config.no_theme.btn_text;
         if (Diversity.browser.getParameter('theme_flag') === '0')
             document.getElementById('img-wrap').style.display = 'block';
+        if (Diversity.browser.getParameter('color_scheme') === 'dark')
+            document.documentElement.classList.add("dark-theme");
         document.getElementById('theme_select').addEventListener('click', function() {  
             // 父页面跳转
             window.parent.location.href = window.parent.config.menu.theme;

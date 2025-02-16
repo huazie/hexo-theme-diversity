@@ -4,12 +4,16 @@
 })();
 
 function showDefaultBlogPage() {
+    // 设置的默认主题名
     const theme = Diversity.data.get('theme');
     const blogIframe = document.getElementById('blog');
 	// 如果没有设置默认主题，则跳转无主题页
 	if (!theme) {
+        // 主题标识，设置过主题即为1
         const flag = Diversity.data.get('theme_flag');
-        blogIframe.src = '/no-theme.html?theme_flag=' + (flag ? flag : 0);
+        // 配色方案
+        const colorScheme = Diversity.data.get('color_scheme');
+        blogIframe.src = '/no-theme.html?theme_flag=' + (flag ? flag : 0) + '&color_scheme=' + colorScheme;
         return;
     }
 
@@ -118,3 +122,12 @@ function showDefaultBlogPage() {
         backToTop.parentNode.removeChild(backToTop);
     }
 }
+
+document.addEventListener('color-scheme:refresh', () => {
+    try {
+        const blogIframe = document.getElementById('blog');
+        if (blogIframe && blogIframe.contentDocument && blogIframe.contentDocument.documentElement)
+            blogIframe.contentDocument.documentElement.classList.toggle("dark-theme");
+    } catch (error) {
+    }
+});

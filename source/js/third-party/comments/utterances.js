@@ -14,4 +14,4 @@ const loadUtterances = () => {
 }
 
 document.addEventListener('page:loaded', loadUtterances);
-document.addEventListener('comment:refresh', loadUtterances);
+document.addEventListener('color-scheme:refresh', loadUtterances);
