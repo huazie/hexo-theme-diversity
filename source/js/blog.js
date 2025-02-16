@@ -9,11 +9,7 @@ function showDefaultBlogPage() {
     const blogIframe = document.getElementById('blog');
 	// 如果没有设置默认主题，则跳转无主题页
 	if (!theme) {
-        // 主题标识，设置过主题即为1
-        const flag = Diversity.data.get('theme_flag');
-        // 配色方案
-        const colorScheme = Diversity.data.get('color_scheme');
-        blogIframe.src = '/no-theme.html?theme_flag=' + (flag ? flag : 0) + '&color_scheme=' + colorScheme;
+        blogIframe.src = '/no-theme.html';
         return;
     }
 
