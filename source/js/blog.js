@@ -108,6 +108,11 @@ function showDefaultBlogPage() {
             }
         } catch (error) {
         }
+
+        // 深色模式
+        if (Diversity.utils.isDarkMode()) {
+            blogIframe.classList.add('dark-filter');
+        }
     });
 
     // 获取返回顶部按钮
@@ -121,9 +126,13 @@ function showDefaultBlogPage() {
 
 document.addEventListener('color-scheme:refresh', () => {
     try {
+        const theme = Diversity.data.get('theme');
         const blogIframe = document.getElementById('blog');
-        if (blogIframe && blogIframe.contentDocument && blogIframe.contentDocument.documentElement)
+        // 没有设置默认主题
+        if (!theme)
             blogIframe.contentDocument.documentElement.classList.toggle("dark-theme");
+        else
+            blogIframe.classList.toggle('dark-filter');
     } catch (error) {
     }
 });
