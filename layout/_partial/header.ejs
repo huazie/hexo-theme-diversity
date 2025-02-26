@@ -7,10 +7,12 @@
             <%- header_menu('main-nav') %>
         </ul>
 
+        <% if (theme.darkmode && theme.darkmode == 2) { %>
         <button id="color-scheme-toggle">
             <i class="color-scheme-icon fa fa-sun-o"></i>
             <i class="color-scheme-icon fa fa-moon-o"></i>
         </button>
+        <% } %>
 
         <a id="mobile-nav-toggle">
             <span class="mobile-nav-toggle-bar"></span>
