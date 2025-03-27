@@ -55,6 +55,15 @@ back2top:
 
 # 评论系统配置
 comments:
+  # 多个评论系统启用时，选择一个默认展示风格
+  # 可选值：tabs 【选项卡】 
+  # Available values: tabs
+  style: tabs
+  # 选择一个默认显示的评论系统
+  # Choose a comment system to be displayed by default.
+  # 可选值：utterances | gitalk
+  # Available values: utterances | gitalk 
+  active:
   # 是否懒加载评论系统【true：是 false：否】
   lazyload: false
 
@@ -62,14 +71,14 @@ comments:
 # 一个由开源社区构建的评论插件，它提供了一种在博客、文章或任何静态网站上添加互动式评论功能的高效解决方案。
 # For more information: https://utteranc.es
 utterances:
-  # 可选值：true（启用） | false（禁用）
+  # 可选值：true 【启用】 | false 【禁用】
   # Available values: true | false
   enable: false
   # GitHub 仓库所有者 user-name 和 名称 repo-name
   # Github repository owner and name
   repo: user-name/repo-name
   # 指定GitHub issue的匹配规则
-  # Available values: pathname | url | title | og:title
+  # Available values: pathname | url | title | og:title | `issue number` | `specific term`
   issue_term: pathname
   # 默认主题
   # Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
@@ -77,3 +86,45 @@ utterances:
   # 深色主题
   # Dark Theme
   dark: github-dark
+
+# Gitalk
+# 一个基于GitHub Issue和Preact开发的现代评论插件。
+# 它允许网站访客使用GitHub账号登录并发表评论，所有评论数据都储存在相应的GitHub仓库中。
+# For more information: https://gitalk.github.io
+gitalk:
+  # 可选值：true 【启用】 | false 【禁用】
+  # Available values: true | false
+  enable: false
+  # GitHub 仓库所有者
+  # GitHub repo owner 
+  github_id: 
+  # 用于存储评论issues的仓库名
+  # Repository name to store issues
+  repo: 
+  # GitHub 应用客户端 ID
+  # GitHub Application Client ID
+  client_id: 
+  # GitHub 应用客户端密钥
+  # GitHub Application Client Secret
+  client_secret: 
+  # GitHub 仓库所有者和协作者，只有这些人可以创建 GitHub 问题。
+  # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
+  admin_user: 
+  # 类似 Facebook 的免打扰模式
+  # Facebook-like distraction free mode
+  distraction_free_mode: true 
+  # 当官方代理不可用时，您可以将其更改为自己的代理地址。
+  # When the official proxy is not available, you can change it to your own proxy address
+  # 下面是官方代理地址
+  # This is official proxy address
+  proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
+  # 指定GitHub issue的匹配规则
+  # 其中 pathname | url | title 用来匹配 issue 的标签，`issue number` 是 issue的编号（一个正数）
+  # Available values: pathname | url | title | `issue number`
+  issue_term: pathname
+  # Gitalk 的显示语言取决于用户的浏览器或系统环境。
+  # Gitalk's display language depends on user's browser or system environment
+  # 如果您希望所有访问您网站的用户看到统一的语言，您可以设置一个强制语言值。
+  # If you want everyone visiting your site to see a uniform language, you can set a force language value
+  # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
+  language:

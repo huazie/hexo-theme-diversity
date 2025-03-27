@@ -2,7 +2,7 @@
 
 const path = require('path');
 
-// 添加 Utterances
+// 添加 Utterances 评论系统相关的Diversity主题注入过滤器
 hexo.extend.filter.register('theme_inject', injects => {
     const config = hexo.theme.config.utterances;
     // 没有启用 Utterances
