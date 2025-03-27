@@ -133,7 +133,6 @@ Diversity = {
 /**
  * Diversity数据操作
  *
- * @namespace Huazie
  * @class data
  */
 Diversity.data = {
@@ -247,7 +246,6 @@ Diversity.data = {
 /**
  * 浏览器，URL等相关操作
  *
- * @namespace Huazie
  * @class browser
  */
 Diversity.browser = {
@@ -297,7 +295,6 @@ Diversity.browser = {
 /**
  * Diversity 公共能力
  *
- * @namespace Huazie
  * @class utils
  */
 Diversity.utils = {
@@ -463,4 +460,68 @@ Diversity.utils = {
             }
         });
     }
+};
+
+/**
+ * 常用正则表达式验证
+ *
+ * @class validate
+ */
+Diversity.validate = {
+
+    /**
+     * Current object name
+     *
+     * @method toString
+     * @return {String} 'Diversity.validate'
+     */
+    toString: function () {
+        return "Diversity.validate";
+    },
+    /**
+     * 正则集
+     *
+     * @type {Object}
+     * @class regExp
+     */
+    regExp: {
+        num: "^([+-]?)\\d*\\.?\\d+$",       // 数字
+        pNum: "^\\d+(\\.\\d+)?$",           // 正数
+        nNum: "^(\\-?)\\d+(\\.\\d+)?$",     // 负数
+        integer: "^-?[1-9]\\d*$",           // 整数
+        pInteger: "^[1-9]\\d*$",            // 正整数
+        nInteger: "^-[1-9]\\d*$",           // 负整数
+        nnInteger: "^[1-9]\\d*|0$",         // 非负整数（正整数 + 0）
+        npInteger: "^-[1-9]\\d*|0$",        // 非正整数（负整数 + 0）
+        float: "^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$",    // 浮点数
+        pFloat: "^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$",                 // 正浮点数
+        nFloat: "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$",                  // 负浮点数
+        nnFloat: "^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0$",      // 非负浮点数（正浮点数 + 0）
+        npFloat: "^(-([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*))|0?\\.0+|0$", // 非正浮点数（负浮点数 + 0）
+        phone: /^(13[0-9]|14[5-9]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[89])\d{8}$/,       // 手机号码
+        email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,         // 邮箱账号
+        url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$",   // Http地址
+    },
+    /**
+     * 正则表达式开始校验
+     *
+     * @method test
+     * @param {String} type 验证类型
+     * @param {String} value 验证值
+     */
+    test: function (type, value) {
+        var _exp = this.regExp[type];
+        if (!_exp) {
+            alert("The expression " + type + " is not in regExp");
+            return false;
+        }
+        var exp;
+        if (typeof _exp == "string") {
+            exp = new RegExp(_exp);
+        } else {
+            exp = _exp;
+        }
+        return exp.test(value);
+    }
+
 };

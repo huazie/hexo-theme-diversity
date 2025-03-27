@@ -1,0 +1,61 @@
+if (hexo-config('gitalk.enable')) {
+    .gt-header a, .gt-comments a, .gt-popup a {
+        border-bottom: 0;
+    }
+
+    .gt-container .gt-popup .gt-action.is--active::before {
+        top: .7em;
+    }
+
+    .gt-container .gt-no-init {
+        color: var(--text-color) !important;
+    }
+
+    .gt-container .gt-svg {
+        fill: currentColor;
+    }
+
+    .gt-container .gt-counts, 
+    .gt-container .gt-user-name,
+    .gt-container .gt-version,
+    .gt-container .gt-header-preview,
+    .gt-container .gt-comments-null {
+        color: var(--text-color) !important;
+    }
+
+    .gt-container .gt-popup {
+        background: var(--content-bg-color) !important;
+    }
+
+    .gt-container .gt-header-textarea {
+        background-color: var(--selected-bg-color) !important;
+    }
+
+    .gt-container .gt-header-preview {
+        background-color: var(--gt-header-preview-bg-color) !important;
+    }
+
+    .gt-container .gt-btn-preview {
+        background-color: var(--gt-btn1-bg-color) !important;
+    }
+
+    .gt-container .gt-btn-preview:hover {
+        background-color: var(--gt-btn1-hover-bg-color) !important;
+    }
+
+    .gt-container .gt-btn-login {
+        background-color: var(--gt-btn-bg-color) !important;
+    }
+
+    .gt-container .gt-btn-login:hover {
+        background-color: var(--gt-btn-hover-bg-color) !important;
+    }
+
+    .gt-container .gt-comment-admin .gt-comment-content {
+        background-color: var(--gt-admin-comment-bg-color) !important;
+    }
+
+    .gt-container .gt-comment-content {
+        background-color: var(--gt-comment-bg-color) !important;
+    }
+}

@@ -1,7 +1,7 @@
 const loadUtterances = () => {
     // 加载评论模块
     Diversity.utils.loadComments('.utterances-container')
-        .then(() => Diversity.utils.getScript('https://utteranc.es/client.js', {
+        .then(() => Diversity.utils.getScript(config.utterances.js, {
             attributes: {
                 async: true,
                 crossOrigin: 'anonymous',

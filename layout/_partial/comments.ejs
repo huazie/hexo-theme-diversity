@@ -4,6 +4,32 @@
         <% if (theme.injects.comment.length === 1) { %>
         <% const inject_item = theme.injects.comment[0] %>
         <%- partial(inject_item.layout, inject_item.locals, inject_item.options) %>
+        <% } else if (theme.injects.comment.length > 1) { %>
+            <% if (theme.comments.style == 'tabs') { %>
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <% for (var i = 0; i < theme.injects.comment.length; i++) { %>
+                            <% const inject_item = theme.injects.comment[i] %>
+                            <li class="<%= inject_item.locals.active %>">
+                                <a data-toggle="tab" href="#comment-<%= inject_item.locals.class %>">
+                                    <%= inject_item.locals.label %>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+
+                    <div class="tab-content">
+                        <% for (var i = 0; i < theme.injects.comment.length; i++) { %>
+                            <% const inject_item = theme.injects.comment[i] %>
+                            <div id="comment-<%= inject_item.locals.class %>" 
+                                class="tab-pane <%= inject_item.locals.active %>">
+                                <%- partial(inject_item.layout, inject_item.locals, inject_item.options) %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+            <%- js('js/bootstrap-3.0.0.min') %>
         <% } %>
     </div>
 </div>
