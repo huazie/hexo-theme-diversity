@@ -84,6 +84,8 @@ back2top:
   exclude: [next]
 
 comments:
+  style: tabs
+  active:
   lazyload: false
 
 utterances:
@@ -92,6 +94,18 @@ utterances:
   issue_term: pathname
   theme: github-light
   dark: github-dark
+
+gitalk:
+  enable: false
+  github_id: 
+  repo: 
+  client_id: 
+  client_secret: 
+  admin_user: 
+  distraction_free_mode: true
+  proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
+  issue_term: pathname
+  language:
 ```
 
 - **title** - Default Title of Diversity Theme
@@ -115,6 +129,8 @@ utterances:
   - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is touched.
   - **exclude** - Excluded themes do not display the b2t button.
 - **comments** - Comment System Configuration
+  - **style** - Choose a default display style for comment systems with multiple enabled. Available values: tabs
+  - **active** - Choose a comment system to be displayed by default. Available values: utterances | gitalk
   - **lazyload** - Enable Lazy Loading for Comments, Available values: `true` | `false`
 - **utterances** - Utterances Configuration, For more information: https://utteranc.es
   - **enable** - Whether to enable. Available values: `true` | `false`
@@ -124,10 +140,25 @@ utterances:
     - **url** - Issue title contains page URL. Utterances will search for an issue whose title contains the blog post's URL. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **title** - Issue title contains page title. Utterances will search for an issue whose title contains the blog post's title. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **og:title** - Issue title contains page `og:title`，Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
-    - **issue number** - Specific issue number. You configure Utterances to load a specific issue by number. Issues are not automatically created.
-    - **other value** - Issue title contains specific term. You configure Utterances to search for an issue whose title contains a specific term of your choosing. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. The issue's title will be the term you chose.
+    - **`issue number`** - Specific issue number. You configure Utterances to load a specific issue by number. Issues are not automatically created.
+    - **`other value`** - Issue title contains specific term. You configure Utterances to search for an issue whose title contains a specific term of your choosing. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. The issue's title will be the term you chose.
   - **theme** - Utterances default theme, Available values: `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
   - **dark** - Utterances dark theme
+- **gitalk** - Gitalk Configuration, For more information: https://gitalk.github.io/
+  - **enable** - Whether to enable. Available values: `true` | `false`
+  - **github_id** - GitHub repo owner
+  - **repo** - Repository name to store issues
+  - **client_id** - GitHub Application Client ID
+  - **client_secret** - GitHub Application Client Secret
+  - **admin_user** - GitHub repo owner and collaborators, only these guys can initialize gitHub issues.
+  - **distraction_free_mode** - Facebook-like distraction free mode
+  - **proxy** - Proxy Address. When the official proxy is not available, you can change it to your own proxy address.
+  - **issue_term** - Issue Matching Rule, Available values: pathname | url | title | `issue number`
+    - **pathname** - Issue's Labels includes the page pathname
+    - **url** - Issue's Labels includes the page url
+    - **title** - Issue's Labels includes the page title
+    - **`issue number`** - Specific issue number. You configure Gitalk to load a specific issue by number.
+  - **language** - Gitalk's display language depends on user's browser or system environment. If you want everyone visiting your site to see a uniform language, you can set a force language value. Available values: zh-CN | zh-TW | en | es-ES | fr | ru 
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 

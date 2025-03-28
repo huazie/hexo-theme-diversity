@@ -86,6 +86,8 @@ back2top:
   exclude: [next]
 
 comments:
+  style: tabs
+  active:
   lazyload: false
 
 utterances:
@@ -94,6 +96,18 @@ utterances:
   issue_term: pathname
   theme: github-light
   dark: github-dark
+
+gitalk:
+  enable: false
+  github_id: 
+  repo: 
+  client_id: 
+  client_secret: 
+  admin_user: 
+  distraction_free_mode: true
+  proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
+  issue_term: pathname
+  language:
 ```
 
 - **title** - Diversity主题默认标题
@@ -117,6 +131,8 @@ utterances:
   - **color** - 鼠标悬浮或用户触摸时，返回顶部按钮的内容所展示的颜色
   - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
 - **comments** - 评论系统配置
+  - **style** - 多个评论系统启用时，选择一个默认展示风格。可选值：tabs 【选项卡】 
+  - **active** - 选择一个默认显示的评论系统。可选值：utterances | gitalk
   - **lazyload** - 是否懒加载评论系统，可选值： `true` | `false`
 - **utterances** - Utterances 配置，更多信息查看：https://utteranc.es
   - **enable** - 是否启用，可选值： `true` | `false`
@@ -126,10 +142,25 @@ utterances:
     - **url** - issue标题包含页面URL。Utterances 会搜索标题包含页面URL 的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
     - **title** - issue标题包含页面标题。Utterances 会搜索标题包含页面标题的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
     - **og:title** - issue标题包含页面 `og:title`。Utterances 会搜索标题包含页面 Open Graph 标题元数据的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
-    - **issue number** - 特定issue编号。您可以通过编号配置 Utterances 以加载特定issue。不会自动创建issue。
+    - **`issue number`** - 特定issue编号。您可以通过编号配置 Utterances 以加载特定issue。不会自动创建issue。
     - **specific term** - issue标题包含特定术语。您可以配置 Utterances 以搜索标题包含您配置的特定术语的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个，且该issue的标题将是您设置的术语。
   - **theme** - Utterances 默认主题，可选值： `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
   - **dark** - Utterances 深色主题
+- **gitalk** - Gitalk 配置，更多信息查看：https://gitalk.github.io/
+  - **enable** - 是否启用，可选值： `true` | `false`
+  - **github_id** - GitHub 仓库所有者
+  - **repo** - 用于存储评论issues的 GitHub 仓库名
+  - **client_id** - GitHub 应用客户端 ID
+  - **client_secret** - GitHub 应用客户端密钥
+  - **admin_user** - GitHub 仓库所有者和协作者，只有这些人可以创建 GitHub issues。
+  - **distraction_free_mode** - 类似 Facebook 的免打扰模式
+  - **proxy** - 代理地址。当官方代理不可用时，您可以将其更改为自己的代理地址。
+  - **issue_term** - 指定issue的匹配规则，可选值： pathname | url | title | `issue number`
+    - **pathname** - issue的标签包含页面路径名。
+    - **url** - issue的标签包含页面URL。
+    - **title** - issue的标签包含页面标题。
+    - **issue number** - 特定issue编号。您可以通过编号配置 Gitalk 以加载特定issue。
+  - **language** - Gitalk 的显示语言取决于用户的浏览器或系统环境。如果您希望所有访问您网站的用户看到统一的语言，您可以设置一个强制语言值。 可选值：zh-CN | zh-TW | en | es-ES | fr | ru 
 
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录
 
