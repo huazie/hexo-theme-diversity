@@ -98,7 +98,7 @@ gitalk:
   # GitHub 仓库所有者
   # GitHub repo owner 
   github_id: 
-  # 用于存储评论issues的仓库名
+  # 用于存储评论issues的GitHub仓库名
   # Repository name to store issues
   repo: 
   # GitHub 应用客户端 ID
@@ -107,7 +107,7 @@ gitalk:
   # GitHub 应用客户端密钥
   # GitHub Application Client Secret
   client_secret: 
-  # GitHub 仓库所有者和协作者，只有这些人可以创建 GitHub 问题。
+  # GitHub 仓库所有者和协作者，只有这些人可以创建 GitHub issues。
   # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   admin_user: 
   # 类似 Facebook 的免打扰模式
