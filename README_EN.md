@@ -151,7 +151,7 @@ gitalk:
   - **client_id** - GitHub Application Client ID
   - **client_secret** - GitHub Application Client Secret
   - **admin_user** - GitHub repo owner and collaborators, only these guys can initialize gitHub issues.
-  - **distraction_free_mode** - Facebook-like distraction free mode
+  - **distraction_free_mode** - Facebook-like distraction free mode. Available values: `true` | `false`
   - **proxy** - Proxy Address. When the official proxy is not available, you can change it to your own proxy address.
   - **issue_term** - Issue Matching Rule, Available values: pathname | url | title | `issue number`
     - **pathname** - Issue's Labels includes the page pathname
