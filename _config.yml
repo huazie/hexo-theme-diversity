@@ -65,7 +65,19 @@ comments:
   # Available values: utterances | gitalk 
   active:
   # 是否懒加载评论系统【true：是 false：否】
+  # Lazyload all comment systems. Available values: true | false
   lazyload: false
+  # 调整导航元素的展示文本或顺序
+  # Modify texts or order for navigation elements
+  nav:
+    # 评论系统名，参考下方各评论系统定义
+    #utterances:
+    # 导航元素的展示文本
+    #  text: Utterances
+    # 导航元素的展示顺序
+    #  order: 0
+    #gitalk:
+    #  order: 1
 
 # Utterances
 # 一个由开源社区构建的评论插件，它提供了一种在博客、文章或任何静态网站上添加互动式评论功能的高效解决方案。

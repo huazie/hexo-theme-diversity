@@ -87,6 +87,12 @@ comments:
   style: tabs
   active:
   lazyload: false
+  nav:
+    #utterances:
+    #  text: Utterances
+    #  order: 0
+    #gitalk:
+    #  order: 1
 
 utterances:
   enable: false
@@ -124,14 +130,18 @@ gitalk:
 - **back2top** - B2t Configuration
   - **enable** - Whether to enable. Available values: `true` | `false`
   - **enable_scroll_percent** - Whether to enable displaying the scroll percent label in b2t button. Available values: `true` | `false`
-  - **scroll_percent** - Minimum scroll percentage to display the b2t button, recommended values: 2 | 3 | 4 | 5
+  - **scroll_percent** - Minimum scroll percentage to display the b2t button, recommended values: `2` | `3` | `4` | `5`
   - **position** - B2t button position. Available values: `left` | `right`
   - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is touched.
   - **exclude** - Excluded themes do not display the b2t button.
 - **comments** - Comment System Configuration
   - **style** - Choose a default display style for comment systems with multiple enabled. Available values: tabs
-  - **active** - Choose a comment system to be displayed by default. Available values: utterances | gitalk
+  - **active** - Choose a comment system to be displayed by default. Available values: `utterances` | `gitalk`
   - **lazyload** - Enable Lazy Loading for Comments, Available values: `true` | `false`
+  - **nav** - Modify texts or order for navigation elements
+    - **`utterances`** - Comment system name (Refer to existing comment system definitions).
+      - **text** - Display text for the navigation element [Optional]. Defaults to the comment system name.
+      - **order** - Display order of the navigation element (higher numbers appear later).
 - **utterances** - Utterances Configuration, For more information: https://utteranc.es
   - **enable** - Whether to enable. Available values: `true` | `false`
   - **repo** - Github repository owner and name

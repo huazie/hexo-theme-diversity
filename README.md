@@ -89,6 +89,12 @@ comments:
   style: tabs
   active:
   lazyload: false
+  nav:
+    #utterances:
+    #  text: Utterances
+    #  order: 0
+    #gitalk:
+    #  order: 1
 
 utterances:
   enable: false
@@ -126,14 +132,18 @@ gitalk:
 - **back2top** - 返回顶部按钮配置
   - **enable** - 是否启用，可选值： `true` | `false`
   - **enable_scroll_percent** - 返回顶部按钮中是否启用展示滚动百分比，可选值： `true` | `false`
-  - **scroll_percent** - 展示返回顶部按钮的最少滚动百分比，建议值： 2 | 3 | 4 | 5
+  - **scroll_percent** - 展示返回顶部按钮的最少滚动百分比，建议值： `2` | `3` | `4` | `5`
   - **position** - 返回顶部按钮展示位置，可选值： `left` | `right`
   - **color** - 鼠标悬浮或用户触摸时，返回顶部按钮的内容所展示的颜色
   - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
 - **comments** - 评论系统配置
   - **style** - 多个评论系统启用时，选择一个默认展示风格。可选值：tabs 【选项卡】 
-  - **active** - 选择一个默认显示的评论系统。可选值：utterances | gitalk
+  - **active** - 选择一个默认显示的评论系统。可选值：`utterances` | `gitalk`
   - **lazyload** - 是否懒加载评论系统，可选值： `true` | `false`
+  - **nav** - 调整导航元素的展示文本或顺序
+    - **`utterances`** - 评论系统名，参考各评论系统定义即可
+      - **text** - 导航元素的展示文本【选填】，默认为评论系统名
+      - **order** - 导航元素的展示顺序【数字越大，展示越靠后】
 - **utterances** - Utterances 配置，更多信息查看：https://utteranc.es
   - **enable** - 是否启用，可选值： `true` | `false`
   - **repo** - GitHub仓库所有者和名称
