@@ -10,7 +10,7 @@ hexo.extend.filter.register('theme_inject', injects => {
         element.args[0] = Object.assign({
             configKey: injectName,
             class: injectName,
-            label: injectName
+            text: injectName
         }, element.args[0]);
 
         const locals = element.args[0];
@@ -28,7 +28,7 @@ hexo.extend.filter.register('theme_inject', injects => {
             }
             // 文本
             if (nav.text) {
-                locals.label = nav.text;
+                locals.text = nav.text;
             }
         }
     });
