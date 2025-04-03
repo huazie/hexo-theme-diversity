@@ -1,0 +1,42 @@
+$spinner-size = 40px
+$border-width = 4px
+$transition-dur = 0.3s
+
+.loading-indicator
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    text-align: center
+    z-index: 10
+    transition: opacity $transition-dur
+    will-change: opacity
+
+    .spinner
+        width: $spinner-size
+        height: $spinner-size
+        margin: 0 auto 10px
+        border: $border-width solid #f3f3f3
+        border-top-color: #3498db
+        border-radius: 50%
+        animation: spin 1s linear infinite
+
+    span
+        color: var(--text-color)
+
+    &.hidden
+        opacity: 0
+        pointer-events: none
+
+@keyframes spin
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+// 检测用户设备/系统设置中是否启用了「减少动态效果」选项
+@media (prefers-reduced-motion: reduce)
+    .spinner
+        animation: none
+    .loading-indicator
+        transition: none

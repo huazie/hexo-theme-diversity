@@ -25,6 +25,9 @@ page:
   back_to_top: Back to Top
   last_updated: "Last updated: %s"
 
+loading-tips:
+  comment: Loading comments...
+
 introduction:
   landscape: A brand new default theme for Hexo.
   phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.

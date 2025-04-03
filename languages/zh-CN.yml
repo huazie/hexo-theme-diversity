@@ -25,6 +25,9 @@ page:
   back_to_top: 回到顶部
   last_updated: 上次更新：%s
 
+loading-tips:
+  comment: 评论正在加载中...
+
 # 主题介绍【如果没有配置，则不展示介绍】
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
