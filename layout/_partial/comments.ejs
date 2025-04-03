@@ -2,8 +2,11 @@
 <div class = "comment-wrap">
     <div class = "comment-inner">
         <% if (theme.injects.comment.length === 1) { %>
-        <% const inject_item = theme.injects.comment[0] %>
-        <%- partial(inject_item.layout, inject_item.locals, inject_item.options) %>
+            <% const inject_item = theme.injects.comment[0] %>
+                <% if (inject_item.locals.showLoading) { %>
+                    <%- partial('_partial/loading', {id : 'loading-' + inject_item.locals.configKey, text : __('loading-tips.comment')}) %>
+                <% } %>
+            <%- partial(inject_item.layout, inject_item.locals, inject_item.options) %>
         <% } else if (theme.injects.comment.length > 1) { %>
             <% if (theme.comments.style == 'tabs') { %>
                 <div class="tabbable">
@@ -23,6 +26,9 @@
                             <% const inject_item = theme.injects.comment[i] %>
                             <div id="comment-<%= inject_item.locals.class %>" 
                                 class="tab-pane <%= inject_item.locals.active %>">
+                                <% if (inject_item.locals.showLoading) { %>
+                                    <%- partial('_partial/loading', {id : 'loading-' + inject_item.locals.configKey, text : __('loading-tips.comment')}) %>
+                                <% } %>
                                 <%- partial(inject_item.layout, inject_item.locals, inject_item.options) %>
                             </div>
                         <% } %>

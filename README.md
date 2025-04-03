@@ -98,6 +98,7 @@ comments:
 
 utterances:
   enable: false
+  loading: true
   repo: user-name/repo-name
   issue_term: pathname
   theme: github-light
@@ -146,6 +147,7 @@ gitalk:
       - **order** - 导航元素的展示顺序【数字越大，展示越靠后】
 - **utterances** - Utterances 配置，更多信息查看：https://utteranc.es
   - **enable** - 是否启用，可选值： `true` | `false`
+  - **loading** - 是否启用加载提示，可选值：`true` | `false`
   - **repo** - GitHub仓库所有者和名称
   - **issue_term** - 指定issue的匹配规则，可选值： `pathname` | `url` | `title` | `og:title` | `issue number` | `specific term`
     - **pathname** - issue标题包含页面路径名。Utterances 会搜索标题包含页面路径名的issue。如果未找到匹配的议题，当有人首次发表评论时，Utterances 将自动创建一个。
@@ -212,6 +214,14 @@ no-theme:
   tip-text: 您还没有设置默认主题！点击下方按钮前往设置
   btn-text: 主题选择
 
+page:
+  contents: 目录
+  back_to_top: 回到顶部
+  last_updated: 上次更新：%s
+
+loading-tips:
+  comment: 评论正在加载中...
+
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
   phase: 通过 Phase，感受时间流逝，它是 Hexo 最美丽的主题。
@@ -222,6 +232,8 @@ introduction:
 - **button** - 按钮文本
 - **gritter** - 主题选择页的提示文本
 - **no-theme** - 无主题页的文本
+- **page** - 页面相关文本
+- **loading-tips** - 加载提示文本
 - **introduction** - 主题介绍【如果没有配置，则不展示介绍】
 
 ### 多主题相关配置
