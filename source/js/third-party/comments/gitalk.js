@@ -21,7 +21,7 @@ const loadGitalk = () => {
         .then(() => {
             if (gitalkId)
                 Diversity.log("GitHub issue label is [" + gitalkId + "]");
-            const gitalk = new Gitalk({
+            let confgObj = {
                 clientID: config.gitalk.client_id,
                 clientSecret: config.gitalk.client_secret,
                 repo: config.gitalk.repo,
@@ -31,9 +31,11 @@ const loadGitalk = () => {
                 labels: [],
                 number: number,
                 proxy: config.gitalk.proxy,
-                language: config.gitalk.language,
                 distractionFreeMode: config.gitalk.distraction_free_mode
-            });
+            }
+            if (config.gitalk.language)
+                confgObj.language = config.gitalk.language;
+            const gitalk = new Gitalk(confgObj);
             gitalk.render(document.querySelector('.gitalk-container'));
         });
 }
