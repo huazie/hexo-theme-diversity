@@ -1,5 +1,7 @@
-<!-- 加载提示 -->
-<div id="<%= id %>" class="loading-indicator">
-    <div class="spinner"></div>
-    <span><%= text %></span>
-</div>
+<% if (showLoading) { %>
+    <!-- 加载提示 -->
+    <div id="<%= id %>" class="loading-indicator">
+        <div class="spinner"></div>
+        <span><%= text %></span>
+    </div>
+<% } %>
