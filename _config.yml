@@ -61,8 +61,8 @@ comments:
   style: tabs
   # 选择一个默认显示的评论系统
   # Choose a comment system to be displayed by default.
-  # 可选值：utterances | gitalk
-  # Available values: utterances | gitalk 
+  # 可选值：utterances | gitalk | giscus
+  # Available values: utterances | gitalk | giscus
   active:
   # 是否懒加载评论系统【true：是 false：否】
   # Lazyload all comment systems. Available values: true | false
@@ -143,3 +143,70 @@ gitalk:
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
   language:
+
+# Giscus
+# 一个利用 GitHub Discussions 实现的评论系统
+# For more information: https://giscus.app/
+giscus:
+  # 可选值：true 【启用】 | false 【禁用】
+  # Available values: true | false
+  enable: false
+  # 是否启用加载提示，可选值：true | false
+  # Whether to enable loading indicator, Available values: true | false
+  loading: true
+  # GitHub 仓库名称，指定评论数据存储在哪个 GitHub 仓库的 Discussions 中。
+  # Github repository name
+  repo: your-username/your-repo-name
+  # GitHub 仓库的唯一ID
+  # 调用 GitHub API https://api.github.com/repos/your-username/your-repo-name，
+  # 返回的 JSON 中 node_id 字段即为仓库 ID
+  # Github repository id
+  repo_id: 
+  # GitHub Discussions 分类名称。将评论归类到特定讨论板块，方便管理
+  # Github discussion category
+  category: 
+  # Discussions 分类的唯一 ID。 需从 GitHub 获取，与 category 配合使用
+  # Github discussion category id
+  category_id: 
+  # 指定GitHub discussion的匹配规则
+  # 可选值： pathname | url | title | og:title | specific
+  # Available values: pathname | url | title | og:title | specific
+  mapping: pathname
+  # 当 mapping 为 specific 时，该值必须配置，如下：
+  # - Discussion 的标题包含特定字符串
+  # - 特定 discussion 号
+  term: 
+  # 当 mapping 为 pathname 或 url 时，是否启用严格匹配 
+  # 可选值:
+  # 0-允许路径前缀匹配（如 https://example.com/post 匹配 https://example.com/post/1）
+  # 1-仅完全匹配路径或 URL
+  # Available values: 0 | 1
+  strict: 0
+  # 是否启用主帖子上的反应。启用后，Discussion 的主帖子上的反应将会显示在评论前
+  # 可选值：0（关闭）| 1（启用）
+  # Available values: 0 | 1
+  reactions_enabled: 1
+  # 是否向 GitHub 发送页面元数据（如标题、URL）
+  # 可选值：0（不发送）| 1（发送）
+  # Available values: 0 | 1
+  emit_metadata: 0
+  # 评论区的主题样式(默认主题)
+  # 可选值：light | light_high_contrast | light_protanopia | light_tritanopia | dark | dark_high_contrast | dark_protanopia | dark_tritanopia | dark_dimmed | preferred_color_scheme | transparent_dark | noborder_light | noborder_dark | noborder_gray | cobalt | purple_dark
+  # Available values: light | light_high_contrast | light_protanopia | light_tritanopia | dark | dark_high_contrast | dark_protanopia | dark_tritanopia | dark_dimmed | preferred_color_scheme | transparent_dark | noborder_light | noborder_dark | noborder_gray | cobalt | purple_dark
+  theme: light
+  # 深色主题
+  # Dark Theme
+  dark: dark
+  # 评论区的语言（界面文本） 如果配置为空，则取 window.navigator.language
+  # 可选值：en | es-ES | fr | ru | zh-CN | zh-TW
+  # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
+  lang: 
+  # 评论输入框的位置
+  # 可选值：
+  # bottom-将评论输入框固定在页面的底部（评论列表下方）
+  # top-将评论输入框固定在页面的顶部（评论列表上方）
+  # Place the comment box above the comments
+  input_position: bottom
+  # 懒加载评论
+  # Load the comments lazily
+  data_loading: lazy

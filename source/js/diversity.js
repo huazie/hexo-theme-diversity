@@ -123,9 +123,11 @@ Diversity = {
      * console.log方法(兼容IE)
      *
      * @method log
-     * @param {String} text
+     * @param {String|Object} text
      */
     log(text) {
+        if (typeof text === 'object' )
+            text = JSON.stringify(text);
         window.console && console.log(text);
     }
 };
