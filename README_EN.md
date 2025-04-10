@@ -113,6 +113,24 @@ gitalk:
   proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
   issue_term: pathname
   language:
+
+giscus:
+  enable: false
+  loading: true
+  repo: your-username/your-repo-name
+  repo_id: 
+  category: 
+  category_id: 
+  mapping: pathname
+  term: 
+  strict: 0
+  reactions_enabled: 1
+  emit_metadata: 0
+  theme: light
+  dark: dark
+  lang: 
+  input_position: bottom
+  data_loading: lazy
 ```
 
 - **title** - Default Title of Diversity Theme
@@ -148,10 +166,10 @@ gitalk:
   - **loading** - Whether to enable loading indicator, Available values: `true` | `false`
   - **repo** - Github repository owner and name
   - **issue_term** - Issue Matching Rule, Available values: `pathname` | `url` | `title` | `og:title` | `issue number` | `specific term`
-    - **pathname** - Issue title contains page pathname. Utterances will search for an issue whose title contains the blog post's pathname URL component. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
-    - **url** - Issue title contains page URL. Utterances will search for an issue whose title contains the blog post's URL. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
-    - **title** - Issue title contains page title. Utterances will search for an issue whose title contains the blog post's title. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
-    - **og:title** - Issue title contains page `og:title`，Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
+    - **`pathname`** - Issue title contains page pathname. Utterances will search for an issue whose title contains the blog post's pathname URL component. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
+    - **`url`** - Issue title contains page URL. Utterances will search for an issue whose title contains the blog post's URL. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
+    - **`title`** - Issue title contains page title. Utterances will search for an issue whose title contains the blog post's title. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
+    - **`og:title`** - Issue title contains page `og:title`，Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post.
     - **`issue number`** - Specific issue number. You configure Utterances to load a specific issue by number. Issues are not automatically created.
     - **`other value`** - Issue title contains specific term. You configure Utterances to search for an issue whose title contains a specific term of your choosing. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. The issue's title will be the term you chose.
   - **theme** - Utterances default theme, Available values: `github-light` | `github-dark` | `preferred-color-scheme` | `github-dark-orange` | `icy-dark` | `dark-blue` | `photon-dark` | `boxy-light`
@@ -165,12 +183,38 @@ gitalk:
   - **admin_user** - GitHub repo owner and collaborators, only these guys can initialize gitHub issues.
   - **distraction_free_mode** - Facebook-like distraction free mode. Available values: `true` | `false`
   - **proxy** - Proxy Address. When the official proxy is not available, you can change it to your own proxy address.
-  - **issue_term** - Issue Matching Rule, Available values: pathname | url | title | `issue number`
-    - **pathname** - Issue's Labels includes the page pathname
-    - **url** - Issue's Labels includes the page url
-    - **title** - Issue's Labels includes the page title
+  - **issue_term** - Issue Matching Rule, Available values: `pathname` | `url` | `title` | `issue number`
+    - **`pathname`** - Issue's Labels includes the page pathname
+    - **`url`** - Issue's Labels includes the page url
+    - **`title`** - Issue's Labels includes the page title
     - **`issue number`** - Specific issue number. You configure Gitalk to load a specific issue by number.
-  - **language** - Gitalk's display language depends on user's browser or system environment. If you want everyone visiting your site to see a uniform language, you can set a force language value. Available values: zh-CN | zh-TW | en | es-ES | fr | ru 
+  - **language** - Gitalk's display language depends on user's browser or system environment. If you want everyone visiting your site to see a uniform language, you can set a force language value. Available values: `zh-CN` | `zh-TW` | `en` | `es-ES` | `fr` | `ru` 
+- **giscus** - Giscus 配置，更多信息查看：https://giscus.app/
+  - **enable** - Whether to enable. Available values: `true` | `false`
+  - **loading** - Whether to enable loading indicator, Available values: `true` | `false`
+  - **repo** - Github repository name, This repo is where the discussions will be linked to.
+  - **repo_id** - Github repository id. Users can preview the `<script>` content by entering their repository details on [giscus.app](https://giscus.app/)
+  - **category** - Github discussion category. When searching for a matching discussion, giscus will only search in this category. Available values: `Announcements` | `General` | `Ideas` | `Polls` | `Q&A` | `Show and tell`
+  - **category_id** - Github discussion category id. Users can view the `<script>` content by selecting a Discussion category on [giscus.app](https://giscus.app/)
+  - **mapping** - Page ↔️ Discussions Mapping Rules, Available values: `pathname` | `url` | `title` | `og:title` | `specific`
+    - **`pathname`** - Discussion title contains page pathname. Giscus will search for a discussion whose title contains the page's pathname URL component.
+    - **`url`** - Discussion title contains page URL. Giscus will search for a discussion whose title contains the page's URL.
+    - **`title`** - Discussion title contains page `<title>`. Giscus will search for a discussion whose title contains the page's `<title>` HTML tag.
+    - **`og:title`** - Discussion title contains page og:title. Giscus will search for a discussion whose title contains the page's `<meta property="og:title">` HTML tag.
+    - **`specific`** - Specifically designated to be used in conjunction with the term configuration property.
+  - **term** - When `mapping` is set to `specific`, the `term` property is required and must be configured as follows:
+    - Discussion title contains a specific term.
+    - Specific discussion number. This option does not support automatic discussion creation.
+  - **strict** - Whether to use strict title matching. Avoid mismatches due to GitHub's fuzzy searching method when there are multiple discussions with similar titles. Available values: 0 | 1
+  - **reactions_enabled** - Whether to enable reactions for the main post. The reactions for the discussion's main post will be shown before the comments. Available values: 0 | 1
+  - **emit_metadata** - Whether to emit discussion metadata. Discussion metadata will be sent periodically to the parent window (the embedding page). 
+  - **theme** - Giscus default theme, Available values: `light` | `light_high_contrast` | `light_protanopia` | `light_tritanopia` | `dark` | `dark_high_contrast` | `dark_protanopia` | `dark_tritanopia` | `dark_dimmed` | `preferred_color_scheme` | `transparent_dark` | `noborder_light` | `noborder_dark` | `noborder_gray` | `cobalt` | `purple_dark`
+  - **dark** - Giscus dark theme
+  - **lang** - The interface language of the comment section (displayed text). If not configured, it defaults to `window.navigator.language`. Available values: `zh-CN` | `zh-TW` | `en` | `es-ES` | `fr` | `ru` 
+  - **input_position** - Comment input position, Available values: 
+    - **`bottom`** - The comment input box will be placed below the comments
+    - **`top`** - The comment input box will be placed above the comments, so that users can leave a comment without scrolling to the bottom of the discussion.
+  - **data_loading** - Load the comments lazily. Loading of the comments will be deferred until the user scrolls near the comments container. This is done by adding loading="lazy" to the `<iframe>` element.
 
 Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
 

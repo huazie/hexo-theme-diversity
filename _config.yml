@@ -176,18 +176,16 @@ giscus:
   # - Discussion 的标题包含特定字符串
   # - 特定 discussion 号
   term: 
-  # 当 mapping 为 pathname 或 url 时，是否启用严格匹配 
-  # 可选值:
-  # 0-允许路径前缀匹配（如 https://example.com/post 匹配 https://example.com/post/1）
-  # 1-仅完全匹配路径或 URL
+  # 是否启用严格的标题匹配。当有多个具有相似标题的讨论时，避免由于 GitHub 的模糊搜索方法而导致的不匹配。
+  # 可选值: 0（关闭）| 1（启用）
   # Available values: 0 | 1
   strict: 0
   # 是否启用主帖子上的反应。启用后，Discussion 的主帖子上的反应将会显示在评论前
   # 可选值：0（关闭）| 1（启用）
   # Available values: 0 | 1
   reactions_enabled: 1
-  # 是否向 GitHub 发送页面元数据（如标题、URL）
-  # 可选值：0（不发送）| 1（发送）
+  # 是否输出 discussion 的元数据。Discussion 的元数据将定期被发送到父页面（被嵌入的页面）。
+  # 可选值：0（否）| 1（是）
   # Available values: 0 | 1
   emit_metadata: 0
   # 评论区的主题样式(默认主题)
@@ -198,8 +196,8 @@ giscus:
   # Dark Theme
   dark: dark
   # 评论区的语言（界面文本） 如果配置为空，则取 window.navigator.language
-  # 可选值：en | es-ES | fr | ru | zh-CN | zh-TW
-  # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
+  # 可选值：zh-CN | zh-TW | en | es-ES | fr | ru 
+  # Available values: zh-CN | zh-TW | en | es-ES | fr | ru 
   lang: 
   # 评论输入框的位置
   # 可选值：
