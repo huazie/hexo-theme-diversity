@@ -86,6 +86,7 @@ back2top:
 comments:
   style: tabs
   active:
+  storage: true
   lazyload: false
   nav:
     #utterances:
@@ -156,6 +157,7 @@ giscus:
 - **comments** - Comment System Configuration
   - **style** - Choose a default display style for comment systems with multiple enabled. Available values: tabs
   - **active** - Choose a comment system to be displayed by default. Available values: `utterances` | `gitalk`
+  - **storage** - Enable memory of visitor's selected comment system, Available values: `true` | `false` 
   - **lazyload** - Enable Lazy Loading for Comments, Available values: `true` | `false`
   - **nav** - Modify texts or order for navigation elements
     - **`utterances`** - Comment system name (Refer to existing comment system definitions).
