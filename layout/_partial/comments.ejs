@@ -10,11 +10,11 @@
         <% } else if (theme.injects.comment.length > 1) { %>
             <% if (theme.comments.style == 'tabs') { %>
                 <div class="tabbable">
-                    <ul class="nav nav-tabs">
+                    <ul id="comment-nav-tab" class="nav nav-tabs">
                         <% for (var i = 0; i < theme.injects.comment.length; i++) { %>
                             <% const inject_item = theme.injects.comment[i] %>
                             <li class="<%= inject_item.locals.active %>">
-                                <a data-toggle="tab" href="#comment-<%= inject_item.locals.class %>">
+                                <a data-toggle="tab" href="#comment-<%= inject_item.locals.class %>" data-comment="<%= inject_item.locals.class %>">
                                     <%= inject_item.locals.text %>
                                 </a>
                             </li>
@@ -34,6 +34,7 @@
                 </div>
             <% } %>
             <%- js('js/bootstrap-3.0.0.min') %>
+            <%- js('js/tab') %>
         <% } %>
     </div>
 </div>

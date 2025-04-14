@@ -88,6 +88,7 @@ back2top:
 comments:
   style: tabs
   active:
+  storage: true
   lazyload: false
   nav:
     #utterances:
@@ -158,6 +159,7 @@ giscus:
 - **comments** - 评论系统配置
   - **style** - 多个评论系统启用时，选择一个默认展示风格。可选值：tabs 【选项卡】 
   - **active** - 选择一个默认显示的评论系统。可选值：`utterances` | `gitalk`
+  - **storage** - 是否记住访客选择的评论系统，可选值： `true` | `false`。设置为 `true` 意味着记住访客选择的评论系统。
   - **lazyload** - 是否懒加载评论系统，可选值： `true` | `false`
   - **nav** - 调整导航元素的展示文本或顺序
     - **`utterances`** - 评论系统名，参考各评论系统定义即可

@@ -64,6 +64,11 @@ comments:
   # 可选值：utterances | gitalk | giscus
   # Available values: utterances | gitalk | giscus
   active:
+  # 设置为 true 意味着记住访客选择的评论系统。
+  # Setting `true` means remembering the comment system selected by the visitor.
+  # 可选值：true | false
+  # Available values: true | false
+  storage: true
   # 是否懒加载评论系统【true：是 false：否】
   # Lazyload all comment systems. Available values: true | false
   lazyload: false
