@@ -49,6 +49,15 @@ logo-left = 100px
     display none
     flex 1 auto
     padding-left nav-left
+    padding-right nav-left + logo-left
+    // 默认靠左
+    $nav_pos = hexo-config('page.header_nav_position') || 'left';
+    if ($nav_pos == 'left')
+        text-align: left;
+    else if ($nav_pos == 'center')
+        text-align: center;
+    else if ($nav_pos == 'right')
+        text-align: right;
     @media mq-normal
         display block
 
@@ -91,6 +100,7 @@ logo-left = 100px
 transition = all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)
 
 #color-scheme-toggle
+    width logo-size
     background none
     border none
     cursor pointer
