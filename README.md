@@ -146,6 +146,7 @@ giscus:
   - 如果该图片路径未配置，默认取 `/images/default.png`
 - **source** - 主题项目来源【用于主题来源按钮点击跳转】
 - **page** - 页面配置
+  - **header_nav_position** - 顶部导航栏位置【不配置，默认靠左】，可选值：`left`（靠左）| `center`（居中）| `right`（靠右）
   - **blog_scroll_height** - 博客页滚动高度【单位：`px`】
     - 滚动页面高度大于等于配置高度，隐藏菜单导航栏
     - 滚动页面高度小于配置高度，显示菜单导航栏

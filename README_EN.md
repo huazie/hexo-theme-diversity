@@ -144,6 +144,7 @@ giscus:
   - If the image path is not configured, it will default to `/images/default.png`.
 - **source** - Theme Project Source [For button navigation to the source of the theme]
 - **page** - Page Configuration
+  - **header_nav_position** - Position of the top navigation bar, Defaults to left if not configured. Available values: `left` | `center` | `right`
   - **blog_scroll_height** - Scroll Height for Blog Page (Unit: `px`)
     - Hide Menu Navigation Bar when Scroll Height is Greater Than or Equal to Configured Height
     - Show Menu Navigation Bar when Scroll Height is Less Than Configured Height
