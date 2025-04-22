@@ -75,6 +75,7 @@ source:
   light: https://github.com/hexojs/hexo-theme-light
 
 page:
+  header_nav_position: 
   blog_scroll_height: 200
 
 back2top:
