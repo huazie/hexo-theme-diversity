@@ -453,7 +453,7 @@ Diversity.utils = {
                         script.crossOrigin = 'anonymous';
                     }
                 } else {
-                    // / 如果src是字符串类型，直接将其赋值给script元素的src属性，作为脚本的URL地址，用于加载脚本
+                    // 如果src是字符串类型，直接将其赋值给script元素的src属性，作为脚本的URL地址，用于加载脚本
                     script.src = src;
                 }
                 // 根据parentNode的值，将创建好且配置好属性的script元素添加到指定的父节点下。
