@@ -1,6 +1,7 @@
 logo-size = 60px
 nav-left = 25px
 logo-left = 100px
+toggle-right = 20px
 
 #header
     width 100%
@@ -49,7 +50,11 @@ logo-left = 100px
     display none
     flex 1 auto
     padding-left nav-left
-    padding-right nav-left + logo-left
+    $darkmode = hexo-config('darkmode');
+    if ($darkmode == 2)
+        padding-right: nav-left + logo-left;
+    else
+        padding-right: nav-left + logo-left + logo-size + toggle-right;
     // 默认靠左
     $nav_pos = hexo-config('page.header_nav_position') || 'left';
     if ($nav_pos == 'left')
@@ -106,7 +111,7 @@ transition = all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)
     cursor pointer
     border-radius 50%
     transition transition
-    margin-right 20px
+    margin-right toggle-right
     // 用于去除移动端浏览器在用户点击元素时默认显示的高亮效果
     -webkit-tap-highlight-color transparent
     tap-highlight-color transparent
