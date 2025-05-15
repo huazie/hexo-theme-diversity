@@ -2,6 +2,7 @@
 // 导入hexo-fs模块
 const hexo_fs_1 = require("hexo-fs");
 const path_1 = require("path");
+const hexo_util_1 = require("hexo-util");
 
 class Util {
 	/**
@@ -54,6 +55,19 @@ class Util {
 	 */
 	static isCleanCmd(cmd) {
 	    return cmd === 'clean';
+	}
+
+	/**
+	 * 合并主题配置
+	 * 
+	 * @param ctx hexo对象
+	 */
+	static mergeCtxThemeConfig(ctx) {
+	    // Merge hexo.config.theme_config into hexo.theme.config
+	    // config.theme_config has "_config.[theme].yml" merged in load_theme_config.js
+	    if (ctx.config.theme_config) {
+	        ctx.theme.config = (0, hexo_util_1.deepMerge)(ctx.theme.config, ctx.config.theme_config);
+	    }
 	}
 
 }
