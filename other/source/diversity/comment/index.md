@@ -50,6 +50,10 @@ _config.yml
 
 详细了解，请翻看 **Huazie** 的博客分类之 [博客框架-Hexo](../../diversity/blog/?path=/categories/%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6-Hexo/) 中的文章。 
 
+## 版本
+
+详细了解，请查看项目 [Releases](https://github.com/huazie/hexo-theme-diversity/releases)。
+
 ## 问题
 
 反馈 **Bug** 或者咨询使用问题，可以
