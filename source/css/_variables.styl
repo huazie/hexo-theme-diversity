@@ -56,6 +56,39 @@ gutter-width         = 20px
 article-toc-width    = 220px
 mobile-nav-width     = 60%
 
+// Get Font Config
+get_font_config(config, key) {
+    $custom = hexo-config('font.' + config + '.' + key);
+    if $custom is a 'string' {
+    	return unquote($custom);
+    }
+    return null;
+}
+
+// Size
+font-nav-size = 1em
+font-nav-size = get_font_config('nav', 'size') if get_font_config('nav', 'size')
+
+// Font Family
+// Western
+font-western = 'Helvetica Neue', Helvetica, Arial
+font-western = get_font_config('western', 'family'), font-western if get_font_config('western', 'family');
+
+// Chinese
+font-chinese = 'PingFang SC', 'Microsoft YaHei'
+font-chinese = get_font_config('chinese', 'family'), font-chinese if get_font_config('chinese', 'family');
+
+// 无衬线字体（优先西文，中文作为补充）
+font-sans    = font-western, font-chinese, sans-serif
+
+// 导航栏字体
+font-nav     = font-sans
+font-nav     = get_font_config('nav', 'family'), font-sans if get_font_config('nav', 'family');
+
+// 页面字体
+font-page    = font-sans
+font-page    = get_font_config('page', 'family'), font-sans if get_font_config('page', 'family');
+
 // Media queries
 mq-mobile = "screen and (max-width: 768px)"
 mq-normal = "screen and (min-width: 769px)"
