@@ -86,6 +86,17 @@ back2top:
   color: "#fc6423"
   exclude: [next]
 
+font:
+  western:
+    family: 
+  chinese:
+    family: 
+  nav:
+    family: 
+    size: 
+  page:
+    family:
+
 comments:
   style: tabs
   active:
@@ -158,6 +169,20 @@ giscus:
   - **position** - 返回顶部按钮展示位置，可选值： `left` | `right`
   - **color** - 鼠标悬浮或用户触摸时，返回顶部按钮的内容所展示的颜色
   - **exclude** - 被排除主题，配置中的主题不展示返回顶部按钮
+- **font** - 字体配置(优先西文字体，中文字体作为补充)
+  - **western** - 西文字体配置
+    - **family** - 西文字体类型，可选值（常用）： `Arial` | `Helvetica` | `Tahoma` | `Sitka` | `Times New Roman` | `Courier New` | `Verdana` | `Georgia` | `Palatino` | `Garamond` | `Comic Sans MS` | `Trebuchet MS`
+    - 单个场景，如： Arial 或 'Times New Roman' 或 "Times New Roman"
+      - 多个场景，如： 'Tahoma, Times New Roman, Courier New' 或 "Times New Roman, Courier New, Verdana"
+  - **chinese** - 中文字体配置
+    - **family** - 中文字体类型，可选值（常用）： `楷体` | `等线` | `黑体` | `宋体` | `仿宋`
+    - 单个场景，如： '楷体' 或 "楷体"
+      - 多个场景，如： '楷体, 等线, 黑体' 或 "楷体, 等线, 黑体"
+  - **nav** - 导航栏字体配置
+    - **family** - 导航栏字体类型，可选值参考上述西文和中文字体类型
+    - **size** - 导航栏字体大小(参考示例： `1.1em` 或 `17px`)
+  - **page** - 页面字体配置
+    - **family** - 页面字体类型，可选值参考上述西文和中文字体类型
 - **comments** - 评论系统配置
   - **style** - 多个评论系统启用时，选择一个默认展示风格。可选值：tabs 【选项卡】 
   - **active** - 选择一个默认显示的评论系统。可选值：`utterances` | `gitalk`

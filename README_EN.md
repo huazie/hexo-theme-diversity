@@ -84,6 +84,17 @@ back2top:
   color: "#fc6423"
   exclude: [next]
 
+font:
+  western:
+    family: 
+  chinese:
+    family: 
+  nav:
+    family: 
+    size: 
+  page:
+    family:
+
 comments:
   style: tabs
   active:
@@ -156,6 +167,20 @@ giscus:
   - **position** - B2t button position. Available values: `left` | `right`
   - **color** - The color displayed when the mouse hovers over b2t button or the b2t button is touched.
   - **exclude** - Excluded themes do not display the b2t button.
+- **font** - Font Configuration (Western fonts prioritized, Chinese fonts as supplement)
+  - **western** - Western Font Configuration
+    - **family** - Western Font family, Available values: `Arial` | `Helvetica` | `Tahoma` | `Sitka` | `Times New Roman` | `Courier New` | `Verdana` | `Georgia` | `Palatino` | `Garamond` | `Comic Sans MS` | `Trebuchet MS`
+    - Single font example: 'Arial' or 'Times New Roman' or "Times New Roman"
+      - Multiple fonts example: 'Tahoma, Times New Roman, Courier New' or "Times New Roman, Courier New, Verdana"
+  - **chinese** - Chinese Font Configuration
+    - **family** - Chinese Font family, Available values: `楷体` | `等线` | `黑体` | `宋体` | `仿宋`
+    - Single font example: '楷体' or "楷体"
+      - Multiple fonts example: '楷体, 等线, 黑体' or "楷体, 等线, 黑体"
+  - **nav** - Navigation bar font configuration
+    - **family** - Navigation bar font family. Optional values refer to the Chinese and Western font familys mentioned above.
+    - **size** - Navigation bar font size (Example: `1.1em` or `17px`)
+  - **page** - Page font configuration
+    - **family** - Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
 - **comments** - Comment System Configuration
   - **style** - Choose a default display style for comment systems with multiple enabled. Available values: tabs
   - **active** - Choose a comment system to be displayed by default. Available values: `utterances` | `gitalk`
