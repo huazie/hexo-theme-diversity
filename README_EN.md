@@ -170,11 +170,11 @@ giscus:
 - **font** - Font Configuration (Western fonts prioritized, Chinese fonts as supplement)
   - **western** - Western Font Configuration
     - **family** - Western Font family, Available values: `Arial` | `Helvetica` | `Tahoma` | `Sitka` | `Times New Roman` | `Courier New` | `Verdana` | `Georgia` | `Palatino` | `Garamond` | `Comic Sans MS` | `Trebuchet MS`
-    - Single font example: 'Arial' or 'Times New Roman' or "Times New Roman"
+      - Single font example: 'Arial' or 'Times New Roman' or "Times New Roman"
       - Multiple fonts example: 'Tahoma, Times New Roman, Courier New' or "Times New Roman, Courier New, Verdana"
   - **chinese** - Chinese Font Configuration
     - **family** - Chinese Font family, Available values: `楷体` | `等线` | `黑体` | `宋体` | `仿宋`
-    - Single font example: '楷体' or "楷体"
+      - Single font example: '楷体' or "楷体"
       - Multiple fonts example: '楷体, 等线, 黑体' or "楷体, 等线, 黑体"
   - **nav** - Navigation bar font configuration
     - **family** - Navigation bar font family. Optional values refer to the Chinese and Western font familys mentioned above.

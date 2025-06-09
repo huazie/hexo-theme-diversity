@@ -2,6 +2,7 @@ menu:
   blog: Blog
   theme: Theme
   comment: Comment
+  game: Game
 
 button:
   theme-default: DEFAULT
