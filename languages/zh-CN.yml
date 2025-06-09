@@ -2,6 +2,7 @@ menu:
   blog: 博客
   theme: 主题
   comment: 留言
+  game: 游戏
 
 button:
   theme-default: 设为默认

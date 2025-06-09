@@ -172,11 +172,11 @@ giscus:
 - **font** - 字体配置(优先西文字体，中文字体作为补充)
   - **western** - 西文字体配置
     - **family** - 西文字体类型，可选值（常用）： `Arial` | `Helvetica` | `Tahoma` | `Sitka` | `Times New Roman` | `Courier New` | `Verdana` | `Georgia` | `Palatino` | `Garamond` | `Comic Sans MS` | `Trebuchet MS`
-    - 单个场景，如： Arial 或 'Times New Roman' 或 "Times New Roman"
+      - 单个场景，如： Arial 或 'Times New Roman' 或 "Times New Roman"
       - 多个场景，如： 'Tahoma, Times New Roman, Courier New' 或 "Times New Roman, Courier New, Verdana"
   - **chinese** - 中文字体配置
     - **family** - 中文字体类型，可选值（常用）： `楷体` | `等线` | `黑体` | `宋体` | `仿宋`
-    - 单个场景，如： '楷体' 或 "楷体"
+      - 单个场景，如： '楷体' 或 "楷体"
       - 多个场景，如： '楷体, 等线, 黑体' 或 "楷体, 等线, 黑体"
   - **nav** - 导航栏字体配置
     - **family** - 导航栏字体类型，可选值参考上述西文和中文字体类型
