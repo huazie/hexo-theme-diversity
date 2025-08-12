@@ -22,8 +22,6 @@ hexo.on('ready', () => {
     if (!/^(g|s|v)/.test(hexo.env.cmd)) return;
     const { version } = require('../package.json');
     hexo.log.info(`Diversity version ${version}`);
-    // 监控 _config.diversity.yml 文件变化
-    require('./event/watcher')(hexo, cmd);
 });
 
 // 获取控制台命令的别名
@@ -68,8 +66,6 @@ themes.forEach(function(theme) {
         hexo1.init()
             .then(() => require('./helper')(hexo1, themeName))
             .then(() => require('./generator')(hexo1, themeName))
-            // 监控 _config.${theme}.yml 文件变化，如 _config.landscape.yml
-            .then(() => require('./event/watcher')(hexo1, cmd))
             .then(() => hexo1.call(cmd, args))
             .then(() => hexo1.exit())
             .catch(err => hexo1.exit(err));
