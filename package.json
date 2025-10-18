@@ -5,8 +5,10 @@
   "files": [
     "languages",
     "layout",
+    "other",
     "scripts",
     "source",
+    "_config.diversity.yml",
     "_config.yml"
   ],
   "repository": "huazie/hexo-theme-diversity",
