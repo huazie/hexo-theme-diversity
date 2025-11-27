@@ -26,15 +26,7 @@
     <% } %>
 </div>
 
-<footer id="theme-footer">
-    <p>
-        <% if (config.author){ %>
-        &copy; <%= new Date().getFullYear() %> <%= config.author %>
-        <% } %> 
-    </p>
-    <p>
-        Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>, <a href="https://github.com/huazie/hexo-theme-diversity" target="_blank">Diversity</a>
-    </p>
-</footer>
+<%- partial('_partial/footer', {footerId: "theme-footer"}) %>
+
 <%- js('js/jquery.gritter-1.7.4.min') %>
 <%- js('js/theme') %>
