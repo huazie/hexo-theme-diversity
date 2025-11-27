@@ -56,20 +56,9 @@
             }
         }
 
-        const toggleColorScheme = () => {
-            document.documentElement.classList.toggle("dark-theme");
-            const isDark = document.documentElement.classList.contains("dark-theme");
-            Diversity.data.set("color_scheme", isDark ? "dark" : "light");
-            document.dispatchEvent(
-                new Event("color-scheme:refresh", {
-                    bubbles: true,
-                })
-            );
-        }
-
         // 读取并初始化配色方案
         initColorScheme();
 
-        colorSchemeToggle && colorSchemeToggle.addEventListener("click", toggleColorScheme);
+        colorSchemeToggle && colorSchemeToggle.addEventListener("click", Diversity.utils.toggleColorScheme);
     }
 })();

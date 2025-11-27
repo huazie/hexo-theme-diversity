@@ -313,14 +313,9 @@ Diversity.utils = {
         return "Diversity.utils";
     },
     /**
-     * 加载评论模块，支持旧版回调和新版Promise风格
+     * 判断是否处于暗色模式
      * 
-     * 该方法基于Intersection Observer API实现延迟加载评论的功能，
-     * 当评论所在的元素进入视口时，才会加载评论。
-     * 
-     * @param {string} selector - 用于选择包含评论的元素的选择器
-     * @param {Function} [legacyCallback] - （可选）旧版回调函数，当评论加载完成后会被调用
-     * @returns {Promise} - 返回一个Promise对象，该对象在评论加载完成后被解析
+     * @returns {boolean} - 如果处于暗色模式，则返回true，否则返回false
      */
     isDarkMode() {
         let isDarkMode = false;
@@ -329,6 +324,19 @@ Diversity.utils = {
         else if (config.darkmode === 2)
             isDarkMode = document.documentElement.classList.contains('dark-theme');
         return isDarkMode;
+    },
+    /**
+     * 切换明暗色模式
+     */
+    toggleColorScheme() {
+        document.documentElement.classList.toggle("dark-theme");
+        const isDark = document.documentElement.classList.contains("dark-theme");
+        Diversity.data.set("color_scheme", isDark ? "dark" : "light");
+        document.dispatchEvent(
+            new Event("color-scheme:refresh", {
+                bubbles: true,
+            })
+        );
     },
     /**
      * 加载评论模块，支持旧版回调和新版Promise风格
