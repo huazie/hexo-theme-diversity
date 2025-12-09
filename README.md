@@ -373,3 +373,13 @@ tag_generator:
 ## 文档
 
 详细了解，请翻看 **Huazie** 的博客分类之 [博客框架-Hexo](https://blog.huazie.com/diversity/blog/?path=/categories/%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6-Hexo/) 中的文章。
+
+## 插件
+
+以下为 Diversity 主题独立出来的 Hexo 插件，欢迎大家使用：
+
+- [hexo-hot-config](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-hot-config/README.md)  - Hexo 热配置插件，支持实时更新配置
+- [hexo-generator-comments](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-generator-comments/README.md) - Hexo 多评论系统生成插件，支持多种评论系统的集成与切换，提供统一的评论界面。
+- [hexo-comments-utterances](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-utterances/README.md) - Hexo Utterances 评论插件，支持 Utterances 评论系统的集成
+- [hexo-comments-gitalk](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitalk/README.md) - Hexo Gitalk 评论插件，支持 Gitalk 评论系统的集成
+- [hexo-comments-giscus](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-giscus/README.md) - Hexo Giscus 评论插件，支持 Giscus 评论系统的集成
