@@ -373,3 +373,13 @@ tag_generator:
 ## Documentation
 
 For a detailed understanding, please refer to the articles in the [[Blog Framework - Hexo]](https://blog.huazie.com/diversity/blog/?path=/categories/%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6-Hexo/) category on Huazie's blog.
+
+## Plugin
+
+The following are standalone Hexo plugins extracted from the Diversity theme. You are welcome to try them out:
+
+- [hexo-hot-config](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-hot-config/README.md) - Hexo hot configuration plugin, supporting real-time configuration updates.
+- [hexo-generator-comments](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-generator-comments/README.md) - Hexo multi-comment system generator plugin, supporting integration and switching of multiple comment systems, providing a unified comment interface.
+- [hexo-comments-utterances](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-utterances/README.md) - Hexo Utterances comment plugin, supporting integration of Utterances comment system.
+- [hexo-comments-gitalk](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitalk/README.md) - Hexo Gitalk comment plugin, supporting integration of Gitalk comment system.
+- [hexo-comments-giscus](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-giscus/README.md) - Hexo Giscus comment plugin, supporting integration of Giscus comment system.
