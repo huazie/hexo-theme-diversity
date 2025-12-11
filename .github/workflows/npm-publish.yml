@@ -9,10 +9,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # 添加权限配置 ↓↓↓
     permissions:
-      id-token: write   # 解决来源证明错误
-      contents: read    # 确保代码检出权限
+      id-token: write
+      contents: read
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -31,24 +30,6 @@ jobs:
         npm run build --if-present
 
     - name: Publish to npm
-      run: |
-        # 添加认证配置
-        echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
-        
-        PACKAGE_NAME=$(node -p "require('./package.json').name")
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        
-        echo "Package: $PACKAGE_NAME, Version: $CURRENT_VERSION"
-        
-        # 健壮的版本检查
-        if npm view $PACKAGE_NAME@$CURRENT_VERSION version >/dev/null 2>&1; then
-          echo "✅ $CURRENT_VERSION already published, skipping"
-        else
-          echo "🚀 Publishing $PACKAGE_NAME@$CURRENT_VERSION to NPM"
-          npm publish --access public
-        fi
-        
-        # 清理凭证
-        rm -f .npmrc
+      run: npm publish --provenance --access public
       env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+         NPM_CONFIG_PROVENANCE: true  # 启用来源证明，增强安全性
