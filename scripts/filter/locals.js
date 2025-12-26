@@ -3,7 +3,7 @@
 function customLocalsFilter(locals) {
     const { i18n } = this.theme;
     const { config } = this;
-    const { __, theme } = locals;
+    const { __ } = locals;
     locals.diversity_version = require('../../package.json').version;
     locals.title = __('title') !== 'title' ? __('title') : config.title;
     locals.subtitle = __('subtitle') !== 'subtitle' ? __('subtitle') : config.subtitle;
