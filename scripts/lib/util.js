@@ -2,7 +2,6 @@
 // 导入hexo-fs模块
 const hexo_fs_1 = require("hexo-fs");
 const path_1 = require("path");
-const hexo_util_1 = require("hexo-util");
 
 class Util {
 	/**
