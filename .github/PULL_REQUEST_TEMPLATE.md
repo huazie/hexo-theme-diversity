@@ -16,4 +16,5 @@
 - [ ] Refactoring (no changes to functionality and APIs).
 - [ ] Documentation.
 - [ ] Translation.
+- [ ] Version Upgrade.
 - [ ] Other... Please describe:
