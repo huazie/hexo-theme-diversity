@@ -3,6 +3,9 @@
 const path_1 = require("path");
 const Hexo = require('hexo');
 const { Util } = require('./lib/util');
+const Sync = require('./lib/sync');
+// Sync 实例
+const sync = new Sync(hexo);
 
 // Diversity的主题名
 const themeName = hexo.config.theme;
@@ -12,11 +15,23 @@ require('./filter')(hexo, themeName);
 require('./helper')(hexo, themeName);
 // 在生成器解析前执行
 hexo.extend.filter.register('before_generate', () => {
+    // 同步 Diversity 主题配置和资源
+    sync.syncDiversity();
     // 配置生成器
     require('./generator')(hexo, themeName);
     // 添加Diversity主题注入过滤器处理 theme_inject
     require('./event/injects')(hexo);
 }, 100);
+
+// 注册 hexo dsync 控制台命令
+hexo.extend.console.register('dsync', '同步 Diversity 主题配置和资源', {
+    options: [
+        { name: '-f, --force', desc: '强制覆盖已存在文件' }
+    ]
+}, function (args) {
+    const force = args.force || args.f || false;
+    sync.doSync(force);
+});
 
 hexo.on('ready', () => {
     if (!/^(g|s|v)/.test(hexo.env.cmd)) return;
@@ -31,27 +46,29 @@ const cmd = alias[hexo.env.cmd];
 // 当前项目根目录
 const cwd = process.cwd();
 hexo.log.info('Cmd =', cmd);
-const themeConfig = hexo.config.theme_config;
-if (!themeConfig || !themeConfig.themes) {
-    hexo.log.error('Please add the [_config.diversity.yml] file in [' + cwd + '].');
-    hexo.log.error('The "themes" property must to be configured.');
-    return;
-}
-themeConfig.cmd = cmd;
-// 获取配置的多主题列表
-const themes = themeConfig.themes;
-if (!(Array.isArray(themes))) {
-    hexo.log.error('Please check the [_config.diversity.yml] file.');
-    hexo.log.error('The "themes" property must be an Array.');
-    return;
-}
 
-// 多主题目录配置的数组索引
-let index = 0;
-// 循环处理配置的多主题列表
-themes.forEach(function(theme) {
-    themeConfig.index = index;
-    if (Util.isMatchCmd(cmd)) {
+if (Util.isMatchCmd(cmd)) {
+    const themeConfig = hexo.config.theme_config;
+    if (!themeConfig || !themeConfig.themes) {
+        hexo.log.error('Please add the [_config.diversity.yml] file in [' + cwd + '].');
+        hexo.log.error('The "themes" property must to be configured.');
+        return;
+    }
+    themeConfig.cmd = cmd;
+    // 获取配置的多主题列表
+    const themes = themeConfig.themes;
+    if (!(Array.isArray(themes))) {
+        hexo.log.error('Please check the [_config.diversity.yml] file.');
+        hexo.log.error('The "themes" property must be an Array.');
+        return;
+    }
+
+    // 多主题目录配置的数组索引
+    let index = 0;
+    // 循环处理配置的多主题列表
+    themes.forEach(function(theme) {
+        themeConfig.index = index;
+        
         hexo.log.info('Theme', (index + 1), '=', theme);
         const {args} = hexo.env;
         const fileName = '_config.yml';
@@ -69,7 +86,7 @@ themes.forEach(function(theme) {
             .then(() => hexo1.call(cmd, args))
             .then(() => hexo1.exit())
             .catch(err => hexo1.exit(err));
-    } 
-    // 下一个主题
-    index++;
-});
+        // 下一个主题
+        index++;
+    });
+}
