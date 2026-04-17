@@ -2,7 +2,7 @@
 title: 留言
 subTitle: Diversity 主题接入介绍
 date: 2024-12-22 19:48:25
-updated: 2024-12-22 19:48:25
+updated: 2026-04-16 23:54:12
 layout: comment
 comments: true
 ---
@@ -27,11 +27,37 @@ _config.yml
 + theme: diversity
 ```
 
+**同步 Diversity 主题配置和资源**
+
+你可以采用如下三种方式：
+
+1. 手动同步【不推荐】
+
 将 `themes/diversity` 目录下的 `_config.diversity.yml`，添加到你的 **Hexo** 项目根目录。
 
 将 `themes/diversity` 目录下的 `other` 目录中的目录和文件复制或移动到你的 **Hexo** 项目根目录。
 
-当然你也可以选择通过项目依赖导入，在 **Hexo** 项目 package.json 文件中添加如下【`x.x.x` 替换为指定版本号】：
+2. 执行 `hexo server` 命令后同步 `_config.diversity.yml` 配置和 `other` 目录内容。【推荐】
+
+```
+# 本地预览时同步【非强制覆盖】
+hexo s
+# 使用强制覆盖模式
+hexo s --force     // 本地预览时强制覆盖已存在文件
+hexo s -f          // 本地预览时强制覆盖已存在文件（参数简写）
+```
+
+3. 执行 `hexo dsync` 命令专门同步 `_config.diversity.yml` 配置和 `other` 目录内容。【推荐】
+
+```
+# 本地直接同步【非强制覆盖】
+hexo dsync
+# 使用强制覆盖模式：
+hexo dsync --force // 本地同步时强制覆盖已存在文件
+hexo dsync -f      // 本地同步时强制覆盖已存在文件（参数简写）
+```
+
+当然你也可以选择通过项目依赖导入，在 **Hexo** 项目 `package.json` 文件中添加如下【`x.x.x` 替换为指定版本号】：
 
 ```json
 "dependencies": {

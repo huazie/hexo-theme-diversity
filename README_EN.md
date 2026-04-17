@@ -17,9 +17,35 @@ _config.yml
 + theme: diversity
 ```
 
-Copy the `_config.diversity.yml` located in the `themes/diversity` to the root directory of your Hexo project.
+**Syncing Diversity Theme Configuration and Resources**
 
-Copy or move the directories and files from the `other` directory within the `themes/diversity` directory to your Hexo project root directory.
+You can use one of the following three methods:
+
+1. Manual Sync [Not Recommended]
+
+Copy `_config.diversity.yml` from the `themes/diversity` directory to your **Hexo** project root.
+
+Copy or move the directories and files from the `other` directory under `themes/diversity` to your **Hexo** project root.
+
+2. Sync after running `hexo server` command – syncs `_config.diversity.yml` and `other` directory contents. [Recommended]
+
+```
+# Sync during local preview [non‑force overwrite]
+hexo s
+# Force overwrite mode
+hexo s --force     // Force overwrite existing files during local preview
+hexo s -f          // Force overwrite existing files during local preview (short option)
+```
+
+3. Run the `hexo dsync` command to specifically sync `_config.diversity.yml` and `other` directory contents. [Recommended]
+
+```
+# Direct local sync [non‑force overwrite]
+hexo dsync
+# Force overwrite mode
+hexo dsync --force // Force overwrite existing files during local sync
+hexo dsync -f      // Force overwrite existing files during local sync (short option)
+```
 
 Alternatively, you can install the theme as a project dependency. Add the following to your `package.json` (replace `x.x.x` with the desired version):
 
