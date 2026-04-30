@@ -47,4 +47,4 @@ introduction:
 - **no-theme** - Text for the no theme page
 - **page** - Page-related text
 - **loading-tips** - Loading prompt text
-- **introduction** - Theme introduction [if not configured, then no introduction is displayed]
+- **introduction** - Theme introduction [if not configured, then no introduction is displayed]. Theme introductions and other content can also be configured through data files. For detailed instructions, please refer to [data-config.md](data-config.md).
