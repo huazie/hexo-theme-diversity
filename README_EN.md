@@ -97,6 +97,10 @@ For detailed configuration of `diversity` theme , please refer to [docs/en/diver
 
 For detailed i18n configuration, please refer to [docs/en/i18n-config.md](docs/en/i18n-config.md).
 
+### Data File Configuration
+
+For detailed data file configuration, please refer to [docs/en/data-config.md](docs/en/data-config.md).
+
 ### Multi-Theme Configuration
 
 For detailed multi-theme configuration, please refer to [docs/en/other-config.md](docs/en/other-config.md).

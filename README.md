@@ -99,6 +99,10 @@ git pull
 
 详细国际化配置说明，请查阅 [docs/zh/i18n-config.md](docs/zh/i18n-config.md)。
 
+### 数据文件配置
+
+详细数据文件配置说明，请查阅 [docs/zh/data-config.md](docs/zh/data-config.md)。
+
 ### 多主题相关配置
 
 详细多主题相关配置说明，请查阅 [docs/zh/theme-config.md](docs/zh/theme-config.md)。

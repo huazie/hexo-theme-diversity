@@ -47,4 +47,4 @@ introduction:
 - **no-theme** - 无主题页的文本
 - **page** - 页面相关文本
 - **loading-tips** - 加载提示文本
-- **introduction** - 主题介绍【如果没有配置，则不展示介绍】
+- **introduction** - 主题介绍【如果没有配置，则不展示介绍】。主题介绍等内容也支持通过数据文件进行配置，详细说明请查阅 [data-config.md](data-config.md)。
