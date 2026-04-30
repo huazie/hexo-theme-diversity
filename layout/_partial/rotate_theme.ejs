@@ -29,10 +29,17 @@
                 if (!path) {
                     path = '/images/default.png';
                 }
-                const key = 'introduction.' + themeName;
-                let introduction = __(key);
-                if (introduction === key) {
-                    introduction = '';
+                // 优先从数据文件获取主题介绍，如果没有则回退到语言文件
+                const lang = page.lang || page.language || config.language || 'zh-CN';
+                const introDataKey = 'diversity_introduction.' + lang;
+                const introData = site.data[introDataKey] || {};
+                let introduction = introData[themeName];
+                if (!introduction) {
+                    const key = 'introduction.' + themeName;
+                    introduction = __(key);
+                    if (introduction === key) {
+                        introduction = '';
+                    }
                 }
     %>
     <div class="img rotate-10-<%= i %> card">

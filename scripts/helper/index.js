@@ -83,8 +83,16 @@ function config() {
         }
     };
 
+    // 获取当前语言，优先从页面配置获取，其次从站点配置获取
+    const lang = this.page.lang || this.page.language || config.language || 'zh-CN';
+    // 根据主题名称和语言获取对应的数据文件，格式为：{theme}_introduction.{lang}
+    // 例如：diversity_introduction.zh-CN
+    const introDataKey = config.theme + '_introduction.' + lang;
+    const introData = site.data[introDataKey] || {};
+
     theme.themes.forEach(function(theme) {
-        exportConfig.introduction[theme] = __('introduction.' + theme);
+        // 优先级：数据文件 > 语言文件
+        exportConfig.introduction[theme] = introData[theme] || __('introduction.' + theme);
     });
 
     return exportConfig;
