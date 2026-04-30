@@ -10,7 +10,7 @@ menu:
 
 button:
   theme-default: 设为默认
-  cancel-defalut: 取消默认
+  cancel-default: 取消默认
   theme-redirect: 主题直达
   theme-source: 主题来源
   back-to-top: 返回顶部

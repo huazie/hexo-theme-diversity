@@ -65,7 +65,7 @@ function config() {
         index: diversity_menu[Object.keys(diversity_menu)[0]],
         button: {
             theme_default: __('button.theme-default'),
-            cancel_defalut: __('button.cancel-defalut'),
+            cancel_default: __('button.cancel-default'),
             theme_redirect: __('button.theme-redirect'),
             theme_source: __('button.theme-source')
         },
