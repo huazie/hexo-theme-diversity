@@ -6,7 +6,7 @@ menu:
 
 button:
   theme-default: DEFAULT
-  cancel-defalut: CANCEL
+  cancel-default: CANCEL
   theme-redirect: REDIRECT
   theme-source: SOURCE
   back-to-top: BACK TO TOP

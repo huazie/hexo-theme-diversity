@@ -55,7 +55,7 @@
                 button.removeClass('btn-default').addClass('btn-primary');
             } else {
                 // 按钮文本改为取消默认
-                button.text(config.button.cancel_defalut);
+                button.text(config.button.cancel_default);
                 button.removeClass('btn-primary').addClass('btn-default');
             }
         });
