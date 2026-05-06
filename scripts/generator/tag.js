@@ -5,7 +5,7 @@ const pagination = require('hexo-pagination');
 module.exports = function(locals) {
     const config = this.config;
     // 标签首页布局。 如果不配置，则默认为 tag-index
-    const tLayout = config.category_generator.layout || 'tag-index';
+    const tLayout = config.tag_generator.layout || 'tag-index';
     // 标签首页每页展示条数
     const perPage = config.tag_generator.per_page;
     // 分页目录名
@@ -37,7 +37,7 @@ module.exports = function(locals) {
         for (const tag of allTagPosts.data) {
             const posts = tag.posts.sort(orderBy);
             const date = posts.toArray()[posts.length - 1].date;
-            // 分类创建的日期为其下最早的文章
+            // 标签创建的日期为其下最早的文章
             tag.date = date;
             tag.title = tag.name;
             tag.categories = {length: 0};
