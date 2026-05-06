@@ -105,7 +105,7 @@ git pull
 
 ### 多主题相关配置
 
-详细多主题相关配置说明，请查阅 [docs/zh/theme-config.md](docs/zh/theme-config.md)。
+详细多主题相关配置说明，请查阅 [docs/zh/other-config.md](docs/zh/other-config.md)。
 
 ## 文档
 
