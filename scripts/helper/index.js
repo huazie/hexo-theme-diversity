@@ -60,7 +60,6 @@ function config() {
         source: theme.source,
         page: theme.page,
         back2top: theme.back2top,
-        comments: theme.comments,
         menu: diversity_menu,
         index: diversity_menu[Object.keys(diversity_menu)[0]],
         button: {

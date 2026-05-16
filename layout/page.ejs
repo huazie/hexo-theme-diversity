@@ -20,7 +20,13 @@
                             <footer class="article-footer">
                                 <time class="article-footer-updated" datetime="<%- date(page.updated) %>" itemprop="dateModified"><%- __('page.last_updated', date(page.updated)) %></time>
                             </footer>
-                            <%- partial('_partial/comments') %>
+                            <% if (page.comments) { %>
+                                <% try { %>
+                                    <%- partial('comments') %>
+                                <% } catch(e) { %>
+                                    <!-- Comments layout not found -->
+                                <% } %>
+                            <% } %>
                         </div>
                     </div>
                     <aside id="article-toc" role="navigation">

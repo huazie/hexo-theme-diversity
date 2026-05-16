@@ -50,6 +50,8 @@ font:
   page:
     family:
 
+# Comment system configuration
+# Requires the hexo-generator-comments plugin
 comments:
   style: tabs
   active:
@@ -62,6 +64,7 @@ comments:
     #gitalk:
     #  order: 1
 
+# Requires the hexo-comments-utterances plugin
 utterances:
   enable: false
   loading: true
@@ -70,6 +73,7 @@ utterances:
   theme: github-light
   dark: github-dark
 
+# Requires the hexo-comments-gitalk plugin
 gitalk:
   enable: false
   github_id: 
@@ -82,6 +86,7 @@ gitalk:
   issue_term: pathname
   language:
 
+# Requires the hexo-comments-giscus plugin
 giscus:
   enable: false
   loading: true
@@ -138,7 +143,7 @@ giscus:
     - **family** - Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
 - **comments** - Comment System Configuration
   - **style** - Choose a default display style for comment systems with multiple enabled. Available values: tabs
-  - **active** - Choose a comment system to be displayed by default. Available values: `utterances` | `gitalk`
+  - **active** - Choose a comment system to be displayed by default. Optional values: `utterances` | `gitalk` | `giscus`, etc.
   - **storage** - Enable memory of visitor's selected comment system, Available values: `true` | `false`
   - **lazyload** - Enable Lazy Loading for Comments, Available values: `true` | `false`
   - **nav** - Modify texts or order for navigation elements
@@ -199,6 +204,8 @@ giscus:
     - **`bottom`** - The comment input box will be placed below the comments
     - **`top`** - The comment input box will be placed above the comments, so that users can leave a comment without scrolling to the bottom of the discussion.
   - **data_loading** - Load the comments lazily. Loading of the comments will be deferred until the user scrolls near the comments container. This is done by adding loading="lazy" to the `<iframe>` element.
+
+For more comment-related configuration, please refer to [hexo-generator-comments](https://github.com/huazie/diversity-plugins/blob/main/packages/hexo-generator-comments/README.md).
 
 ## `_config.diversity.yml`
 
