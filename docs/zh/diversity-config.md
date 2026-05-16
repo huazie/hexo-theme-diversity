@@ -50,6 +50,8 @@ font:
   page:
     family:
 
+# 评论系统配置
+# 需要依赖 hexo-generator-comments 插件
 comments:
   style: tabs
   active:
@@ -62,6 +64,7 @@ comments:
     #gitalk:
     #  order: 1
 
+# 需要依赖 hexo-comments-utterances 插件
 utterances:
   enable: false
   loading: true
@@ -70,8 +73,10 @@ utterances:
   theme: github-light
   dark: github-dark
 
+# 需要依赖 hexo-comments-gitalk 插件
 gitalk:
   enable: false
+  loading: true
   github_id: 
   repo: 
   client_id: 
@@ -82,6 +87,7 @@ gitalk:
   issue_term: pathname
   language:
 
+# 需要依赖 hexo-comments-giscus 插件
 giscus:
   enable: false
   loading: true
@@ -199,6 +205,8 @@ giscus:
     - **`bottom`** - 将评论输入框固定在页面的底部（评论列表下方）
     - **`top`** - 将评论输入框固定在页面的顶部（评论列表上方）
   - **data_loading** - 懒加载评论。评论的加载将延迟到用户滚动到评论容器附近。 这是通过将 loading="lazy" 添加到 `<iframe>` 元素来完成的。
+
+更多评论相关配置，请查阅 [hexo-generator-comments](https://github.com/huazie/diversity-plugins/blob/main/packages/hexo-generator-comments/README.md) 
 
 ## `_config.diversity.yml`
 
