@@ -106,9 +106,15 @@
         const colorScheme = Diversity.data.get('color_scheme');
         if (colorScheme === 'dark')
             document.documentElement.classList.add("dark-theme");
-        document.getElementById('theme_select').addEventListener('click', function() {  
-            // 父页面跳转
-            window.parent.location.href = window.parent.config.menu.theme;
+        document.getElementById('theme_select').addEventListener('click', function() {
+            // 获取父页面当前的 URL 参数
+            const parentSearch = window.parent.location.search;
+            let themeUrl = window.parent.config.menu.theme;
+            // 将父页面的参数追加到主题选择页 URL
+            if (parentSearch) {
+                themeUrl += (themeUrl.indexOf('?') === -1 ? parentSearch : parentSearch.replace('?', '&'));
+            }
+            window.parent.location.href = themeUrl;
         });
     </script>
 </html>

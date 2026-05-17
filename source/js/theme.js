@@ -17,10 +17,17 @@
             Diversity.data.set(COOKIE_NAME, curTheme);
             // 设置主题标志，1：设置过主题 0：没有设置过
             Diversity.data.setIfNotAbsent('theme_flag', 1);
+            // 获取当前 URL 参数
+            const curSearch = window.location.search;
+            let blogUrl = config.menu.blog;
+            // 将当前参数追加到博客页跳转链接
+            if (curSearch) {
+                blogUrl += (blogUrl.indexOf('?') === -1 ? curSearch : curSearch.replace('?', '&'));
+            }
             $.gritter.add({
                 title: Diversity.data.convert(config.gritter.title_theme, curTheme),
                 text: config.gritter.text_configured + ' <a class="gritter-link" href="' 
-                    + config.menu.blog + '">' + config.gritter.text_clicktojump + '</a>',
+                    + blogUrl + '">' + config.gritter.text_clicktojump + '</a>',
                 time: 4000,
                 image: window.location.origin + '/images/diversity.png',
                 class_name: 'gritter-success gritter-light'
