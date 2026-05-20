@@ -3,6 +3,29 @@
 	showDefaultBlogPage();
 })();
 
+// 监听 iframe 通过 postMessage 发来的路由变化 
+window.addEventListener('message', function(event) {
+    const blogIframe = document.getElementById('blog');
+    if (!blogIframe) return;
+    // 过滤：只处理 iframe 发来的路由变化消息
+    if (event.source !== blogIframe.contentWindow) return;
+    if (!event.data || event.data.type !== 'diversity:route-change') return;
+
+    const theme = Diversity.data.get('theme');
+    let blogPath = event.data.path || '/';
+    // 去除路径中的主题名
+    const themeIndex = blogPath.indexOf(theme);
+    if (themeIndex !== -1) {
+        blogPath = blogPath.substring(themeIndex + theme.length);
+    }
+    // 空字符串或只有 / 都视为根路径
+    if (!blogPath || blogPath === '' || blogPath === '/') blogPath = '/';
+    const originPath = window.location.pathname;
+    const param = blogPath === '/' ? '' : '?path=' + blogPath;
+    const newUrl = window.location.origin + originPath + param;
+    history && history.replaceState({ path: originPath }, '', newUrl);
+});
+
 function showDefaultBlogPage() {
     // 设置的默认主题名
     const theme = Diversity.data.get('theme');
@@ -46,8 +69,6 @@ function showDefaultBlogPage() {
     if (path) 
         url += path;
 
-    blogIframe.src = url;
-
     blogIframe.addEventListener('load', function() {
         // 去除loading效果
         blogIframe.classList.remove('loading');
@@ -55,6 +76,11 @@ function showDefaultBlogPage() {
             // 注意：这块代码本地因为针对不同主题启动不同的http服务，主页面与iframe页面跨域了，无法正常运行
             // 获取iframe的窗口对象
             const iframeWindow = blogIframe.contentWindow || blogIframe.contentDocument.defaultView;
+            if (!iframeWindow) {
+                console.error('[blog.js] 无法获取 iframeWindow');
+                return;
+            }
+
             // 获取header标签
             const header = document.getElementById('header');
             // 获取header标签的类名列表
@@ -62,7 +88,8 @@ function showDefaultBlogPage() {
             // 获取返回顶部按钮
             const backToTop = document.querySelector('.back-to-top');
             // 添加iframe窗口的滚动事件
-            iframeWindow && iframeWindow.addEventListener('scroll', function() {
+
+            const scrollHandler = function() {
                 let scrollHeight = iframeWindow.pageYOffset || iframeWindow.document.documentElement.scrollTop;
                 // 菜单导航栏处于显示的状态
                 if (!navHeaderClassList.contains('hidden')) {
@@ -79,34 +106,25 @@ function showDefaultBlogPage() {
                     backToTop.classList.toggle('back-to-top-on', Math.round(scrollPercent) >= config.back2top.scroll_percent);
                     backToTop.querySelector('span').innerText = Math.round(scrollPercent) + '%';
                 }
-            });
+            };
+            iframeWindow.removeEventListener('scroll', scrollHandler);
+            iframeWindow.addEventListener('scroll', scrollHandler);
 
-            backToTop && backToTop.addEventListener('click', () => {
+            const clickHandler = function() {
                 window.anime({
                     targets  : iframeWindow && iframeWindow.document.scrollingElement,
                     duration : 500,
                     easing   : 'linear',
                     scrollTop: 0
                 });
-            });
-
-            if (iframeWindow) {
-                // 当前设置的默认主题
-                const theme = Diversity.data.get('theme');
-                // 博客页iframe窗口的pathname，包含主题名的某个路径【例如 /landscape/archives/】
-                let blogPath = iframeWindow.location.pathname;
-                // 取pathname中，主题名后的部分【如上取 /archives/】
-                blogPath = blogPath.substring(blogPath.indexOf(theme) + theme.length);
-                // 博客页主窗口的pathname
-                const originPath = window.location.pathname;
-                // path参数
-                let param = blogPath === '/' ? '' : '?path=' + blogPath;
-                // 浏览器展示的新地址
-                const newUrl = window.location.origin + originPath + param;
-                // 使用 replaceState 替换当前的历史记录条目，并更新博客页主窗口的地址栏
-                history && history.replaceState({ path: originPath }, '', newUrl);
+            };
+            if (backToTop) {
+                backToTop.removeEventListener('click', clickHandler);
+                backToTop.addEventListener('click', clickHandler);
             }
+
         } catch (error) {
+            console.error('[blog.js] load 事件异常:', error);
         }
 
         // 深色模式
@@ -114,6 +132,9 @@ function showDefaultBlogPage() {
             blogIframe.classList.add('dark-filter');
         }
     });
+
+    // 最后设 src，确保 load 事件已绑定
+    blogIframe.src = url;
 
     // 获取返回顶部按钮
     const backToTop = document.querySelector('.back-to-top');

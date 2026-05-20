@@ -83,6 +83,7 @@ if (Util.isMatchCmd(cmd)) {
         hexo1.init()
             .then(() => require('./helper')(hexo1, themeName))
             .then(() => require('./generator')(hexo1, themeName))
+            .then(() => require('./injector')(hexo1))
             .then(() => hexo1.call(cmd, args))
             .then(() => hexo1.exit())
             .catch(err => hexo1.exit(err));
