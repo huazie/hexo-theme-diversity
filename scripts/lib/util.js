@@ -62,8 +62,7 @@ class Util {
 const points = {
 	// 视图定义
     views: [
-        'pageEnd',
-        'comment'
+        'pageEnd'
     ]
 };
 
