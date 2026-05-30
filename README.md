@@ -120,3 +120,5 @@ git pull
 - [hexo-comments-utterances](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-utterances/README.md) - Hexo Utterances 评论插件，支持 Utterances 评论系统的集成
 - [hexo-comments-gitalk](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitalk/README.md) - Hexo Gitalk 评论插件，支持 Gitalk 评论系统的集成
 - [hexo-comments-giscus](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-giscus/README.md) - Hexo Giscus 评论插件，支持 Giscus 评论系统的集成
+- [hexo-comments-twikoo](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-twikoo/README.md) - Hexo Twikoo 评论插件，支持 Twikoo 评论系统的集成
+- [hexo-comments-gitment](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitment/README.md) - Hexo Gitment 评论插件，支持 Gitment 评论系统的集成
