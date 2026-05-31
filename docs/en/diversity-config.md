@@ -53,8 +53,12 @@ font:
 # Comment system configuration
 # Requires the hexo-generator-comments plugin
 comments:
+  title: 
+  layout: 
+  path: 
+  darkclass:
   style: tabs
-  active:
+  active: 
   storage: true
   lazyload: false
   nav:
@@ -142,8 +146,12 @@ giscus:
   - **page** - Page font configuration
     - **family** - Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
 - **comments** - Comment System Configuration
-  - **style** - Choose a default display style for comment systems with multiple enabled. Available values: tabs
-  - **active** - Choose a comment system to be displayed by default. Optional values: `utterances` | `gitalk` | `giscus`, etc.
+  - **title** - Custom comment section title (optional, defaults to "Comments")
+  - **layout** - Custom comment layout filename (optional, without file extension)
+  - **path** - Custom comment page path (optional, defaults to `comments`)
+  - **darkclass** - Dark theme class name (optional)
+  - **style** - When multiple comment systems are enabled, choose a default display style. Available values: `tabs` | `dropdown`
+  - **active** - Choose a default comment system to display. Available values: `utterances` | `gitalk` | `giscus` | `twikoo` | `gitment`, etc.
   - **storage** - Enable memory of visitor's selected comment system, Available values: `true` | `false`
   - **lazyload** - Enable Lazy Loading for Comments, Available values: `true` | `false`
   - **nav** - Modify texts or order for navigation elements
