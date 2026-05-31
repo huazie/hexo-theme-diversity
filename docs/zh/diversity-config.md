@@ -53,8 +53,12 @@ font:
 # 评论系统配置
 # 需要依赖 hexo-generator-comments 插件
 comments:
+  title: 
+  layout: 
+  path: 
+  darkclass:
   style: tabs
-  active:
+  active: 
   storage: true
   lazyload: false
   nav:
@@ -143,8 +147,12 @@ giscus:
   - **page** - 页面字体配置
     - **family** - 页面字体类型，可选值参考上述西文和中文字体类型
 - **comments** - 评论系统配置
-  - **style** - 多个评论系统启用时，选择一个默认展示风格。可选值：tabs 【选项卡】
-  - **active** - 选择一个默认显示的评论系统。可选值：`utterances` | `gitalk`
+  - **title** - 自定义评论标题（可选，默认为"Comments"）
+  - **layout** - 自定义评论布局文件名（可选，不包含扩展名）
+  - **path** - 自定义评论页面路径（可选，默认为 `comments`）
+  - **darkclass** - 深色主题类名（可选）
+  - **style** - 多个评论系统启用时，选择一个默认展示风格。可选值：`tabs` 【选项卡】 | `dropdown` 【下拉菜单】
+  - **active** - 选择一个默认显示的评论系统。可选值：`utterances` | `gitalk` | `giscus` | `twikoo` | `gitment` 等等
   - **storage** - 是否记住访客选择的评论系统，可选值： `true` | `false`。设置为 `true` 意味着记住访客选择的评论系统。
   - **lazyload** - 是否懒加载评论系统，可选值： `true` | `false`
   - **nav** - 调整导航元素的展示文本或顺序
