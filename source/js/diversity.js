@@ -318,7 +318,11 @@ Diversity.utils = {
      * @returns {boolean} - 如果处于暗色模式，则返回true，否则返回false
      */
     isDarkMode() {
-        let isDarkMode = false;
+        let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (!isDarkMode)
+            isDarkMode = document.documentElement.classList.contains('dark-theme');
+        if (!isDarkMode && conf && conf.comments && conf.comments.darkClass) 
+            isDarkMode = document.documentElement.classList.contains(conf.comments.darkClass);
         if (config.darkmode === 1)
             isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         else if (config.darkmode === 2)
