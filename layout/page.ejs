@@ -22,7 +22,7 @@
                             </footer>
                             <% if (page.comments) { %>
                                 <% try { %>
-                                    <%- partial('comments') %>
+                                    <%- partial(theme.comments.layout || 'comments') %>
                                 <% } catch(e) { %>
                                     <!-- Comments layout not found -->
                                 <% } %>
