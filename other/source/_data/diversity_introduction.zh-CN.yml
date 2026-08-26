@@ -1,5 +1,6 @@
-# Diversity 主题介绍配置（中文）
+# Diversity 主题介绍配置（旧格式，中文）
 # 如需添加其他语言，请创建对应文件，如 diversity_introduction.en.yml
+# 推荐改用新格式 source/_data/languages/{lang}.yml（按语言组织，优先级更高），详见 data-config.md。
 
 # 主题名: 主题介绍
 # landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。

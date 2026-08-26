@@ -11,7 +11,7 @@ module.exports = (ctx, theme) => {
         helper.register('header_menu', require('./navigation'));
         // 一种在生成的HTML页面中嵌入JSON格式配置信息的辅助函数
         helper.register('diversity_data', data);
-        // 生成Diversity主题的核心配置信息的辅助函数
+        // 生成Diversity主题的核心配置信息的辅助函数（内含 introduction 主题介绍映射，模板内直接使用）
         helper.register('diversity_config', config);
         // Diversity主题内容注入的辅助函数
         helper.register('diversity_inject', inject);
@@ -84,14 +84,21 @@ function config() {
 
     // 获取当前语言，优先从页面配置获取，其次从站点配置获取
     const lang = this.page.lang || this.page.language || config.language || 'zh-CN';
-    // 根据主题名称和语言获取对应的数据文件，格式为：{theme}_introduction.{lang}
-    // 例如：diversity_introduction.zh-CN
-    const introDataKey = config.theme + '_introduction.' + lang;
-    const introData = site.data[introDataKey] || {};
+    // 主题自带介绍：从 i18n 取 __('introduction.' + theme)
+    // 注意：hexo-i18n 在 key 缺失时返回 key 字符串本身，这里过滤掉以免写入 'introduction.xxx'
+    const langFileIntro = {};
+    theme.themes.forEach(function (t) {
+        const key = 'introduction.' + t;
+        const v = __(key);
+        if (v && v !== key) {
+            langFileIntro[t] = v;
+        }
+    });
+    // 主题介绍：合并 i18n 自带 + 旧格式数据文件({theme}_introduction.{lang}) + 新格式数据文件(languages/{lang}.yml 的 introduction 段)
+    const introMap = getIntroductionMap(lang, site.data, config.theme, langFileIntro);
 
     theme.themes.forEach(function(theme) {
-        // 优先级：数据文件 > 语言文件
-        exportConfig.introduction[theme] = introData[theme] || __('introduction.' + theme);
+        exportConfig.introduction[theme] = introMap[theme] || '';
     });
 
     return exportConfig;
@@ -129,4 +136,36 @@ function pageAnchor(str) {
     });
 
     return $.html();
+}
+
+/**
+ * 合并主题介绍映射（逐主题，数据优先，i18n 自带兜底）。
+ * 优先级（高 → 低）：
+ *   1. 语言数据文件 source/_data/languages/{lang}.yml 的 introduction 段
+ *      （hexo 加载为 site.data.languages[lang].introduction，个别版本扁平化为 site.data['languages/{lang}']）
+ *   2. 旧格式数据文件 source/_data/{theme}_introduction.{lang}.yml
+ *      （hexo 加载为 site.data['{theme}_introduction.{lang}']）
+ *   3. 主题自带介绍（由调用方从 i18n __('introduction.{theme}') 取得后传入 langFileIntro 兜底）
+ * 数据文件只需写需要覆盖或新增的主题，其余自动由主题自带介绍补齐。
+ * @param {string} lang - 语言代码
+ * @param {object} siteData - site.data（数据文件内容）
+ * @param {string} themeName - 主题名（用于旧格式数据文件的 key）
+ * @param {object} langFileIntro - 主题自带介绍映射（i18n 取得，{themeName: intro}）
+ * @returns {object} 合并后的介绍映射 {themeName: intro}
+ */
+function getIntroductionMap(lang, siteData, themeName, langFileIntro) {
+    // 新格式：source/_data/languages/{lang}.yml → hexo 加载为 site.data.languages[lang]（嵌套）
+    // 个别版本/配置可能扁平化为 site.data['languages/{lang}']，这里两种都兼容
+    const newLangData = (siteData.languages && siteData.languages[lang]) || siteData['languages/' + lang] || {};
+    const newData = newLangData.introduction || {};
+    // 旧格式：source/_data/{theme}_introduction.{lang}.yml → site.data['{theme}_introduction.{lang}']
+    const legacyData = siteData[themeName + '_introduction.' + lang] || {};
+    const merged = Object.assign({}, langFileIntro, legacyData, newData);
+    // 去除值首尾空白
+    Object.keys(merged).forEach(key => {
+        if (typeof merged[key] === 'string') {
+            merged[key] = merged[key].trim();
+        }
+    });
+    return merged;
 }
