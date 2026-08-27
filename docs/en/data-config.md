@@ -65,4 +65,57 @@ hexo dsync --force
 
 ## Navigation Menu Configuration
 
-In addition to theme introductions, navigation menus can also be configured through data files. For details, please refer to the [diversity_menu.yml](../../../other/source/_data/diversity_menu.yml) template file.
+Navigation menus support configuring "paths" and "display names" separately. The merge priority is: **language data file > legacy data file > theme's own i18n > menu key**.
+
+### 1. Menu Paths (diversity_menu.yml, language-independent)
+
+Menu paths are configured in `source/_data/diversity_menu.yml`, shared by all languages:
+
+```yml
+blog: /diversity/blog/
+theme: /diversity/theme/
+comment: /diversity/comment/
+game: /diversity/game/
+```
+
+### 2. Menu Names (language data file, recommended, highest priority)
+
+Menu display names are per-language. It is recommended to write them into the `menu` section of `source/_data/languages/{lang}.yml` (**only write the menus you want to override or add**; the rest automatically fall back to the theme's own i18n):
+
+```yml
+# Navigation menu names: only configure display names; paths are in diversity_menu.yml
+menu:
+  game: Game
+```
+
+### 3. Legacy Menu Names (compatible, secondary priority)
+
+The legacy naming `diversity_menu.{lang}.yml` is still supported, e.g. `diversity_menu.en.yml`:
+
+```yml
+# Legacy format: menu_key: display_name
+game: Game
+```
+
+### 4. Priority Explanation
+
+The merge priority for menu display names is as follows (high → low):
+
+1. **Language data file** (`source/_data/languages/{lang}.yml` `menu` section) - Highest priority
+2. **Legacy data file** (`source/_data/diversity_menu.{lang}.yml`) - Secondary priority
+3. **Theme's own i18n** (`themes/diversity/languages/{lang}.yml` `menu` section, i.e. `__('menu.{key}')`) - Fallback
+4. **Menu key** (shown as-is when nothing above is configured) - Last fallback
+
+### 5. Quick Sync
+
+Data file templates are included in the theme's `other/source/_data/` directory (including `languages/{lang}.yml` and `diversity_menu.yml`). Execute the sync command to use them:
+
+```bash
+hexo dsync
+```
+
+Or use force overwrite mode:
+
+```bash
+hexo dsync --force
+```

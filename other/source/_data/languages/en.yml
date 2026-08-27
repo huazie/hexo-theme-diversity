@@ -8,3 +8,9 @@
 #     (sourced from themes/diversity/languages/{lang}.yml).
 introduction:
   #icarus: A simple and modern Hexo theme with modular design.
+#
+# Navigation menu names (merge priority: this file > legacy data file > theme i18n > menu key):
+#   - Only configure menu display names; menu paths are configured in diversity_menu.yml.
+#   - Menus not configured here fall back to the theme i18n __('menu.{key}'), then to the menu key itself.
+menu:
+  #game: Game

@@ -65,4 +65,57 @@ hexo dsync --force
 
 ## 导航菜单配置
 
-除了主题介绍，还可以通过数据文件配置导航菜单，详情请查阅 [diversity_menu.yml](../../../other/source/_data/diversity_menu.yml) 模板文件。
+导航菜单支持配置「路径」与「显示名称」，两者分开配置，合并优先级：**语言数据文件 > 旧格式数据文件 > 主题自带 i18n > 菜单 key**。
+
+### 1. 菜单路径（diversity_menu.yml，无语言区分）
+
+菜单路径在 `source/_data/diversity_menu.yml` 中配置，所有语言共用：
+
+```yml
+blog: /diversity/blog/
+theme: /diversity/theme/
+comment: /diversity/comment/
+game: /diversity/game/
+```
+
+### 2. 菜单名称（语言数据文件，推荐，优先级最高）
+
+菜单显示名称按语言配置，推荐写入 `source/_data/languages/{lang}.yml` 的 `menu` 段（**只需写需要覆盖或新增的菜单**，其余自动回退主题自带 i18n）：
+
+```yml
+# 导航菜单名称：仅配置显示名称，路径在 diversity_menu.yml 中
+menu:
+  game: 游戏
+```
+
+### 3. 旧格式菜单名称（兼容，次优先级）
+
+兼容旧版命名 `diversity_menu.{lang}.yml`，例如 `diversity_menu.zh-CN.yml`：
+
+```yml
+# 旧格式：菜单 key: 显示名称
+game: 游戏
+```
+
+### 4. 优先级说明
+
+菜单显示名称的合并优先级如下（高 → 低）：
+
+1. **语言数据文件** (`source/_data/languages/{lang}.yml` 的 `menu` 段) - 最高优先级
+2. **旧格式数据文件** (`source/_data/diversity_menu.{lang}.yml`) - 次优先级
+3. **主题自带 i18n** (`themes/diversity/languages/{lang}.yml` 的 `menu` 段，即 `__('menu.{key}')`) - 兜底
+4. **菜单 key**（以上均未配置时显示 key 本身） - 最后兜底
+
+### 5. 快速同步
+
+数据文件模板已包含在主题的 `other/source/_data/` 目录下（含 `languages/{lang}.yml` 与 `diversity_menu.yml`），执行同步命令即可：
+
+```bash
+hexo dsync
+```
+
+或使用强制覆盖模式：
+
+```bash
+hexo dsync --force
+```

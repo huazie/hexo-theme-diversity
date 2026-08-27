@@ -8,3 +8,9 @@
 #     （来源为 themes/diversity/languages/{lang}.yml）。
 introduction:
   #icarus: 一个简洁、现代的 Hexo 主题，具有模块化设计。
+#
+# 导航菜单名称 menu（合并优先级：本文件 > 旧格式数据文件 > 主题 i18n > 菜单 key）：
+#   - 仅配置菜单「显示名称」，菜单「路径」请在 diversity_menu.yml 中配置；
+#   - 未配置的菜单自动回退主题 i18n __('menu.{key}')，再兜底菜单 key 本身。
+menu:
+  #game: 游戏
