@@ -1,0 +1,10 @@
+# 语言数据文件（一个语言一个文件，文件名即语言代码，如 zh-CN.yml / en.yml）
+# 用途：存放该语言的「主题扩展配置」，与主题自带 languages/{lang}.yml 互补。
+# 加载方式：hexo 将其读为 site.data.languages[lang]（纯数据文件，不会污染主题 i18n）。
+#
+# 主题介绍 introduction（合并优先级：本文件 > 旧格式数据文件 > 主题 i18n）：
+#   - 本文件的 introduction 段优先级最高，仅写需要覆盖或新增的主题介绍即可；
+#   - 其余主题自动取自主题自带 i18n，即 __('introduction.{theme}')
+#     （来源为 themes/diversity/languages/{lang}.yml）。
+introduction:
+  #icarus: 一个简洁、现代的 Hexo 主题，具有模块化设计。

@@ -1,5 +1,6 @@
-# Diversity Theme Introduction Configuration (English)
+# Diversity Theme Introduction Configuration (legacy format, English)
 # To add other languages, create corresponding files, e.g., diversity_introduction.ja.yml
+# Prefer the new format source/_data/languages/{lang}.yml (organized by language, higher priority). See data-config.md.
 
 # them_name: theme_introduction
 # landscape: A brand new default theme for Hexo.

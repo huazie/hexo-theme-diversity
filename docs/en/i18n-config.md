@@ -37,7 +37,10 @@ introduction:
   landscape: A brand new default theme for Hexo.
   phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.
   light: A simple theme for Hexo.
+  next: A high quality elegant Hexo theme crafted from scratch with love.
 ```
+
+> Theme introduction is the fallback copy for each integrated theme: if a data file under `source/_data` does not configure a theme's introduction, it falls back to this i18n section. Data files can override or extend this section. The priority is: language data file > legacy data file > this i18n. See [data-config.md](data-config.md) for details.
 
 ## Configuration Options
 
@@ -47,4 +50,4 @@ introduction:
 - **no-theme** - Text for the no theme page
 - **page** - Page-related text
 - **loading-tips** - Loading prompt text
-- **introduction** - Theme introduction [if not configured, then no introduction is displayed]. Theme introductions and other content can also be configured through data files. For detailed instructions, please refer to [data-config.md](data-config.md).
+- **introduction** - Theme introduction [fallback copy; falls back to empty and shows nothing if not configured]. Can be overridden and extended through data files. For detailed instructions, please refer to [data-config.md](data-config.md).

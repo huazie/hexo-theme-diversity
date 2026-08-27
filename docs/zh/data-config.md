@@ -4,14 +4,29 @@ Diversity 主题支持通过 `source/_data` 目录下的数据文件进行部分
 
 ## 主题介绍配置
 
-### 1. 创建数据文件
+主题介绍支持三层配置，合并优先级从高到低依次为：**语言数据文件 > 旧格式数据文件 > 主题自带 i18n**。
 
-在 `source/_data` 目录下创建多语言数据文件，命名格式为 `{theme}_introduction.{lang}.yml`，例如：
+### 1. 语言数据文件（推荐，优先级最高）
+
+在 `source/_data` 目录下创建 `languages` 子目录，按语言各建一个文件，命名格式为 `languages/{lang}.yml`，例如：
+
+- `source/_data/languages/zh-CN.yml`（中文）
+- `source/_data/languages/en.yml`（英文）
+
+该文件被 Hexo 加载为 `site.data.languages[lang]`（纯数据文件，**不会**污染主题 i18n）。在 `introduction` 段中**只需写需要覆盖或新增的主题**，其余主题会自动回退到主题自带 i18n。
+
+```yml
+# 主题介绍（扩展配置）：只需写需要覆盖或新增的主题
+introduction:
+  icarus: 一个简洁、现代的 Hexo 主题，具有模块化设计。
+```
+
+### 2. 旧格式数据文件（兼容，次优先级）
+
+兼容旧版命名 `{theme}_introduction.{lang}.yml`，例如：
 
 - `diversity_introduction.zh-CN.yml`（中文）
 - `diversity_introduction.en.yml`（英文）
-
-### 2. 数据文件内容格式
 
 ```yml
 # 主题名: 主题介绍
@@ -22,21 +37,26 @@ next: NexT 是一个高质量且优雅的 Hexo 主题。它从零开始，用心
 icarus: 一个简洁、现代的 Hexo 主题，具有模块化设计。
 ```
 
-### 3. 优先级说明
+### 3. 主题自带 i18n（兜底）
 
-主题介绍的读取优先级如下：
+若数据文件未配置某主题介绍，则回退读取主题自带语言文件 `themes/diversity/languages/{lang}.yml` 的 `introduction` 段（即 i18n `__('introduction.{theme}')`）。该文件已内置 landscape / phase / light / next 等主题介绍，一般无需修改。
 
-1. **数据文件** (`source/_data/{theme}_introduction.{lang}.yml`) - 最高优先级
-2. **语言文件** (`languages/{lang}.yml` 中的 `introduction` 配置) - 次优先级
-3. **空字符串**（如果都没有配置）- 不展示介绍
+### 4. 优先级说明
 
-### 4. 快速同步
+主题介绍的合并优先级如下（高 → 低）：
 
-数据文件模板已包含在主题的 `other/source/_data/` 目录下，执行同步命令即可：
+1. **语言数据文件** (`source/_data/languages/{lang}.yml` 的 `introduction` 段) - 最高优先级
+2. **旧格式数据文件** (`source/_data/{theme}_introduction.{lang}.yml`) - 次优先级
+3. **主题自带 i18n** (`themes/diversity/languages/{lang}.yml` 的 `introduction` 段) - 兜底
+
+### 5. 快速同步
+
+数据文件模板已包含在主题的 `other/source/_data/` 目录下（含 `languages/{lang}.yml` 与 `diversity_introduction.{lang}.yml`），执行同步命令即可：
 
 ```bash
 hexo dsync
 ```
+
 或使用强制覆盖模式：
 
 ```bash

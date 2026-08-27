@@ -1,0 +1,10 @@
+# Language data file (one file per language; filename is the language code, e.g. zh-CN.yml / en.yml)
+# Purpose: store this language's "theme extension config", complementing the theme's own languages/{lang}.yml.
+# Loading: hexo reads it into site.data.languages[lang] (a pure data file, does NOT pollute the theme i18n).
+#
+# Theme introduction (merge priority: this file > legacy data file > theme i18n):
+#   - This file's introduction section has the highest priority; only write themes to override or add.
+#   - Other themes fall back to the theme's own i18n, i.e. __('introduction.{theme}')
+#     (sourced from themes/diversity/languages/{lang}.yml).
+introduction:
+  #icarus: A simple and modern Hexo theme with modular design.

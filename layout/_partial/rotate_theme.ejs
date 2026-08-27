@@ -1,4 +1,6 @@
 <div class="ring" style="cursor: grab; transform: rotateY(180deg);">
+    <%# 主题介绍映射：直接复用 diversity_config 中已计算的 introduction 字段（数据缺的主题由语言文件补齐） %>
+    <% const introMap = diversity_config().introduction; %>
     <%
         // 如果实际配置的主题较少，保证这些主题展现在样式布局的中间部分
         let middle = rotateNum / 2;
@@ -29,18 +31,8 @@
                 if (!path) {
                     path = '/images/default.png';
                 }
-                // 优先从数据文件获取主题介绍，如果没有则回退到语言文件
-                const lang = page.lang || page.language || config.language || 'zh-CN';
-                const introDataKey = 'diversity_introduction.' + lang;
-                const introData = site.data[introDataKey] || {};
-                let introduction = introData[themeName];
-                if (!introduction) {
-                    const key = 'introduction.' + themeName;
-                    introduction = __(key);
-                    if (introduction === key) {
-                        introduction = '';
-                    }
-                }
+                // 主题介绍：直接取 diversity_config().introduction 中对应主题的介绍
+                let introduction = introMap[themeName] || '';
     %>
     <div class="img rotate-10-<%= i %> card">
         <div class="card-back card-container" style="background-image: url(&quot;<%= theme.back_image%>&quot;);">
