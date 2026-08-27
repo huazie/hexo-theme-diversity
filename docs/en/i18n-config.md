@@ -44,7 +44,7 @@ introduction:
 
 ## Configuration Options
 
-- **menu** - Display name for the navigation bar menu
+- **menu** - Display name for the navigation bar menu [fallback copy; falls back to the menu key when not configured]. Can be overridden and extended through data files. See [data-config.md](data-config.md) for details.
 - **button** - Button Text
 - **gritter** - Prompt text on the theme selection page
 - **no-theme** - Text for the no theme page

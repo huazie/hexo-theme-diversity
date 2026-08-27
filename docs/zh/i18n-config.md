@@ -44,7 +44,7 @@ introduction:
 
 ## 配置项说明
 
-- **menu** - 导航栏菜单展示名称
+- **menu** - 导航栏菜单展示名称【兜底文案，未配置时回退为菜单 key】。支持通过数据文件覆盖与扩展，详细说明请查阅 [data-config.md](data-config.md)。
 - **button** - 按钮文本
 - **gritter** - 主题选择页的提示文本
 - **no-theme** - 无主题页的文本
