@@ -25,6 +25,20 @@ page:
   back_to_top: Back to Top
   last_updated: "Last updated: %s"
 
+open:
+  title: Open Source Projects
+  view_grid: Grid
+  view_list: List
+  author: Author
+  language: Language
+  license: License
+  source: Source
+  demo: Demo
+  doc: Docs
+  empty: No open source projects yet
+  more: More>>
+  collapse: Collapse
+
 introduction:
   landscape: A brand new default theme for Hexo.
   phase: Feel the flow of time with Phase, the most beautiful theme for Hexo.

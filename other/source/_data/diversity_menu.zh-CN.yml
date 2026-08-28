@@ -1,0 +1,9 @@
+# Diversity 导航菜单名称配置（旧格式，中文）
+# 菜单名称支持按语言扩展，命名格式：diversity_menu.{lang}.yml
+# 例如：diversity_menu.en.yml（英文）、diversity_menu.zh-CN.yml（中文）
+# 注意：菜单路径请在 diversity_menu.yml 中配置，本文件仅配置菜单显示名称
+# 推荐改用新格式 source/_data/languages/{lang}.yml 的 menu 段（按语言组织，优先级更高），详见 data-config.md。
+# 优先级：数据文件 > 主题 languages 中的 menu 配置 > 菜单 key
+
+# game: 游戏
+# open: 开源

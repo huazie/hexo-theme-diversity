@@ -1,0 +1,14 @@
+# 开源项目配置（单文件模式：文件名即 key，本文件 key = diversity-comments-site）
+# 可选字段：demo / doc / license_url / order（排序，升序）
+name: Diversity Comments
+logo: /images/diversity.svg
+source: https://github.com/huazie/diversity-comments-site
+demo: https://blog.huazie.com/demo/#card-demo
+doc: https://blog.huazie.com/demo/#card-quickstart
+author: Huazie
+author_url: https://github.com/huazie
+description: Diversity Comments 是一个轻量级的多评论系统聚合方案。 它通过 iframe + postMessage 的方式， 将 Utterances、Gitalk、Giscus、Twikoo、Gitment 和 Waline 六大评论系统统一集成到你的页面中。
+tags: [Hexo, Diversity, 多评论系统, Utterances, Gitalk, Giscus, Twikoo, Gitment, Waline]
+language: [JavaScript, EJS]
+license: MIT
+order: 2

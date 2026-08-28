@@ -1,0 +1,58 @@
+<% const openDisplay = page.display || theme.open.display || 'grid'; %>
+<div id="content-wrap" class="open-page">
+    <div id="content" class="wrapper">
+        <div id="content-inner">
+            <article class="article-container" itemscope itemtype="http://schema.org/Article">
+                <div class="article-inner">
+                    <div class="article">
+                        <div class="inner">
+                            <header class="article-header">
+                                <div class="open-title-row">
+                                    <h1 class="article-title" itemprop="name"><svg class="open-title-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L20 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg><span><%= __('open.title') %></span></h1>
+                                    <div class="open-toolbar">
+                                        <button class="open-switch<%= openDisplay === 'grid' ? ' active' : '' %>" data-mode="grid" title="<%= __('open.view_grid') %>" aria-label="<%= __('open.view_grid') %>">
+                                            <svg class="open-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                                        </button>
+                                        <button class="open-switch<%= openDisplay === 'list' ? ' active' : '' %>" data-mode="list" title="<%= __('open.view_list') %>" aria-label="<%= __('open.view_list') %>">
+                                            <svg class="open-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="6" r="1.8"/><circle cx="5" cy="12" r="1.8"/><circle cx="5" cy="18" r="1.8"/><rect x="9" y="4.5" width="12" height="3" rx="1.5"/><rect x="9" y="10.5" width="12" height="3" rx="1.5"/><rect x="9" y="16.5" width="12" height="3" rx="1.5"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </header>
+                            <div id="open-list" class="open-<%= openDisplay %>" data-more="<%= __('open.more') %>" data-collapse="<%= __('open.collapse') %>">
+                                <%# 开源项目数据：source/_data/open/*.yml 单文件配置，文件名即 key（如 open/diversity-comments-site），按 order 升序 %>
+                                <% const openData = site.data || {}; %>
+                                <% const projects = Object.keys(openData).filter(function (k) { return k.indexOf('open/') === 0; }).map(function (k) { var p = Object.assign({}, openData[k]); p.key = k.slice(5); return p; }).sort(function (a, b) { return (a.order || 0) - (b.order || 0); }); %>
+                                <% projects.forEach(function (p) { %>
+                                <div class="open-card">
+                                    <div class="open-card-head">
+                                        <% if (p.logo) { %><img class="open-logo" src="<%= p.logo %>" alt="<%= p.name %>" loading="lazy"><% } else { %><svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/><text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif"><%= (p.name || '?').trim().charAt(0).toUpperCase() %></text></svg><% } %>
+                                        <h3 class="open-name"><%= p.name %></h3>
+                                    </div>
+                                    <div class="open-card-body">
+                                        <h3 class="open-name"><%= p.name %></h3>
+                                        <% if (p.description) { %><p class="open-desc"><%= p.description %></p><% } %>
+                                        <div class="open-meta">
+                                            <% if (p.author) { %><% if (p.author_url) { %><a class="open-badge-link" href="<%= p.author_url %>" target="_blank" rel="noopener"><% } %><span class="open-badge open-badge-author"><span class="open-badge-label"><%= __('open.author') %></span><span class="open-badge-value"><%= p.author %></span></span><% if (p.author_url) { %></a><% } %><% } %>
+                                            <% if (p.language) { %><% var langs = Array.isArray(p.language) ? p.language : [p.language]; %><span class="open-badge open-badge-lang"><span class="open-badge-label"><%= __('open.language') %></span><% langs.forEach(function (lang) { %><span class="open-badge-value"><%= lang %></span><% }); %></span><% } %>
+                                            <% if (p.license) { %><% var licUrl = p.license_url || (p.source ? p.source + '/blob/main/LICENSE' : ''); %><% if (licUrl) { %><a class="open-badge-link" href="<%= licUrl %>" target="_blank" rel="noopener"><% } %><span class="open-badge open-badge-license"><span class="open-badge-label"><%= __('open.license') %></span><span class="open-badge-value"><%= p.license %></span></span><% if (licUrl) { %></a><% } %><% } %>
+                                        </div>
+                                        <% if (p.tags && p.tags.length) { %><div class="open-tags"><% p.tags.forEach(function (t) { %><span class="open-tag"><%= t %></span><% }); %></div><% } %>
+                                        <div class="open-links">
+                                            <% if (p.source) { %><a class="open-link" href="<%= p.source %>" target="_blank" rel="noopener"><%= __('open.source') %></a><% } %>
+                                            <% if (p.demo) { %><a class="open-link" href="<%= p.demo %>" target="_blank" rel="noopener"><%= __('open.demo') %></a><% } %>
+                                            <% if (p.doc) { %><a class="open-link" href="<%= p.doc %>" target="_blank" rel="noopener"><%= __('open.doc') %></a><% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }); %>
+                                <% if (!projects.length) { %><p class="open-empty"><%= __('open.empty') %></p><% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+<%- js('js/open') %>

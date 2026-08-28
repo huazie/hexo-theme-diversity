@@ -1,0 +1,13 @@
+# 开源项目配置（单文件模式：文件名即 key，本文件 key = hexo-theme-diversity）
+name: Diversity Theme
+logo: /images/diversity.svg
+source: https://github.com/huazie/hexo-theme-diversity
+demo: https://blog.huazie.com
+doc: https://github.com/huazie/hexo-theme-diversity#readme
+author: Huazie
+author_url: https://github.com/huazie
+description: 博客多样性，一款多主题自由切换的Hexo主题。它允许用户在多个独立主题间一键自由切换，而无需重新部署。
+tags: [Hexo, Diversity, Theme, 主题, hexo-theme-diversity, 博客多样性]
+language: [JavaScript, EJS, Styl]
+license: MIT
+order: 1

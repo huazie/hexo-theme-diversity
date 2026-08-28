@@ -119,3 +119,108 @@ hexo dsync
 ```bash
 hexo dsync --force
 ```
+
+## 开源项目配置
+
+开源项目展示页（`layout: open`）通过数据文件配置项目列表，支持方格 / 列表两种展示模式。
+
+### 1. 数据文件（单文件模式）
+
+在 `source/_data` 目录下创建 `open` 子目录，每个开源项目一个文件，**文件名即 key**，命名格式 `open/{key}.yml`，例如：
+
+- `source/_data/open/hexo-theme-diversity.yml`（key = hexo-theme-diversity）
+- `source/_data/open/flea-game.yml`（key = flea-game）
+
+该文件被 Hexo 加载为 `site.data['open/{key}']`。
+
+```yml
+# 开源项目配置（单文件模式：文件名即 key，本文件 key = hexo-theme-diversity）
+name: Diversity Theme
+logo: /images/diversity.svg
+source: https://github.com/huazie/hexo-theme-diversity
+demo: https://blog.huazie.com
+doc: https://github.com/huazie/hexo-theme-diversity#readme
+author: Huazie
+author_url: https://github.com/huazie
+description: Hexo 自定义主题，支持多主题自由切换、明暗模式与 Diversity 统一评论系统。
+tags: [Hexo, 主题, JavaScript]
+language: JavaScript
+license: MIT
+order: 1
+```
+
+### 2. 字段说明
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `name` | ✅ | 项目名称 |
+| `logo` | - | 项目 Logo 图片路径（未配置时显示名称首字母占位） |
+| `source` | - | 源码仓库地址，展示「源码」按钮 |
+| `demo` | - | 在线演示地址，展示「演示」按钮 |
+| `doc` | - | 文档地址，展示「文档」按钮 |
+| `author` | - | 作者 |
+| `author_url` | - | 作者主页链接，配置后作者名可点击跳转（新窗口打开） |
+| `description` | - | 项目描述（超出两行自动省略，可展开） |
+| `tags` | - | 标签列表 |
+| `language` | - | 主要开发语言（字符串或数组；配置数组时同一徽章内并列展示多个语言值，标签只出现一次） |
+| `license` | - | 开源协议（配置后自动链接到源码仓库的 LICENSE 文件） |
+| `license_url` | - | 自定义协议链接地址（覆盖默认 LICENSE 链接） |
+| `order` | - | 排序值，数字越小越靠前（未配置按 0 处理） |
+
+### 3. 展示页面
+
+创建 `source/diversity/open/index.md`，指定 `layout: open` 与默认展示模式：
+
+```yml
+---
+title: 开源项目
+layout: open
+#display: grid
+---
+```
+
+`display` 可选值：`grid`（方格） | `list`（列表）。未配置时依次回退主题 `_config.yml` 的 `open.display`、默认 `grid`。
+
+### 4. 快速同步
+
+数据文件模板已包含在主题的 `other/source/_data/open/` 目录下，执行同步命令即可：
+
+```bash
+hexo dsync
+```
+
+或使用强制覆盖模式：
+
+```bash
+hexo dsync --force
+```
+
+## 构建排除（ignore 配置）
+
+`themes/diversity/other` 是 Diversity 主题的**同步源目录**：`hexo dsync`（以及 `hexo s` 本地预览）会将其内容整体拷贝到站点根目录——`other/source/*` 复制到 `source/*`、`other/_config.*` 复制到站点根等。它里面**不止数据文件**：除 `source/_data/`（数据文件模板，如 `diversity_menu.yml`、`open/*.yml`、`languages/*.yml`）外，还包含 `source/diversity/` 下的页面 markdown（如 `blog`、`comment`、`open`、`theme` 等独立页）。该目录只用于「同步分发」，本身**不应参与 Hexo 构建**。
+
+### 问题背景
+
+Hexo 主题 i18n 处理器的 pattern 为 `languages/*path`（`*` 在 hexo-util 中等价于 `(.*)?`，可跨目录匹配），会遍历整个主题目录。因此 `themes/diversity/other/source/_data/languages/*.yml` 也会被当作语言文件加载。
+
+这些数据文件模板的 `introduction:` 与 `menu:` 段默认仅有注释，YAML 解析为 `null`。`hexo-i18n` 在 `flattenObject` 中递归到 `null` 子节点时执行 `Object.keys(null)`，会抛出 `TypeError: Cannot convert undefined or null to object`，导致 `hexo g` 构建失败。
+
+> 备注：`other/` 的内容在 `hexo dsync` 后已存在于站点 `source/`，构建时读取的是**同步后的副本**；保留 `other/` 在主题目录内只是作为同步源，必须将其整体排除在构建之外——否则不仅 i18n 处理器会发现它，任何扫描主题目录的处理器都可能误伤。
+
+### 配置方式
+
+在项目根目录 `_config.yml` 的 `ignore` 下排除**整个** `other` 目录（而非某个子目录），避免后续往 `other/` 增删内容时再次踩坑：
+
+```yml
+# Hexo 会忽略整个 Hexo 项目下的这些文件夹或文件
+ignore:
+  # other 目录仅用于同步，不参与构建（否则会被主题 i18n 处理器误当作语言文件读取）
+  - '**/themes/diversity/other/**'
+```
+
+`ignore` 为全局生效（同时作用于 source box 与 theme box），匹配目录后既不会被扫描，也不会输出到 `public/`。
+
+### 为什么不用 skip_render / include / exclude
+
+- `skip_render`：仅作用于 `source/` 目录下的 asset/post 处理器，且文件仍会原样复制到 `public/`（只是跳过渲染）。它对主题目录（theme box）无效，且本场景需要「彻底不读」。
+- `include` / `exclude`：仅作用于 `source/` 目录，无法覆盖 `themes/diversity/other`。

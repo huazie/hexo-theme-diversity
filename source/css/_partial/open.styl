@@ -1,0 +1,306 @@
+// 开源页全屏展示：突破 .wrapper 的 80% 宽度限制
+.open-page
+    #content
+        max-width 100%
+        margin 0
+    #content-inner
+        margin-left 0
+    .article-container
+        float none
+    .article-inner
+        border-radius 0
+        box-shadow none
+        margin 0
+        background-color transparent
+    .inner
+        padding 0 40px
+        @media mq-mobile
+            padding 0 15px
+    .article-title
+        float none
+        display flex
+        align-items center
+        gap 10px
+        .open-title-ico
+            width 0.95em
+            height 0.95em
+            fill currentColor
+            flex-shrink 0
+
+// 标题行：标题居左，切换按钮靠右下侧（同行展示）
+.open-title-row
+    display flex
+    align-items center
+    flex-wrap wrap
+    gap 8px 12px
+    margin-bottom 8px
+
+#open-list
+    max-width 1600px
+    margin 0 auto
+
+// 开源项目展示（统一使用 CSS 变量适配 light/dark）
+.open-toolbar
+    display flex
+    align-items center
+    gap 8px
+    margin-left auto
+
+.open-switch
+    font-family font-page
+    font-size 0.9em
+    width 36px
+    height 36px
+    padding 0
+    display inline-flex
+    align-items center
+    justify-content center
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    cursor pointer
+    transition all 0.2s
+    &:hover
+        border-color color-link
+        color color-link
+    &.active
+        border-color color-link
+        background-color color-link
+        color #fff
+        .open-ico
+            fill #fff
+
+.open-ico
+    width 18px
+    height 18px
+    fill currentColor
+
+#open-list
+    transition all 0.3s ease
+
+.open-card
+    background-color var(--content-bg-color)
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    padding 20px
+    box-shadow 0 3px 8px 6px rgba(7, 17, 27, 0.09)
+    transition transform 0.2s, box-shadow 0.2s
+    &:hover
+        transform translateY(-4px)
+        box-shadow 0 6px 16px 8px rgba(7, 17, 27, 0.15)
+
+.open-card-head
+    display flex
+    align-items center
+    gap 12px
+    margin-bottom 12px
+
+.open-logo
+    width 72px
+    height 72px
+    border-radius 12px
+    object-fit contain
+    flex-shrink 0
+    background-color var(--content-bg-color)
+
+.open-logo-default
+    display block
+
+.open-name
+    font-family font-page
+    font-size 1.3em
+    font-weight bold
+    color var(--text-color)
+    margin 0
+    min-width 0
+    overflow-wrap break-word
+
+.open-desc
+    font-family font-page
+    font-size 0.95em
+    line-height 1.6
+    color var(--text-color)
+    opacity 0.85
+    margin 0 0 8px 0
+    overflow-wrap break-word
+    word-break break-word
+    &.clamp
+        display -webkit-box
+        -webkit-box-orient vertical
+        -webkit-line-clamp 2
+        overflow hidden
+
+.open-more
+    display inline-block
+    margin-top 0
+    margin-bottom 8px
+    padding 2px 0
+    font-size 0.78em
+    color color-link
+    cursor pointer
+    user-select none
+
+.open-meta
+    display flex
+    flex-wrap wrap
+    gap 6px
+    margin-bottom 10px
+
+// shields.io 风格徽章：深灰标签 + 彩色值
+.open-badge
+    display inline-flex
+    align-items center
+    font-size 0.72em
+    line-height 1
+    border-radius 4px
+    overflow hidden
+    .open-badge-label
+        padding 4px 6px
+        background-color #586069
+        color #fff
+    .open-badge-value
+        padding 4px 6px
+        color #fff
+
+.open-badge-author .open-badge-value
+    background-color #a371f7
+.open-badge-lang .open-badge-value
+    background-color #007ec6
+// 竖线只加在语言值之间（Language 标签与首个语言之间不加）
+// 用 border-left 实现：不撑高行高，左右间隔由相邻 value 的 padding 对称
+.open-badge-lang .open-badge-value + .open-badge-value
+    border-left 1px solid rgba(255, 255, 255, 0.55)
+.open-badge-license .open-badge-value
+    background-color #fe7d37
+
+.open-badge-link
+    text-decoration none
+    &:hover
+        opacity 0.85
+
+.open-tags
+    margin-bottom 12px
+
+.open-tag
+    display inline-block
+    font-size 0.75em
+    padding 2px 8px
+    margin 0 6px 6px 0
+    border-radius 10px
+    background-color color-pale-gray
+    color color-dark-gray
+
+.open-links
+    display flex
+    gap 12px
+
+.open-link
+    font-size 0.85em
+    color color-link
+    text-decoration none
+    &:hover
+        color color-link-hover
+        text-decoration underline
+
+.open-empty
+    text-align center
+    color color-gray
+    padding 40px 0
+
+// 方格布局（grid）：磁贴式，内容左对齐（logo 在顶部，文字靠左），同行卡片等高、链接贴底
+.open-grid
+    display grid
+    grid-template-columns repeat(auto-fill, minmax(320px, 1fr))
+    gap 24px
+    align-items stretch
+    .open-card
+        display flex
+        flex-direction column
+    .open-card-head
+        justify-content flex-start
+        margin-bottom 12px
+    .open-card-body
+        display flex
+        flex-direction column
+        flex 1
+        min-width 0
+        align-items flex-start
+        text-align left
+        // 方格模式：名称在 head（logo 旁）展示，body 里的名称隐藏
+        .open-name
+            display none
+    .open-links
+        margin-top auto
+        justify-content flex-start
+
+// 列表布局（list）：左侧图标 + 右侧内容（真正的行式列表，名称在内容区顶部）
+.open-list
+    display flex
+    flex-direction column
+    gap 16px
+    .open-card
+        display flex
+        flex-direction row
+        align-items flex-start
+        gap 20px
+    .open-card-head
+        flex 0 0 auto
+        margin-bottom 0
+        // 列表模式：名称在 body 顶部，head 里的名称隐藏
+        .open-name
+            display none
+    .open-card-body
+        flex 1
+        min-width 0
+        display flex
+        flex-direction column
+        .open-name
+            margin 0 0 8px 0
+    .open-links
+        margin-top 0
+
+@media mq-mobile
+    // 方格：两列紧凑磁贴（logo 在顶部、内容左对齐），min-height 保证卡片完全等高
+    .open-grid
+        grid-template-columns repeat(2, 1fr)
+        gap 12px
+        .open-card
+            padding 14px
+            // content-box：min-height 285 + 上下 padding 28 + border 2 = 总高 315（与自然最高卡片一致）
+            min-height 285px
+        .open-card-head
+            justify-content flex-start
+            margin-bottom 10px
+        .open-logo
+            width 40px
+            height 40px
+            margin 0
+        .open-name
+            font-size 0.95em
+        .open-card-body
+            align-items flex-start
+            text-align left
+        .open-desc
+            font-size 0.9em
+    // 列表：单列横向行（图标+名称在左，描述/元信息/标签/链接在右）
+    .open-list
+        .open-card
+            flex-direction row
+            align-items flex-start
+            padding 12px
+            gap 12px
+        .open-card-head
+            flex 0 0 auto
+            margin-bottom 0
+        .open-logo
+            width 48px
+            height 48px
+            margin 0
+        .open-name
+            font-size 1.05em
+    // 手机端方格：链接间距收紧、允许换行
+    .open-grid
+        .open-links
+            gap 8px
+            flex-wrap wrap

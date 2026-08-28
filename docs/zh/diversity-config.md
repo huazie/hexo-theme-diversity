@@ -50,6 +50,9 @@ font:
   page:
     family:
 
+open:
+  display: grid
+
 # 评论系统配置
 # 需要依赖 hexo-generator-comments 插件
 comments:
@@ -146,6 +149,8 @@ giscus:
     - **size** - 导航栏字体大小(参考示例： `1.1em` 或 `17px`)
   - **page** - 页面字体配置
     - **family** - 页面字体类型，可选值参考上述西文和中文字体类型
+- **open** - 开源项目展示页配置（数据来源：`source/_data/open/*.yml`，详见 [data-config.md](data-config.md)）
+  - **display** - 默认展示模式，可选值： `grid`（方格） | `list`（列表）。页面 front-matter 中指定 `display` 时优先于此处配置
 - **comments** - 评论系统配置
   - **title** - 自定义评论标题（可选，默认为"Comments"）
   - **layout** - 自定义评论布局文件名（可选，不包含扩展名）
