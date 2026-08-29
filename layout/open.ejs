@@ -42,6 +42,9 @@
                                             <% if (p.source) { %><a class="open-link" href="<%= p.source %>" target="_blank" rel="noopener"><%= __('open.source') %></a><% } %>
                                             <% if (p.demo) { %><a class="open-link" href="<%= p.demo %>" target="_blank" rel="noopener"><%= __('open.demo') %></a><% } %>
                                             <% if (p.doc) { %><a class="open-link" href="<%= p.doc %>" target="_blank" rel="noopener"><%= __('open.doc') %></a><% } %>
+                                            <button class="open-toggle" type="button" aria-expanded="false" aria-label="<%= __('open.more') %>">
+                                                <svg class="open-toggle-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

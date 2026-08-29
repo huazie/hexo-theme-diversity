@@ -18,6 +18,25 @@
         });
     });
 
+    // 手机端卡片展开/收起：同步所有卡片，避免同行等高拉伸留白
+    var toggles = document.querySelectorAll('.open-toggle');
+    var cards = document.querySelectorAll('.open-card');
+    function setAllExpanded(on) {
+        cards.forEach(function (c) { c.classList.toggle('expanded', on); });
+        toggles.forEach(function (t) {
+            t.setAttribute('aria-expanded', on ? 'true' : 'false');
+            t.setAttribute('aria-label', on ? collapseText : moreText);
+        });
+    }
+    toggles.forEach(function (t) {
+        t.addEventListener('click', function () {
+            var card = t.closest('.open-card');
+            if (!card) return;
+            // 以当前卡片目标状态为准，同步所有卡片
+            setAllExpanded(!card.classList.contains('expanded'));
+        });
+    });
+
     // 描述两行省略 + 「更多>>」展开/收起（无溢出时不渲染占位，不占用空间）
     function applyClamp() {
         var descs = list.querySelectorAll('.open-desc');

@@ -81,7 +81,7 @@
     background-color var(--content-bg-color)
     border 1px solid var(--header-divider-color)
     border-radius 8px
-    padding 20px
+    padding 16px
     box-shadow 0 3px 8px 6px rgba(7, 17, 27, 0.09)
     transition transform 0.2s, box-shadow 0.2s
     &:hover
@@ -191,7 +191,9 @@
 
 .open-links
     display flex
+    align-items center
     gap 12px
+    width 100%
 
 .open-link
     font-size 0.85em
@@ -205,6 +207,28 @@
     text-align center
     color color-gray
     padding 40px 0
+
+// 展开/收起箭头按钮（默认隐藏，仅手机端显示；置于 .open-links 行内最右）
+.open-toggle
+    display none
+    flex-shrink 0
+    align-items center
+    justify-content center
+    width 28px
+    height 28px
+    padding 0
+    border none
+    background transparent
+    color var(--text-color)
+    opacity 0.6
+    cursor pointer
+    -webkit-tap-highlight-color transparent
+    .open-toggle-ico
+        width 20px
+        height 20px
+        transition transform 0.2s ease
+    &:active
+        opacity 1
 
 // 方格布局（grid）：磁贴式，内容左对齐（logo 在顶部，文字靠左），同行卡片等高、链接贴底
 .open-grid
@@ -253,10 +277,11 @@
         min-width 0
         display flex
         flex-direction column
+        align-self stretch
         .open-name
             margin 0 0 8px 0
     .open-links
-        margin-top 0
+        margin-top auto
 
 @media mq-mobile
     // 方格：手机端保持两列磁贴；内容自适应，避免右侧溢出
@@ -264,12 +289,25 @@
         .inner
             // 手机端方格到屏幕左右边缘的间隔缩小（原 15px，现 8px；桌面 40px）
             padding 0 8px
+    // 手机端：卡片右下角展开/收起箭头；收起态隐藏 作者/语言/协议/标签
+    .open-toggle
+        display inline-flex
+        // 推到 .open-links 行最右，与 源码/文档/演示 同一行
+        margin-left auto
+    .open-card:not(.expanded)
+        .open-meta,
+        .open-tags
+            display none
+    .open-card.expanded
+        .open-toggle-ico
+            transform rotate(180deg)
     .open-grid
         grid-template-columns repeat(2, 1fr)
         // 手机端两列之间的间隔缩小（原为 12px）
         gap 8px
         .open-card
-            padding 12px
+            // 底部比其余三边小 2px（8px），让链接/箭头更贴底
+            padding 8px 8px 6px
             // grid item 默认 min-width:auto 会被内部内容撑开列宽，造成整体溢出右侧；归零后由内部断行控制
             min-width 0
             overflow-wrap anywhere
@@ -305,14 +343,15 @@
         .open-link
             font-size 0.78em
         .open-links
-            gap 8px
-            flex-wrap wrap
+            gap 6px
+            // 不换行，保证 箭头 与 源码/文档/演示 同行（列宽足够容纳短链接）
+            flex-wrap nowrap
     // 列表：单列横向行（图标+名称在左，描述/元信息/标签/链接在右）
     .open-list
         .open-card
             flex-direction row
             align-items flex-start
-            padding 12px
+            padding 8px 8px 6px
             gap 12px
         .open-card-head
             flex 0 0 auto
@@ -323,3 +362,8 @@
             margin 0
         .open-name
             font-size 1.05em
+        .open-links
+            gap 6px
+            flex-wrap nowrap
+            align-items center
+            width 100%
