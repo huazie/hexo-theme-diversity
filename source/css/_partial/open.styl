@@ -14,8 +14,6 @@
         background-color transparent
     .inner
         padding 0 40px
-        @media mq-mobile
-            padding 0 15px
     .article-title
         float none
         display flex
@@ -261,28 +259,54 @@
         margin-top 0
 
 @media mq-mobile
-    // 方格：两列紧凑磁贴（logo 在顶部、内容左对齐），min-height 保证卡片完全等高
+    // 方格：手机端保持两列磁贴；内容自适应，避免右侧溢出
+    .open-page
+        .inner
+            // 手机端方格到屏幕左右边缘的间隔缩小（原 15px，现 8px；桌面 40px）
+            padding 0 8px
     .open-grid
         grid-template-columns repeat(2, 1fr)
-        gap 12px
+        // 手机端两列之间的间隔缩小（原为 12px）
+        gap 8px
         .open-card
-            padding 14px
-            // content-box：min-height 285 + 上下 padding 28 + border 2 = 总高 315（与自然最高卡片一致）
-            min-height 285px
+            padding 12px
+            // grid item 默认 min-width:auto 会被内部内容撑开列宽，造成整体溢出右侧；归零后由内部断行控制
+            min-width 0
+            overflow-wrap anywhere
+            word-break break-word
         .open-card-head
             justify-content flex-start
-            margin-bottom 10px
+            margin-bottom 8px
         .open-logo
-            width 40px
-            height 40px
+            width 36px
+            height 36px
             margin 0
         .open-name
-            font-size 0.95em
+            font-size 0.9em
         .open-card-body
             align-items flex-start
             text-align left
         .open-desc
-            font-size 0.9em
+            font-size 0.78em
+            margin 4px 0 8px
+        // 徽章容器换行，避免单行过宽撑破列
+        .open-meta
+            display flex
+            flex-wrap wrap
+            gap 4px
+            margin-bottom 8px
+        .open-badge
+            // 手机端在 0.68em 基础上约减 2px：按 16px 基准 0.12em≈1.92px；
+            // 注：hexo 链路会丢弃 em-px 混合的 calc()，故用纯 em 实现，自适应父级字号
+            font-size 0.56em
+        .open-tags
+            margin-bottom 8px
+            line-height 1.7
+        .open-link
+            font-size 0.78em
+        .open-links
+            gap 8px
+            flex-wrap wrap
     // 列表：单列横向行（图标+名称在左，描述/元信息/标签/链接在右）
     .open-list
         .open-card
@@ -299,8 +323,3 @@
             margin 0
         .open-name
             font-size 1.05em
-    // 手机端方格：链接间距收紧、允许换行
-    .open-grid
-        .open-links
-            gap 8px
-            flex-wrap wrap
