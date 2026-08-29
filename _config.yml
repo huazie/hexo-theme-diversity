@@ -94,6 +94,17 @@ font:
     # Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
     family:
 
+# 开源项目展示页配置
+# Open source projects showcase page configuration
+# 开源项目数据：source/_data/open/*.yml（单文件模式，文件名即 key），详见 docs/data-config.md
+# Project data: source/_data/open/*.yml (single-file mode, filename is the key). See docs/data-config.md
+open:
+  # 默认展示模式，可选值： grid（方格） | list（列表）
+  # Default display mode. Available values: grid | list
+  # 页面 front-matter 中指定 display 时优先于此处配置
+  # Takes lower priority than the display set in the page front-matter
+  display: grid
+
 # 多评论系统配置
 # 需要依赖 hexo-generator-comments 插件
 # comments:

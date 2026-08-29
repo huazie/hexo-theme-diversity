@@ -119,3 +119,108 @@ Or use force overwrite mode:
 ```bash
 hexo dsync --force
 ```
+
+## Open Source Projects Configuration
+
+The open source projects showcase page (`layout: open`) is driven by data files, supporting both grid and list display modes.
+
+### 1. Data File (single-file mode)
+
+Create an `open` subdirectory under `source/_data`, one file per project, **the filename is the key**, named `open/{key}.yml`, e.g.:
+
+- `source/_data/open/hexo-theme-diversity.yml` (key = hexo-theme-diversity)
+- `source/_data/open/flea-game.yml` (key = flea-game)
+
+The file is loaded by Hexo as `site.data['open/{key}']`.
+
+```yml
+# Open source project config (single-file mode: filename is the key, this file key = hexo-theme-diversity)
+name: Diversity Theme
+logo: /images/diversity.svg
+source: https://github.com/huazie/hexo-theme-diversity
+demo: https://blog.huazie.com
+doc: https://github.com/huazie/hexo-theme-diversity#readme
+author: Huazie
+author_url: https://github.com/huazie
+description: Hexo custom theme supporting multi-theme switching, dark/light mode and the Diversity unified comment system.
+tags: [Hexo, Theme, JavaScript]
+language: JavaScript
+license: MIT
+order: 1
+```
+
+### 2. Field Reference
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | ✅ | Project name |
+| `logo` | - | Logo image path (falls back to a first-letter placeholder when absent) |
+| `source` | - | Source repository URL, shows the "Source" button |
+| `demo` | - | Online demo URL, shows the "Demo" button |
+| `doc` | - | Documentation URL, shows the "Docs" button |
+| `author` | - | Author |
+| `author_url` | - | Author homepage URL; when set, the author name becomes a clickable link (opens in a new tab) |
+| `description` | - | Project description (auto-clamped to two lines, expandable) |
+| `tags` | - | Tag list |
+| `language` | - | Primary programming language (string or array; an array shows multiple language values inside one badge with a single label) |
+| `license` | - | License (links to the LICENSE file of the source repo when set) |
+| `license_url` | - | Custom license link URL (overrides the default LICENSE link) |
+| `order` | - | Sort value, ascending (treated as 0 when absent) |
+
+### 3. Showcase Page
+
+Create `source/diversity/open/index.md`, specifying `layout: open` and the default display mode:
+
+```yml
+---
+title: Open Source Projects
+layout: open
+#display: grid
+---
+```
+
+`display` available values: `grid` | `list`. When absent, it falls back to `open.display` in the theme's `_config.yml`, then to `grid`.
+
+### 4. Quick Sync
+
+Data file templates are included in the theme's `other/source/_data/open/` directory. Execute the sync command to use them:
+
+```bash
+hexo dsync
+```
+
+Or use force overwrite mode:
+
+```bash
+hexo dsync --force
+```
+
+## Build Exclusion (ignore)
+
+`themes/diversity/other` is the Diversity theme's **sync source directory**: `hexo dsync` (and `hexo s` for local preview) copies its contents into the site root — `other/source/*` → `source/*`, `other/_config.*` → site root, etc. It contains **more than just data files**: besides `source/_data/` (data file templates such as `diversity_menu.yml`, `open/*.yml`, `languages/*.yml`), it also holds page markdown under `source/diversity/` (standalone pages like `blog`, `comment`, `open`, `theme`). This directory exists only for "sync distribution" and **must not take part in the Hexo build**.
+
+### Background
+
+The Hexo theme i18n processor uses the pattern `languages/*path` (`*` is equivalent to `(.*)?` in hexo-util and matches across directories), so it walks the entire theme directory. As a result, `themes/diversity/other/source/_data/languages/*.yml` is also loaded as a language file.
+
+In those template data files, the `introduction:` and `menu:` sections are comments only by default, so YAML parses them as `null`. When `hexo-i18n` recurses into a `null` child node in `flattenObject` and calls `Object.keys(null)`, it throws `TypeError: Cannot convert undefined or null to object`, breaking `hexo g`.
+
+> Note: after `hexo dsync`, the contents of `other/` already exist in the site's `source/`; the build reads the **synced copy**. `other/` is kept inside the theme merely as the sync source and must be excluded from the build entirely — otherwise not only i18n but any processor scanning the theme directory could be hit.
+
+### Configuration
+
+In the project root `_config.yml`, exclude the **whole** `other` directory (not just a subfolder), so adding/removing content under `other/` later won't trip the same trap again:
+
+```yml
+# Hexo ignores these folders/files across the whole project
+ignore:
+  # the other/ directory is for sync only and should not be built (otherwise the theme i18n processor misreads it as a language file)
+  - '**/themes/diversity/other/**'
+```
+
+`ignore` takes effect globally (both the source box and the theme box), so matched directories are neither scanned nor written to `public/`.
+
+### Why not skip_render / include / exclude
+
+- `skip_render`: only affects the asset/post processors under `source/`, and the file is still copied as-is into `public/` (just not rendered). It does not apply to the theme directory (theme box), and this case needs "never read at all".
+- `include` / `exclude`: only apply to the `source/` directory and cannot cover `themes/diversity/other`.

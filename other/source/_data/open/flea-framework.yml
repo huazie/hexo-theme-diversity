@@ -1,0 +1,12 @@
+# 开源项目配置（单文件模式：文件名即 key，本文件 key = flea-framework）
+name: Flea Framework
+logo: /diversity/images/logo/flea-framework.png
+source: https://github.com/huazie/flea-framework
+doc: https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/
+author: Huazie
+author_url: https://github.com/huazie
+description: Flea Framework 是一个模块化、轻量级的 Java 应用开发基础框架，提供从缓存、持久化到权限管理的一站式解决方案。
+tags: [缓存管理, 数据持久化管理, 授权管理, Jersey, 通用工具, Java 框架, Maven]
+language: Java
+license: BSD-3-Clause
+order: 3

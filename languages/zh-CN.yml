@@ -25,7 +25,20 @@ page:
   back_to_top: 回到顶部
   last_updated: 上次更新：%s
 
-# 主题介绍【如果没有配置，则不展示介绍】
+open:
+  title: 开源项目
+  view_grid: 方格
+  view_list: 列表
+  author: 作者
+  language: 语言
+  license: 协议
+  source: 源码
+  demo: 演示
+  doc: 文档
+  empty: 暂无开源项目
+  more: 更多>>
+  collapse: 收起
+
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。
   phase: 通过 Phase，感受时间流逝，它是 Hexo 最美丽的主题。

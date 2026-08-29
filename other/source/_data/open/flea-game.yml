@@ -1,0 +1,12 @@
+# 开源项目配置（单文件模式：文件名即 key，本文件 key = flea-game）
+name: Flea Game
+logo: /diversity/images/logo/flea-game.png
+source: https://github.com/huazie/flea-game
+demo: https://blog.huazie.com/diversity/game
+author: Huazie
+author_url: https://github.com/huazie
+description: 多页面 HTML5 游戏门户，包含数独、2048、贪吃蛇、记忆翻牌、扫雷、俄罗斯方块、五子棋、消消乐、推箱子等小游戏。
+tags: [纯前端小游戏, 数独, 2048, 贪吃蛇, 记忆翻牌, 扫雷, 俄罗斯方块, 五子棋, 消消乐, 推箱子]
+language: [JavaScript, HTML, CSS]
+license: MIT
+order: 4

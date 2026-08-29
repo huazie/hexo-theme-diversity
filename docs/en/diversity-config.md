@@ -50,6 +50,9 @@ font:
   page:
     family:
 
+open:
+  display: grid
+
 # Comment system configuration
 # Requires the hexo-generator-comments plugin
 comments:
@@ -145,6 +148,8 @@ giscus:
     - **size** - Navigation bar font size (Example: `1.1em` or `17px`)
   - **page** - Page font configuration
     - **family** - Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
+- **open** - Open source projects showcase page configuration (data source: `source/_data/open/*.yml`, see [data-config.md](data-config.md))
+  - **display** - Default display mode. Available values: `grid` | `list`. Takes lower priority than the `display` set in the page front-matter.
 - **comments** - Comment System Configuration
   - **title** - Custom comment section title (optional, defaults to "Comments")
   - **layout** - Custom comment layout filename (optional, without file extension)

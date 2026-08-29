@@ -1,0 +1,9 @@
+# Diversity Navigation Menu Name Configuration (legacy, English)
+# Menu names are extensible per language, file format: diversity_menu.{lang}.yml
+# e.g. diversity_menu.en.yml (English), diversity_menu.zh-CN.yml (Chinese)
+# Note: Menu paths are configured in diversity_menu.yml; this file only configures menu display names
+# Recommended: use the new format source/_data/languages/{lang}.yml with the menu section (per-language, higher priority). See data-config.md.
+# Priority: data file > theme languages menu config > menu key
+
+# game: Game
+# open: Open Source
