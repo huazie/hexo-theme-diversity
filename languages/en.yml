@@ -26,7 +26,7 @@ page:
   last_updated: "Last updated: %s"
 
 open:
-  title: Open Source Projects
+  title: Open Source
   view_grid: Grid
   view_list: List
   author: Author
@@ -36,6 +36,10 @@ open:
   demo: Demo
   doc: Docs
   empty: No open source projects yet
+  search: Search (name / desc / author / tags / lang / license)
+  clear: Clear
+  result: Found {n} projects
+  no_result: No matching projects found
   more: More>>
   collapse: Collapse
 

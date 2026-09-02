@@ -36,6 +36,10 @@ open:
   demo: 演示
   doc: 文档
   empty: 暂无开源项目
+  search: 搜索（名称 / 描述 / 作者 / 标签 / 语言 / 协议）
+  clear: 清空
+  result: 找到 {n} 个项目
+  no_result: 未找到匹配的开源项目
   more: 更多>>
   collapse: 收起
 
