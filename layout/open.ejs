@@ -9,6 +9,13 @@
                             <header class="article-header">
                                 <div class="open-title-row">
                                     <h1 class="article-title" itemprop="name"><svg class="open-title-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L20 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg><span><%= __('open.title') %></span></h1>
+                                    <div class="open-search">
+                                        <svg class="open-search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+                                        <input id="open-search-input" class="open-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="<%= __('open.search') %>" aria-label="<%= __('open.search') %>">
+                                        <button class="open-search-clear" type="button" aria-label="<%= __('open.clear') %>" hidden>
+                                            <svg class="open-search-clear-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                                        </button>
+                                    </div>
                                     <div class="open-toolbar">
                                         <button class="open-switch<%= openDisplay === 'grid' ? ' active' : '' %>" data-mode="grid" title="<%= __('open.view_grid') %>" aria-label="<%= __('open.view_grid') %>">
                                             <svg class="open-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
@@ -19,12 +26,14 @@
                                     </div>
                                 </div>
                             </header>
+                            <p class="open-status" data-result="<%= __('open.result') %>" role="status" aria-live="polite" hidden></p>
                             <div id="open-list" class="open-<%= openDisplay %>" data-more="<%= __('open.more') %>" data-collapse="<%= __('open.collapse') %>">
                                 <%# 开源项目数据：source/_data/open/*.yml 单文件配置，文件名即 key（如 open/diversity-comments-site），按 order 升序 %>
                                 <% const openData = site.data || {}; %>
                                 <% const projects = Object.keys(openData).filter(function (k) { return k.indexOf('open/') === 0; }).map(function (k) { var p = Object.assign({}, openData[k]); p.key = k.slice(5); return p; }).sort(function (a, b) { return (a.order || 0) - (b.order || 0); }); %>
                                 <% projects.forEach(function (p) { %>
-                                <div class="open-card">
+                                <% var sp = [p.key, p.name, p.description, p.author, p.license]; if (p.language) sp = sp.concat(Array.isArray(p.language) ? p.language : [p.language]); if (p.tags) sp = sp.concat(p.tags); %>
+                                <div class="open-card" data-search="<%= sp.filter(Boolean).join(' ') %>">
                                     <div class="open-card-head">
                                         <% if (p.logo) { %><img class="open-logo" src="<%= p.logo %>" alt="<%= p.name %>" loading="lazy"><% } else { %><svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/><text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif"><%= (p.name || '?').trim().charAt(0).toUpperCase() %></text></svg><% } %>
                                         <h3 class="open-name"><%= p.name %></h3>
@@ -51,6 +60,7 @@
                                 <% }); %>
                                 <% if (!projects.length) { %><p class="open-empty"><%= __('open.empty') %></p><% } %>
                             </div>
+                            <p class="open-empty open-no-result" hidden><%= __('open.no_result') %></p>
                         </div>
                     </div>
                 </div>

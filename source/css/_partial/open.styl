@@ -207,6 +207,91 @@
     text-align center
     color color-gray
     padding 40px 0
+    &[hidden]
+        display none
+
+// 搜索框：图标绝对定位在框内左右，输入框用 padding 让位
+.open-search
+    position relative
+    display flex
+    align-items center
+    flex 1 1 260px
+    max-width 380px
+    margin-left auto
+
+.open-search-ico
+    position absolute
+    left 10px
+    width 16px
+    height 16px
+    color var(--text-color)
+    opacity 0.5
+    pointer-events none
+
+.open-search-input
+    width 100%
+    min-width 0
+    font-family font-page
+    font-size 0.9em
+    line-height 1.4
+    padding 8px 32px
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    outline none
+    transition border-color 0.2s
+    &::placeholder
+        color var(--text-color)
+        opacity 0.4
+    &:focus
+        border-color color-link
+    // 隐藏 webkit 原生清除按钮，使用自定义按钮统一外观
+    &::-webkit-search-cancel-button
+        -webkit-appearance none
+        appearance none
+
+.open-search-clear
+    position absolute
+    right 6px
+    display inline-flex
+    align-items center
+    justify-content center
+    width 22px
+    height 22px
+    padding 0
+    border none
+    border-radius 50%
+    background-color transparent
+    color var(--text-color)
+    opacity 0.5
+    cursor pointer
+    -webkit-tap-highlight-color transparent
+    &:hover
+        opacity 1
+    &[hidden]
+        display none
+    .open-search-clear-ico
+        width 14px
+        height 14px
+
+.open-status
+    margin 0 0 12px 0
+    font-size 0.85em
+    color color-gray
+    &[hidden]
+        display none
+
+// 命中关键词高亮（半透明底色，light/dark 均适用）
+.open-hl
+    padding 0 1px
+    border-radius 2px
+    background-color rgba(255, 202, 40, 0.42)
+    color inherit
+// 徽章为固定深色底 + 白字，高亮改用浅黄底 + 深字保证对比度
+.open-badge .open-hl
+    color #24292f
+    background-color rgba(255, 232, 120, 0.92)
 
 // 展开/收起箭头按钮（默认隐藏，仅手机端显示；置于 .open-links 行内最右）
 .open-toggle
@@ -283,12 +368,39 @@
     .open-links
         margin-top auto
 
+// 搜索过滤掉的卡片：特异性 (0,3,0) 高于 .open-grid/.open-list .open-card 的 display:flex
+.open-grid .open-card.is-hidden,
+.open-list .open-card.is-hidden
+    display none
+
 @media mq-mobile
     // 方格：手机端保持两列磁贴；内容自适应，避免右侧溢出
     .open-page
         .inner
             // 手机端方格到屏幕左右边缘的间隔缩小（原 15px，现 8px；桌面 40px）
             padding 0 8px
+        // 基础样式的 article-header 带 20px 下内边距，搜索框换行到第二行后这 20px 全计入「下方间隔」，
+        // 与上方 8px 行间距形成 8/28 不对称；归零后改由搜索框自身外边距统一控制
+        .article-header
+            padding-bottom 0
+    // 标题行：手机端 标题 + 视图切换 同行，搜索框独占下一行（用 order 重排）
+    .open-title-row
+        gap 8px
+        margin-bottom 0
+    .open-search
+        order 3
+        flex 1 1 100%
+        max-width none
+        // 上方 4px + 行间距 8px = 12px，与下方 12px 对齐
+        margin 4px 0 12px
+    .open-toolbar
+        order 2
+        margin-left auto
+    .open-search-input
+        font-size 0.85em
+        padding 7px 30px
+    .open-status
+        margin-bottom 8px
     // 手机端：卡片右下角展开/收起箭头；收起态隐藏 作者/语言/协议/标签
     .open-toggle
         display inline-flex
