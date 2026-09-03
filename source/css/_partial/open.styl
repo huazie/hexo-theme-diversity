@@ -25,13 +25,16 @@
             fill currentColor
             flex-shrink 0
 
-// 标题行：标题居左，切换按钮靠右下侧（同行展示）
+// 标题行：三列网格（1fr auto 1fr），标题居左、搜索框严格水平居中、切换按钮靠右
 .open-title-row
-    display flex
+    display grid
+    grid-template-columns 1fr auto 1fr
     align-items center
-    flex-wrap wrap
     gap 8px 12px
     margin-bottom 8px
+    .article-title
+        grid-row 1
+        grid-column 1
 
 #open-list
     max-width 1600px
@@ -42,7 +45,9 @@
     display flex
     align-items center
     gap 8px
-    margin-left auto
+    grid-row 1
+    grid-column 3
+    justify-self end
 
 .open-switch
     font-family font-page
@@ -215,9 +220,10 @@
     position relative
     display flex
     align-items center
-    flex 1 1 260px
-    max-width 380px
-    margin-left auto
+    grid-row 1
+    grid-column 2
+    width 380px
+    max-width 100%
 
 .open-search-ico
     position absolute
@@ -383,19 +389,24 @@
         // 与上方 8px 行间距形成 8/28 不对称；归零后改由搜索框自身外边距统一控制
         .article-header
             padding-bottom 0
-    // 标题行：手机端 标题 + 视图切换 同行，搜索框独占下一行（用 order 重排）
+    // 标题行：手机端 标题 + 视图切换 同行（第一行），搜索框独占第二行并占满整行宽度
     .open-title-row
+        grid-template-columns 1fr auto
         gap 8px
         margin-bottom 0
+        .article-title
+            grid-row 1
+            grid-column 1
     .open-search
-        order 3
-        flex 1 1 100%
-        max-width none
+        grid-row 2
+        grid-column 1 / -1
+        width auto
         // 上方 4px + 行间距 8px = 12px，与下方 12px 对齐
         margin 4px 0 12px
     .open-toolbar
-        order 2
-        margin-left auto
+        grid-row 1
+        grid-column 2
+        justify-self end
     .open-search-input
         font-size 0.85em
         padding 7px 30px
