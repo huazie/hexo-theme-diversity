@@ -52,6 +52,8 @@ font:
 
 open:
   display: grid
+  # Number of items per page (pagination). 0 means no pagination.
+  page_size: 0
 
 # Comment system configuration
 # Requires the hexo-generator-comments plugin

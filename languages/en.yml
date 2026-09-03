@@ -42,6 +42,9 @@ open:
   no_result: No matching projects found
   more: More>>
   collapse: Collapse
+  prev: Previous page
+  next: Next page
+  pagination: Pagination
 
 introduction:
   landscape: A brand new default theme for Hexo.

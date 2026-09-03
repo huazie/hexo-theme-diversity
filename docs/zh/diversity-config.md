@@ -52,6 +52,8 @@ font:
 
 open:
   display: grid
+  # 每页展示条数（分页），0 表示不分页、全量展示
+  page_size: 0
 
 # 评论系统配置
 # 需要依赖 hexo-generator-comments 插件

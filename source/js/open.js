@@ -7,6 +7,10 @@
     var moreText = list.dataset.more || '更多>>';
     var collapseText = list.dataset.collapse || '收起';
 
+    // 分页配置：每页条数由 open.ejs 通过 data 属性注入（theme.open.page_size，0 表示不分页）
+    var pageSize = parseInt(list.dataset.pageSize, 10) || 0;
+    var currentPage = 1;
+
     var buttons = document.querySelectorAll('.open-switch');
     buttons.forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -14,6 +18,7 @@
             list.className = 'open-' + mode;
             buttons.forEach(function (b) { b.classList.remove('active'); });
             btn.classList.add('active');
+            applyGridCols();
             requestAnimationFrame(applyClamp);
         });
     });
@@ -88,7 +93,8 @@
         cards.forEach(function (card) {
             var text = (card.dataset.search || '').toLowerCase();
             var ok = tokens.every(function (tk) { return text.indexOf(tk) !== -1; });
-            card.classList.toggle('is-hidden', !ok);
+            // 只记录命中标记，是否隐藏（未命中 / 不在当前页）统一交给 applyPage 处理
+            card.dataset.match = ok ? '1' : '0';
             if (ok) matched++;
         });
 
@@ -104,7 +110,9 @@
         }
         if (noResult) noResult.hidden = !(tokens.length && !matched);
 
-        requestAnimationFrame(applyClamp);
+        // 新搜索从头翻页
+        currentPage = 1;
+        applyPage();
     }
 
     if (input) {
@@ -122,6 +130,100 @@
             input.value = '';
             applySearch();
             input.focus();
+        });
+    }
+
+    // 分页：对「搜索命中的卡片」按 pageSize 分页；is-hidden = 未命中 或 不在当前页
+    var pagination = document.getElementById('open-pagination');
+    // 上一页/下一页文案：由 open.ejs 通过 data 属性注入（i18n），缺省兜底中文
+    var prevText = (pagination && pagination.dataset.prev) || '上一页';
+    var nextText = (pagination && pagination.dataset.next) || '下一页';
+
+    // PC 端方格列数自适应：行数不超过 4 的前提下选「浪费位最少」的列数（上限 4，平票取更大列数），保证尽量铺满整行
+    var GRID_COL_MAX = 4;
+    var GRID_ROW_MAX = 4;
+    var GRID_COL_MIN_W = 320; // 与 open.styl 中 minmax 最小列宽保持一致
+    function idealGridCols(n) {
+        if (n <= 1) return Math.max(1, n);
+        var best = Math.min(n, GRID_COL_MAX), bestWaste = Infinity;
+        for (var c = Math.min(n, GRID_COL_MAX); c >= 2; c--) {
+            var rows = Math.ceil(n / c);
+            if (rows > GRID_ROW_MAX) continue;
+            var waste = rows * c - n;
+            if (waste < bestWaste) { bestWaste = waste; best = c; }
+        }
+        return best;
+    }
+
+    // 方格列数落库：list 宽度不足以容纳理想列数时降级（保证卡片不挤）；列表模式/不分页时清除，交回 auto-fill
+    function applyGridCols() {
+        if (!list.classList.contains('open-grid') || pageSize <= 0) {
+            list.classList.remove('has-grid-cols');
+            return;
+        }
+        var gap = 24; // 与 open.styl 桌面端 gap 保持一致
+        var width = list.clientWidth || list.parentNode.clientWidth;
+        // 方格最少一行 2 个：宽度降级与理想列数计算结果都保底 2 列
+        var byWidth = Math.max(2, Math.floor((width + gap) / (GRID_COL_MIN_W + gap)));
+        var cols = Math.max(2, Math.min(idealGridCols(pageSize), byWidth));
+        list.classList.add('has-grid-cols');
+        list.style.setProperty('--open-grid-cols', cols);
+    }
+
+    function applyPage() {
+        var matched = 0;
+        var start = 0;
+        var end;
+        if (pageSize > 0) {
+            cards.forEach(function (card) {
+                if (card.dataset.match !== '0') matched++;
+            });
+            var totalPages = Math.max(1, Math.ceil(matched / pageSize));
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            start = (currentPage - 1) * pageSize;
+            end = start + pageSize;
+        }
+        var vi = 0;
+        cards.forEach(function (card) {
+            var isMatch = card.dataset.match !== '0';
+            var show = isMatch && (pageSize <= 0 || (vi >= start && vi < end));
+            if (isMatch) vi++;
+            card.classList.toggle('is-hidden', !show);
+        });
+        renderPagination(pageSize > 0 ? matched : 0);
+        requestAnimationFrame(applyClamp);
+    }
+
+    // 页码按钮全部重绘（数量少，无需增量更新）；prev/next 越界时禁用
+    function renderPagination(matched) {
+        if (!pagination) return;
+        if (pageSize <= 0 || matched <= pageSize) {
+            pagination.hidden = true;
+            pagination.innerHTML = '';
+            return;
+        }
+        var totalPages = Math.ceil(matched / pageSize);
+        var html = '<button class="open-page-btn open-page-nav" data-page="prev" aria-label="' + prevText + '"' + (currentPage === 1 ? ' disabled' : '') + '><svg class="open-page-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>';
+        for (var i = 1; i <= totalPages; i++) {
+            html += '<button class="open-page-btn' + (i === currentPage ? ' active' : '') + '" data-page="' + i + '"' + (i === currentPage ? ' aria-current="page"' : '') + '>' + i + '</button>';
+        }
+        html += '<button class="open-page-btn open-page-nav" data-page="next" aria-label="' + nextText + '"' + (currentPage === totalPages ? ' disabled' : '') + '><svg class="open-page-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>';
+        pagination.innerHTML = html;
+        pagination.hidden = false;
+    }
+
+    if (pagination) {
+        // 事件委托：按钮随 innerHTML 重绘，监听挂在容器上
+        pagination.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-page]');
+            if (!btn || btn.disabled) return;
+            var p = btn.getAttribute('data-page');
+            if (p === 'prev') currentPage--;
+            else if (p === 'next') currentPage++;
+            else currentPage = parseInt(p, 10) || 1;
+            applyPage();
+            list.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
 
@@ -165,7 +267,8 @@
         });
     }
 
-    window.addEventListener('resize', function () { requestAnimationFrame(applyClamp); });
+    window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); });
     window.addEventListener('load', function () { requestAnimationFrame(applyClamp); });
-    applyClamp();
+    applyGridCols();
+    applyPage();
 })();

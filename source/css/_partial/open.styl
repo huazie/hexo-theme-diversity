@@ -288,6 +288,50 @@
     &[hidden]
         display none
 
+// 分页：水平居中一排按钮，样式与视图切换按钮（.open-switch）一致
+.open-pagination
+    display flex
+    align-items center
+    justify-content center
+    flex-wrap wrap
+    gap 8px
+    margin 24px auto 8px
+    &[hidden]
+        display none
+
+.open-page-btn
+    font-family font-page
+    font-size 0.9em
+    min-width 36px
+    height 36px
+    padding 0 8px
+    display inline-flex
+    align-items center
+    justify-content center
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    cursor pointer
+    transition all 0.2s
+    user-select none
+    -webkit-tap-highlight-color transparent
+    &:hover:not(:disabled):not(.active)
+        border-color color-link
+        color color-link
+    &.active
+        border-color color-link
+        background-color color-link
+        color #fff
+    &:disabled
+        opacity 0.4
+        cursor default
+    .open-page-ico
+        width 16px
+        height 16px
+        fill none
+        stroke currentColor
+
 // 命中关键词高亮（半透明底色，light/dark 均适用）
 .open-hl
     padding 0 1px
@@ -327,6 +371,9 @@
     grid-template-columns repeat(auto-fill, minmax(320px, 1fr))
     gap 24px
     align-items stretch
+    // PC 端按每页条数适配列数（open.js 计算：整除优先铺满整行，宽度不足自动降级），手机端由 mq-mobile 覆盖回 2 列
+    &.has-grid-cols
+        grid-template-columns repeat(var(--open-grid-cols, 3), minmax(0, 1fr))
     .open-card
         display flex
         flex-direction column
@@ -412,6 +459,13 @@
         padding 7px 30px
     .open-status
         margin-bottom 8px
+    // 分页：手机端按钮紧凑化
+    .open-pagination
+        margin 16px auto 8px
+    .open-page-btn
+        min-width 32px
+        height 32px
+        font-size 0.85em
     // 手机端：卡片右下角展开/收起箭头；收起态隐藏 作者/语言/协议/标签
     .open-toggle
         display inline-flex
@@ -425,7 +479,10 @@
         .open-toggle-ico
             transform rotate(180deg)
     .open-grid
+        // 手机端固定一行 2 个（覆盖桌面端按 page_size 适配的列数）
         grid-template-columns repeat(2, 1fr)
+        &.has-grid-cols
+            grid-template-columns repeat(2, 1fr)
         // 手机端两列之间的间隔缩小（原为 12px）
         gap 8px
         .open-card
