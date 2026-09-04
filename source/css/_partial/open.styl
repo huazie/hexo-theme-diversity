@@ -375,6 +375,22 @@
     color #24292f
     background-color rgba(255, 232, 120, 0.92)
 
+// 卡片 stagger 入场（初次加载/切换视图/翻页/重置搜索时由 open.js 触发；尊重系统减弱动态效果设置）
+@keyframes open-card-in
+    from
+        opacity 0
+        transform translateY(20px) scale(0.97)
+    to
+        opacity 1
+        transform none
+
+.open-card.anim-in
+    animation open-card-in 0.45s ease-out backwards
+
+@media (prefers-reduced-motion: reduce)
+    .open-card.anim-in
+        animation none
+
 // 展开/收起箭头按钮（默认隐藏，仅手机端显示；置于 .open-links 行内最右）
 .open-toggle
     display none
