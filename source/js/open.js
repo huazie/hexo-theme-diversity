@@ -31,6 +31,7 @@
             if (store) store.set(DISPLAY_KEY, mode);
             applyGridCols();
             requestAnimationFrame(applyClamp);
+            replayCardAnim();
         });
     });
 
@@ -147,6 +148,7 @@
     function resetSearch() {
         input.value = '';
         applySearch();
+        replayCardAnim();
     }
     var resetBtn = list.parentNode.querySelector('.open-reset');
     if (resetBtn) {
@@ -204,7 +206,7 @@
         list.style.setProperty('--open-grid-cols', cols);
     }
 
-    function applyPage() {
+    function applyPage(animate) {
         var matched = 0;
         var start = 0;
         var end;
@@ -227,6 +229,19 @@
         });
         renderPagination(pageSize > 0 ? matched : 0);
         requestAnimationFrame(applyClamp);
+        // 列表内容整体变化时（翻页/重置）播放入场动画；搜索输入的高频变化不播，避免闪烁
+        if (animate) replayCardAnim();
+    }
+
+    // 卡片 stagger 入场：逐个延迟淡入上浮，动画由 CSS .anim-in 定义（尊重系统减弱动态效果设置）
+    function replayCardAnim() {
+        var visible = list.querySelectorAll('.open-card:not(.is-hidden)');
+        visible.forEach(function (card, i) {
+            card.classList.remove('anim-in');
+            void card.offsetWidth; // 强制 reflow 重启动画
+            card.style.animationDelay = Math.min(i * 40, 320) + 'ms';
+            card.classList.add('anim-in');
+        });
     }
 
     // 页码按钮全部重绘（数量少，无需增量更新）；prev/next 越界时禁用
@@ -256,7 +271,7 @@
             if (p === 'prev') currentPage--;
             else if (p === 'next') currentPage++;
             else currentPage = parseInt(p, 10) || 1;
-            applyPage();
+            applyPage(true);
             list.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
@@ -304,5 +319,6 @@
     window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); });
     window.addEventListener('load', function () { requestAnimationFrame(applyClamp); });
     applyGridCols();
-    applyPage();
+    // 初次加载播一次入场动画
+    applyPage(true);
 })();
