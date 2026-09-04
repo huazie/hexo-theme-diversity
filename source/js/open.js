@@ -12,12 +12,23 @@
     var currentPage = 1;
 
     var buttons = document.querySelectorAll('.open-switch');
+    // 视图模式记忆：用主题 Diversity.data 工具类存取（localStorage 优先，降级 Cookies），刷新后恢复
+    var DISPLAY_KEY = 'open-display';
+    var store = window.Diversity && Diversity.data;
+    var savedDisplay = store ? store.get(DISPLAY_KEY) : null;
+    if (savedDisplay === 'grid' || savedDisplay === 'list') {
+        list.className = 'open-' + savedDisplay;
+        buttons.forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute('data-mode') === savedDisplay);
+        });
+    }
     buttons.forEach(function (btn) {
         btn.addEventListener('click', function () {
             var mode = btn.getAttribute('data-mode');
             list.className = 'open-' + mode;
             buttons.forEach(function (b) { b.classList.remove('active'); });
             btn.classList.add('active');
+            if (store) store.set(DISPLAY_KEY, mode);
             applyGridCols();
             requestAnimationFrame(applyClamp);
         });
