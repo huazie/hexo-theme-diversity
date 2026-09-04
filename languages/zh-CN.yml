@@ -40,6 +40,7 @@ open:
   clear: 清空
   result: 找到 {n} 个项目
   no_result: 未找到匹配的开源项目
+  reset: 重置
   more: 更多>>
   collapse: 收起
   prev: 上一页

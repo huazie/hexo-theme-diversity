@@ -143,6 +143,18 @@
             input.focus();
         });
     }
+    // 清空搜索并回到完整列表（清除按钮 / 无结果重置按钮共用）
+    function resetSearch() {
+        input.value = '';
+        applySearch();
+    }
+    var resetBtn = list.parentNode.querySelector('.open-reset');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+            resetSearch();
+            input.focus();
+        });
+    }
     // 快捷键：/ 聚焦搜索框（输入类元素聚焦时不抢占），Esc 清空并失焦
     if (input) {
         document.addEventListener('keydown', function (e) {

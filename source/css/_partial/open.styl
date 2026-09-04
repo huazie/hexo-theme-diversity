@@ -215,6 +215,38 @@
     &[hidden]
         display none
 
+// 搜索无结果容器：文案 + 重置按钮纵向居中
+.open-no-result
+    display flex
+    flex-direction column
+    align-items center
+    gap 12px
+    &[hidden]
+        display none
+    .open-empty
+        padding 32px 0 0
+
+// 无结果重置按钮：与分页按钮同风格，宽度自适应文案
+.open-reset
+    font-family font-page
+    font-size 0.9em
+    height 36px
+    padding 0 20px
+    display inline-flex
+    align-items center
+    justify-content center
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    cursor pointer
+    transition all 0.2s
+    user-select none
+    -webkit-tap-highlight-color transparent
+    &:hover
+        border-color color-link
+        color color-link
+
 // 搜索框：图标绝对定位在框内左右，输入框用 padding 让位
 .open-search
     position relative
@@ -465,6 +497,10 @@
     .open-page-btn
         min-width 32px
         height 32px
+        font-size 0.85em
+    .open-reset
+        height 32px
+        padding 0 16px
         font-size 0.85em
     // 手机端：卡片右下角展开/收起箭头；收起态隐藏 作者/语言/协议/标签
     .open-toggle
