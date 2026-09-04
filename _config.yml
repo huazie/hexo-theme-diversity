@@ -104,6 +104,11 @@ open:
   # 页面 front-matter 中指定 display 时优先于此处配置
   # Takes lower priority than the display set in the page front-matter
   display: grid
+  # 每页展示条数（分页），0 或不配置表示不分页、全量展示
+  # Number of items per page (pagination). 0 or unset means no pagination.
+  # 页面 front-matter 中指定 page_size 时优先于此处配置
+  # Takes lower priority than the page_size set in the page front-matter
+  page_size: 0
 
 # 多评论系统配置
 # 需要依赖 hexo-generator-comments 插件
