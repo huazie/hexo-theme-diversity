@@ -61,7 +61,10 @@
                                 <% }); %>
                                 <% if (!projects.length) { %><p class="open-empty"><%= __('open.empty') %></p><% } %>
                             </div>
-                            <p class="open-empty open-no-result" hidden><%= __('open.no_result') %></p>
+                            <div class="open-no-result" hidden>
+                                <p class="open-empty"><%= __('open.no_result') %></p>
+                                <button class="open-reset" type="button"><%= __('open.reset') %></button>
+                            </div>
                             <%# 分页按钮由 open.js 动态渲染；page_size 为 0 或仅一页时保持隐藏 %>
                             <nav id="open-pagination" class="open-pagination" data-prev="<%= __('open.prev') %>" data-next="<%= __('open.next') %>" aria-label="<%= __('open.pagination') %>" hidden></nav>
                         </div>
