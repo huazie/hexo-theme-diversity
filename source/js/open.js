@@ -133,13 +133,24 @@
             timer = setTimeout(applySearch, 100);
         });
         input.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && input.value) { input.value = ''; applySearch(); }
+            if (e.key === 'Escape' && input.value) { input.value = ''; applySearch(); input.blur(); }
         });
     }
     if (clearBtn) {
         clearBtn.addEventListener('click', function () {
             input.value = '';
             applySearch();
+            input.focus();
+        });
+    }
+    // 快捷键：/ 聚焦搜索框（输入类元素聚焦时不抢占），Esc 清空并失焦
+    if (input) {
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== '/') return;
+            var active = document.activeElement;
+            var typing = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+            if (typing) return;
+            e.preventDefault();
             input.focus();
         });
     }
