@@ -1,5 +1,8 @@
 <% const openDisplay = page.display || theme.open.display || 'grid'; %>
 <% const openPageSize = page.page_size || theme.open.page_size || 0; %>
+<%# 开源项目数据：source/_data/open/*.yml 单文件配置，文件名即 key（如 open/diversity-comments-site），按 order 升序；提前计算供 标签筛选栏 与 列表 共用 %>
+<% const openData = site.data || {}; %>
+<% const projects = Object.keys(openData).filter(function (k) { return k.indexOf('open/') === 0; }).map(function (k) { var p = Object.assign({}, openData[k]); p.key = k.slice(5); return p; }).sort(function (a, b) { return (a.order || 0) - (b.order || 0); }); %>
 <div id="content-wrap" class="open-page">
     <div id="content" class="wrapper">
         <div id="content-inner">
@@ -27,14 +30,22 @@
                                     </div>
                                 </div>
                             </header>
+                            <%# 标签筛选栏：仅展示被 ≥2 个项目使用的「常用标签」（次数降序、同名升序），点击与搜索取交集；卡片内标签也可点击筛选 %>
+                            <% var tagCount = {}; %>
+                            <% projects.forEach(function (p) { (p.tags || []).forEach(function (t) { tagCount[t] = (tagCount[t] || 0) + 1; }); }); %>
+                            <% var hotTags = Object.keys(tagCount).filter(function (t) { return tagCount[t] >= 2; }).sort(function (a, b) { return tagCount[b] - tagCount[a] || a.localeCompare(b); }); %>
+                            <% if (hotTags.length) { %>
+                            <div class="open-tagbar" role="group" aria-label="<%= __('open.filter') %>">
+                                <% hotTags.forEach(function (t) { %>
+                                <button type="button" class="open-tagchip" data-tag="<%= t %>" aria-pressed="false"><%= t %><span class="open-tagchip-n"><%= tagCount[t] %></span></button>
+                                <% }); %>
+                            </div>
+                            <% } %>
                             <p class="open-status" data-result="<%= __('open.result') %>" role="status" aria-live="polite" hidden></p>
                             <div id="open-list" class="open-<%= openDisplay %>" data-more="<%= __('open.more') %>" data-collapse="<%= __('open.collapse') %>" data-page-size="<%= openPageSize %>">
-                                <%# 开源项目数据：source/_data/open/*.yml 单文件配置，文件名即 key（如 open/diversity-comments-site），按 order 升序 %>
-                                <% const openData = site.data || {}; %>
-                                <% const projects = Object.keys(openData).filter(function (k) { return k.indexOf('open/') === 0; }).map(function (k) { var p = Object.assign({}, openData[k]); p.key = k.slice(5); return p; }).sort(function (a, b) { return (a.order || 0) - (b.order || 0); }); %>
                                 <% projects.forEach(function (p) { %>
                                 <% var sp = [p.key, p.name, p.description, p.author, p.license]; if (p.language) sp = sp.concat(Array.isArray(p.language) ? p.language : [p.language]); if (p.tags) sp = sp.concat(p.tags); %>
-                                <div class="open-card" data-search="<%= sp.filter(Boolean).join(' ') %>">
+                                <div class="open-card" data-search="<%= sp.filter(Boolean).join(' ') %>" data-tags="<%= (p.tags || []).join('|') %>">
                                     <div class="open-card-head">
                                         <% if (p.logo) { %><img class="open-logo" src="<%= p.logo %>" alt="<%= p.name %>" loading="lazy"><% } else { %><svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/><text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif"><%= (p.name || '?').trim().charAt(0).toUpperCase() %></text></svg><% } %>
                                         <h3 class="open-name"><%= p.name %></h3>
@@ -47,7 +58,7 @@
                                             <% if (p.language) { %><% var langs = Array.isArray(p.language) ? p.language : [p.language]; %><span class="open-badge open-badge-lang"><span class="open-badge-label"><%= __('open.language') %></span><% langs.forEach(function (lang) { %><span class="open-badge-value"><%= lang %></span><% }); %></span><% } %>
                                             <% if (p.license) { %><% var licUrl = p.license_url || (p.source ? p.source + '/blob/main/LICENSE' : ''); %><% if (licUrl) { %><a class="open-badge-link" href="<%= licUrl %>" target="_blank" rel="noopener"><% } %><span class="open-badge open-badge-license"><span class="open-badge-label"><%= __('open.license') %></span><span class="open-badge-value"><%= p.license %></span></span><% if (licUrl) { %></a><% } %><% } %>
                                         </div>
-                                        <% if (p.tags && p.tags.length) { %><div class="open-tags"><% p.tags.forEach(function (t) { %><span class="open-tag"><%= t %></span><% }); %></div><% } %>
+                                        <% if (p.tags && p.tags.length) { %><div class="open-tags"><% p.tags.forEach(function (t) { %><button type="button" class="open-tag" data-tag="<%= t %>" aria-label="<%= __('open.filter') %>: <%= t %>"><%= t %></button><% }); %></div><% } %>
                                         <div class="open-links">
                                             <% if (p.source) { %><a class="open-link" href="<%= p.source %>" target="_blank" rel="noopener"><%= __('open.source') %></a><% } %>
                                             <% if (p.demo) { %><a class="open-link" href="<%= p.demo %>" target="_blank" rel="noopener"><%= __('open.demo') %></a><% } %>
