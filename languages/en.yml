@@ -46,6 +46,7 @@ open:
   prev: Previous page
   next: Next page
   pagination: Pagination
+  filter: Filter by tag
 
 introduction:
   landscape: A brand new default theme for Hexo.

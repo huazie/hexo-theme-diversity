@@ -59,6 +59,11 @@
     var clearBtn = list.parentNode.querySelector('.open-search-clear');
     var status = list.parentNode.querySelector('.open-status');
     var noResult = list.parentNode.querySelector('.open-no-result');
+    // 标签筛选：activeTag 单选（再次点击取消），与搜索关键词取交集
+    var tagbar = list.parentNode.querySelector('.open-tagbar');
+    var activeTag = '';
+    // 筛选栏中动态补充的 chip（点击卡片标签筛选时，该标签可能不在常用标签栏里）
+    var dynamicChip = null;
     // 参与高亮的元素：缓存原始文本，避免高亮标签叠加
     var marks = [];
     cards.forEach(function (card) {
@@ -97,7 +102,71 @@
         return out + escapeHtml(buf) + (on ? '</mark>' : '');
     }
 
-    function applySearch() {
+    // 筛选栏 chip 高亮同步：选中态把 count 徽标换成 ×（点击 × 直接删除筛选并清理 URL）；
+    // 当前选中标签不在筛选栏时（点击卡片标签筛选的场景），动态补一个可删除的 chip
+    var X_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    function syncTagbar() {
+        if (!tagbar) return;
+        // 移除上一轮的动态 chip，避免重复累积
+        if (dynamicChip && dynamicChip.parentNode) dynamicChip.parentNode.removeChild(dynamicChip);
+        dynamicChip = null;
+        var known = false;
+        tagbar.querySelectorAll('.open-tagchip').forEach(function (chip) {
+            if (chip.getAttribute('data-tag') === activeTag) known = true;
+        });
+        if (activeTag && !known) {
+            dynamicChip = document.createElement('button');
+            dynamicChip.type = 'button';
+            dynamicChip.className = 'open-tagchip';
+            dynamicChip.setAttribute('data-tag', activeTag);
+            dynamicChip.innerHTML = escapeHtml(activeTag);
+            tagbar.appendChild(dynamicChip);
+        }
+        tagbar.querySelectorAll('.open-tagchip').forEach(function (chip) {
+            var on = chip.getAttribute('data-tag') === activeTag;
+            chip.classList.toggle('active', on);
+            chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+            var x = chip.querySelector('.open-tagchip-x');
+            if (on && !x) {
+                x = document.createElement('span');
+                x.className = 'open-tagchip-x';
+                x.setAttribute('aria-hidden', 'true');
+                x.innerHTML = X_SVG;
+                chip.appendChild(x);
+            } else if (!on && x) {
+                x.parentNode.removeChild(x);
+            }
+        });
+    }
+
+    // URL 同步（③）：?q=搜索词&tag=标签；replaceState 不产生历史记录，刷新/分享可还原，前进后退由 popstate 处理
+    function writeUrl() {
+        if (!window.URLSearchParams || !window.history || !history.replaceState) return;
+        var params = new URLSearchParams(location.search);
+        if (input.value.trim()) params.set('q', input.value.trim()); else params.delete('q');
+        if (activeTag) params.set('tag', activeTag); else params.delete('tag');
+        var qs = params.toString();
+        history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+    }
+
+    // 从 URL 还原 搜索词/标签（仅接受卡片真实存在的标签，避免无效值）
+    function initFromUrl() {
+        if (!window.URLSearchParams) return;
+        var params = new URLSearchParams(location.search);
+        input.value = params.get('q') || '';
+        activeTag = '';
+        var tag = params.get('tag') || '';
+        if (tag) {
+            // cards 是 NodeList，无 some 方法，借用 Array.prototype
+            var valid = Array.prototype.some.call(cards, function (c) {
+                return (c.dataset.tags || '').split('|').indexOf(tag) !== -1;
+            });
+            if (valid) activeTag = tag;
+        }
+        syncTagbar();
+    }
+
+    function applySearch(animate) {
         var value = (input.value || '').toLowerCase().trim();
         var tokens = value ? value.split(/\s+/) : [];
         var matched = 0;
@@ -105,6 +174,8 @@
         cards.forEach(function (card) {
             var text = (card.dataset.search || '').toLowerCase();
             var ok = tokens.every(function (tk) { return text.indexOf(tk) !== -1; });
+            // 标签筛选与关键词取交集
+            if (ok && activeTag) ok = (card.dataset.tags || '').split('|').indexOf(activeTag) !== -1;
             // 只记录命中标记，是否隐藏（未命中 / 不在当前页）统一交给 applyPage 处理
             card.dataset.match = ok ? '1' : '0';
             if (ok) matched++;
@@ -116,15 +187,19 @@
 
         if (clearBtn) clearBtn.hidden = !value;
         if (status) {
-            status.hidden = !tokens.length;
+            // 有关键词或选中标签即展示结果计数
+            var filtering = tokens.length > 0 || !!activeTag;
+            status.hidden = !filtering;
             // 占位符用 {n}：hexo 的 __() 会把 %s 立即格式化掉
-            if (tokens.length) status.textContent = (status.dataset.result || '{n}').replace('{n}', matched);
+            if (filtering) status.textContent = (status.dataset.result || '{n}').replace('{n}', matched);
         }
-        if (noResult) noResult.hidden = !(tokens.length && !matched);
+        if (noResult) noResult.hidden = !((tokens.length || activeTag) && !matched);
 
+        // 状态写入 URL
+        writeUrl();
         // 新搜索从头翻页
         currentPage = 1;
-        applyPage();
+        applyPage(animate);
     }
 
     if (input) {
@@ -134,7 +209,14 @@
             timer = setTimeout(applySearch, 100);
         });
         input.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && input.value) { input.value = ''; applySearch(); input.blur(); }
+            // Esc：有关键词清关键词，仅有标签清标签（清空并失焦）
+            if (e.key === 'Escape' && (input.value || activeTag)) {
+                input.value = '';
+                activeTag = '';
+                syncTagbar();
+                applySearch();
+                input.blur();
+            }
         });
     }
     if (clearBtn) {
@@ -144,9 +226,11 @@
             input.focus();
         });
     }
-    // 清空搜索并回到完整列表（清除按钮 / 无结果重置按钮共用）
+    // 清空搜索与标签并回到完整列表（清除按钮 / 无结果重置按钮共用）
     function resetSearch() {
         input.value = '';
+        activeTag = '';
+        syncTagbar();
         applySearch();
         replayCardAnim();
     }
@@ -157,6 +241,34 @@
             input.focus();
         });
     }
+    // 标签筛选入口（①）：筛选栏 chip 与卡片内标签均可触发；事件委托读 data-tag，标签高亮重绘不影响
+    function toggleTag(tag) {
+        activeTag = activeTag === tag ? '' : tag;
+        syncTagbar();
+        applySearch(true);
+    }
+    if (tagbar) {
+        tagbar.addEventListener('click', function (e) {
+            var chip = e.target.closest('.open-tagchip');
+            if (!chip) return;
+            // × 仅负责删除筛选（清空 activeTag 并同步清理 URL）
+            if (e.target.closest('.open-tagchip-x')) {
+                activeTag = '';
+                syncTagbar();
+                applySearch(true);
+                return;
+            }
+            toggleTag(chip.getAttribute('data-tag'));
+        });
+    }
+    list.addEventListener('click', function (e) {
+        var tag = e.target.closest('.open-tag');
+        if (!tag || !tag.getAttribute('data-tag')) return;
+        var wasActive = activeTag === tag.getAttribute('data-tag');
+        toggleTag(tag.getAttribute('data-tag'));
+        // 选中新标签时回到列表顶部，便于查看筛选结果；取消选中不动
+        if (!wasActive && activeTag) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     // 快捷键：/ 聚焦搜索框（输入类元素聚焦时不抢占），Esc 清空并失焦
     if (input) {
         document.addEventListener('keydown', function (e) {
@@ -318,7 +430,13 @@
 
     window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); });
     window.addEventListener('load', function () { requestAnimationFrame(applyClamp); });
+    // 浏览器前进/后退时按 URL 还原筛选状态
+    window.addEventListener('popstate', function () {
+        initFromUrl();
+        applySearch();
+    });
     applyGridCols();
-    // 初次加载播一次入场动画
-    applyPage(true);
+    // 从 URL 还原 搜索词/标签（?q= & ?tag=），初次加载播一次入场动画
+    initFromUrl();
+    applySearch(true);
 })();

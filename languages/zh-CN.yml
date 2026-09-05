@@ -46,6 +46,7 @@ open:
   prev: 上一页
   next: 下一页
   pagination: 分页
+  filter: 按标签筛选
 
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。

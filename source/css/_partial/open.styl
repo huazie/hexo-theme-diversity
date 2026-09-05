@@ -190,9 +190,68 @@
     font-size 0.75em
     padding 2px 8px
     margin 0 6px 6px 0
+    border none
     border-radius 10px
     background-color color-pale-gray
     color color-dark-gray
+    font-family font-page
+    cursor pointer
+    transition all 0.2s
+    user-select none
+    -webkit-tap-highlight-color transparent
+    &:hover
+        background-color color-link
+        color #fff
+
+// 标签筛选栏：常用标签 chips（被 ≥2 个项目使用的标签），与 .open-tagchip 同风格单选高亮
+.open-tagbar
+    display flex
+    flex-wrap wrap
+    align-items center
+    gap 8px
+    max-width 1600px
+    margin 0 auto 12px
+
+.open-tagchip
+    font-family font-page
+    font-size 0.8em
+    line-height 1
+    padding 6px 12px
+    display inline-flex
+    align-items center
+    gap 6px
+    border 1px solid var(--header-divider-color)
+    border-radius 999px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    cursor pointer
+    transition all 0.2s
+    user-select none
+    -webkit-tap-highlight-color transparent
+    .open-tagchip-n
+        font-size 0.85em
+        opacity 0.55
+    // 选中态 × 删除图标：由 open.js 选中时注入（count 徽标让位隐藏）
+    .open-tagchip-x
+        display none
+        align-items center
+        margin-left -2px
+        svg
+            display block
+            width 12px
+            height 12px
+    &:hover
+        border-color color-link
+        color color-link
+    &.active
+        border-color color-link
+        background-color color-link
+        color #fff
+        .open-tagchip-n
+            display none
+        .open-tagchip-x
+            display inline-flex
+            opacity 0.85
 
 .open-links
     display flex
@@ -507,6 +566,13 @@
         padding 7px 30px
     .open-status
         margin-bottom 8px
+    // 标签筛选栏：手机端紧凑化
+    .open-tagbar
+        gap 6px
+        margin-bottom 8px
+    .open-tagchip
+        font-size 0.75em
+        padding 5px 10px
     // 分页：手机端按钮紧凑化
     .open-pagination
         margin 16px auto 8px
