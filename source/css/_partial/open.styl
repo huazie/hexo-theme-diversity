@@ -204,13 +204,18 @@
         color #fff
 
 // 标签筛选栏：常用标签 chips（被 ≥2 个项目使用的标签），与 .open-tagchip 同风格单选高亮
+// 有筛选栏时（open.ejs 注入 has-tagbar 类）收掉 article-header 的 20px 下内边距，
+// 间距统一由 tagbar 自身 margin 控制；无筛选栏的页面保持原间距不受影响
+.open-page .article-header.has-tagbar
+    padding-bottom 0
 .open-tagbar
     display flex
     flex-wrap wrap
     align-items center
     gap 8px
     max-width 1600px
-    margin 0 auto 12px
+    // 上 4px（+标题行 8px 行间距 = 12）与下 12px 对齐
+    margin 4px auto 12px
 
 .open-tagchip
     font-family font-page
@@ -566,10 +571,10 @@
         padding 7px 30px
     .open-status
         margin-bottom 8px
-    // 标签筛选栏：手机端紧凑化
+    // 标签筛选栏：手机端紧凑化（搜索框 margin-bottom 12px 在 grid 行内，与下方 12px 对齐）
     .open-tagbar
         gap 6px
-        margin-bottom 8px
+        margin 0 0 12px
     .open-tagchip
         font-size 0.75em
         padding 5px 10px

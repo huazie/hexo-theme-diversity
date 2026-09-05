@@ -3,6 +3,10 @@
 <%# 开源项目数据：source/_data/open/*.yml 单文件配置，文件名即 key（如 open/diversity-comments-site），按 order 升序；提前计算供 标签筛选栏 与 列表 共用 %>
 <% const openData = site.data || {}; %>
 <% const projects = Object.keys(openData).filter(function (k) { return k.indexOf('open/') === 0; }).map(function (k) { var p = Object.assign({}, openData[k]); p.key = k.slice(5); return p; }).sort(function (a, b) { return (a.order || 0) - (b.order || 0); }); %>
+<%# 常用标签：被 ≥2 个项目使用的标签（次数降序、同名升序），有则给 header 加 has-tagbar 类以收掉其 20px 下内边距 %>
+<% var tagCount = {}; %>
+<% projects.forEach(function (p) { (p.tags || []).forEach(function (t) { tagCount[t] = (tagCount[t] || 0) + 1; }); }); %>
+<% var hotTags = Object.keys(tagCount).filter(function (t) { return tagCount[t] >= 2; }).sort(function (a, b) { return tagCount[b] - tagCount[a] || a.localeCompare(b); }); %>
 <div id="content-wrap" class="open-page">
     <div id="content" class="wrapper">
         <div id="content-inner">
@@ -10,7 +14,7 @@
                 <div class="article-inner">
                     <div class="article">
                         <div class="inner">
-                            <header class="article-header">
+                            <header class="article-header<%= hotTags.length ? ' has-tagbar' : '' %>">
                                 <div class="open-title-row">
                                     <h1 class="article-title" itemprop="name"><svg class="open-title-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L20 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg><span><%= __('open.title') %></span></h1>
                                     <div class="open-search">
@@ -30,10 +34,7 @@
                                     </div>
                                 </div>
                             </header>
-                            <%# 标签筛选栏：仅展示被 ≥2 个项目使用的「常用标签」（次数降序、同名升序），点击与搜索取交集；卡片内标签也可点击筛选 %>
-                            <% var tagCount = {}; %>
-                            <% projects.forEach(function (p) { (p.tags || []).forEach(function (t) { tagCount[t] = (tagCount[t] || 0) + 1; }); }); %>
-                            <% var hotTags = Object.keys(tagCount).filter(function (t) { return tagCount[t] >= 2; }).sort(function (a, b) { return tagCount[b] - tagCount[a] || a.localeCompare(b); }); %>
+                            <%# 标签筛选栏：点击与搜索取交集；卡片内标签也可点击筛选 %>
                             <% if (hotTags.length) { %>
                             <div class="open-tagbar" role="group" aria-label="<%= __('open.filter') %>">
                                 <% hotTags.forEach(function (t) { %>
