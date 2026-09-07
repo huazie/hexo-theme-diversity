@@ -135,6 +135,10 @@ transition = all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)
         bottom 0
         right gutter-width
         margin auto
+        // 图标右对齐（去 UA 默认 padding），使字形右缘 = gutter-width，
+        // 与左侧汉堡菜单条距左 gutter-width 视觉对称；按钮点击热区仍为 60px
+        padding 0
+        text-align right
 
 .color-scheme-icon
     font-size 1.5rem
