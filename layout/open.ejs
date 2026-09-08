@@ -74,8 +74,22 @@
                                 <% if (!projects.length) { %><p class="open-empty"><%= __('open.empty') %></p><% } %>
                             </div>
                             <div class="open-no-result" hidden>
-                                <p class="open-empty"><%= __('open.no_result') %></p>
-                                <button class="open-reset" type="button"><%= __('open.reset') %></button>
+                                <%# 空状态卡片：插画居左 + 文案按钮居右，与项目卡片同风格；颜色走 currentColor 跟随明暗主题 %>
+                                <svg class="open-no-ico" viewBox="0 0 120 96" fill="none" aria-hidden="true" focusable="false">
+                                    <rect x="14" y="6" width="76" height="56" rx="8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.45"/>
+                                    <rect x="24" y="18" width="40" height="6" rx="3" fill="currentColor" opacity="0.22"/>
+                                    <rect x="24" y="32" width="56" height="6" rx="3" fill="currentColor" opacity="0.22"/>
+                                    <rect x="24" y="46" width="26" height="6" rx="3" fill="currentColor" opacity="0.16"/>
+                                    <circle cx="78" cy="52" r="15" stroke="currentColor" stroke-width="3" opacity="0.8"/>
+                                    <circle cx="78" cy="52" r="2" fill="currentColor" opacity="0.5"/>
+                                    <circle cx="78" cy="52" r="7.5" fill="currentColor" opacity="0.12"/>
+                                    <path d="M89.5 63.5 L103 77" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+                                </svg>
+                                <div class="open-no-body">
+                                    <p class="open-empty"><%= __('open.no_result') %></p>
+                                    <p class="open-empty-tip"><%= __('open.no_result_tip') %></p>
+                                    <button class="open-reset" type="button"><%= __('open.reset') %></button>
+                                </div>
                             </div>
                             <%# 分页按钮由 open.js 动态渲染；page_size 为 0 或仅一页时保持隐藏 %>
                             <nav id="open-pagination" class="open-pagination" data-prev="<%= __('open.prev') %>" data-next="<%= __('open.next') %>" aria-label="<%= __('open.pagination') %>" hidden></nav>

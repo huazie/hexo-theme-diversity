@@ -41,6 +41,7 @@ open:
   result: Found {n} projects
   no_result: No matching projects found
   reset: Reset
+  no_result_tip: Try different keywords or clear the filters
   more: More>>
   collapse: Collapse
   prev: Previous page
