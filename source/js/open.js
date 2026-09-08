@@ -139,17 +139,19 @@
         });
     }
 
-    // URL 同步（③）：?q=搜索词&tag=标签；replaceState 不产生历史记录，刷新/分享可还原，前进后退由 popstate 处理
+    // URL 同步（③）：?q=搜索词&tag=标签&page=页码；replaceState 不产生历史记录，刷新/分享可还原，前进后退由 popstate 处理
     function writeUrl() {
         if (!window.URLSearchParams || !window.history || !history.replaceState) return;
         var params = new URLSearchParams(location.search);
         if (input.value.trim()) params.set('q', input.value.trim()); else params.delete('q');
         if (activeTag) params.set('tag', activeTag); else params.delete('tag');
+        // 页码仅在启用分页且不在第 1 页时写入，还原时越界值由 applyPage 收敛
+        if (pageSize > 0 && currentPage > 1) params.set('page', currentPage); else params.delete('page');
         var qs = params.toString();
         history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     }
 
-    // 从 URL 还原 搜索词/标签（仅接受卡片真实存在的标签，避免无效值）
+    // 从 URL 还原 搜索词/标签/页码（仅接受卡片真实存在的标签，避免无效值）
     function initFromUrl() {
         if (!window.URLSearchParams) return;
         var params = new URLSearchParams(location.search);
@@ -163,10 +165,14 @@
             });
             if (valid) activeTag = tag;
         }
+        // 页码还原：非法/缺省回第 1 页，越界值由 applyPage 收敛到实际总页数
+        var pg = parseInt(params.get('page'), 10);
+        currentPage = pg > 1 ? pg : 1;
         syncTagbar();
     }
 
-    function applySearch(animate) {
+    // keepPage=true 时保留 currentPage（初始加载 / popstate 从 URL 还原页码），用户主动改筛选仍回第 1 页
+    function applySearch(animate, keepPage) {
         var value = (input.value || '').toLowerCase().trim();
         var tokens = value ? value.split(/\s+/) : [];
         var matched = 0;
@@ -195,11 +201,10 @@
         }
         if (noResult) noResult.hidden = !((tokens.length || activeTag) && !matched);
 
-        // 状态写入 URL
-        writeUrl();
-        // 新搜索从头翻页
-        currentPage = 1;
+        // 新搜索从头翻页（URL 还原场景除外）；applyPage 内做越界收敛，之后再把最终页码写入 URL
+        if (!keepPage) currentPage = 1;
         applyPage(animate);
+        writeUrl();
     }
 
     if (input) {
@@ -384,6 +389,7 @@
             else if (p === 'next') currentPage++;
             else currentPage = parseInt(p, 10) || 1;
             applyPage(true);
+            writeUrl();
             list.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
@@ -430,13 +436,13 @@
 
     window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); });
     window.addEventListener('load', function () { requestAnimationFrame(applyClamp); });
-    // 浏览器前进/后退时按 URL 还原筛选状态
+    // 浏览器前进/后退时按 URL 还原筛选与页码状态
     window.addEventListener('popstate', function () {
         initFromUrl();
-        applySearch();
+        applySearch(false, true);
     });
     applyGridCols();
-    // 从 URL 还原 搜索词/标签（?q= & ?tag=），初次加载播一次入场动画
+    // 从 URL 还原 搜索词/标签/页码（?q= & ?tag= & ?page=），初次加载播一次入场动画
     initFromUrl();
-    applySearch(true);
+    applySearch(true, true);
 })();
