@@ -280,15 +280,62 @@
         display none
 
 // 搜索无结果容器：文案 + 重置按钮纵向居中
+// 空状态卡片：与项目卡片同风格（同底色/边框/圆角），插画居左 + 文案按钮居右，
+// 避免三元素松散悬浮在空白里
 .open-no-result
     display flex
-    flex-direction column
     align-items center
-    gap 12px
+    gap 20px
+    // border-box：主题全局 content-box，不显式声明的话 max-width 不含 padding/border，
+    // 实际渲染宽度会多出 74px（400 → 474）
+    box-sizing border-box
+    max-width 400px
+    margin 24px auto 0
+    padding 32px 36px
+    background-color var(--content-bg-color)
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
     &[hidden]
         display none
-    .open-empty
-        padding 32px 0 0
+    // 空状态插画：颜色走 currentColor 跟随明暗主题，轻微上下浮动
+    .open-no-ico
+        width 88px
+        height auto
+        flex-shrink 0
+        color var(--text-color)
+    .open-no-body
+        display flex
+        flex-direction column
+        align-items flex-start
+        gap 10px
+        min-width 0
+        // 文案颜色必须显式跟 var(--text-color)：open 页不走 .article-content，无结果区
+        // 会继承浏览器默认黑色，暗色下黑字贴 #444 卡片底不可见；层次靠 粗细+透明度 区分
+        .open-empty
+            padding 0
+            margin 0
+            font-weight bold
+            color var(--text-color)
+        .open-empty-tip
+            padding 0
+            margin 0
+            font-size 0.85em
+            color var(--text-color)
+            opacity 0.7
+
+// 插画浮动动画（尊重系统减弱动态效果设置）
+@keyframes open-no-float
+    0%, 100%
+        transform translateY(0)
+    50%
+        transform translateY(-3px)
+
+.open-no-ico
+    animation open-no-float 3s ease-in-out infinite
+
+@media (prefers-reduced-motion: reduce)
+    .open-no-ico
+        animation none
 
 // 无结果重置按钮：与分页按钮同风格，宽度自适应文案
 .open-reset
@@ -299,7 +346,8 @@
     display inline-flex
     align-items center
     justify-content center
-    border 1px solid var(--header-divider-color)
+    // 边框用中灰：明暗模式下与卡片底色（白/#444）都有对比，避免按钮融入卡片
+    border 1px solid color-gray
     border-radius 8px
     background-color var(--content-bg-color)
     color var(--text-color)
@@ -571,6 +619,15 @@
         padding 7px 30px
     .open-status
         margin-bottom 8px
+    // 空状态卡片：手机端紧凑化（比桌面端略收，但保留足够高度避免扁宽）
+    .open-no-result
+        gap 14px
+        margin-top 16px
+        padding 30px 24px
+        .open-no-ico
+            width 64px
+        .open-no-body
+            gap 8px
     // 标签筛选栏：手机端紧凑化（搜索框 margin-bottom 12px 在 grid 行内，与下方 12px 对齐）
     .open-tagbar
         gap 6px
