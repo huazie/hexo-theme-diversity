@@ -48,6 +48,10 @@ open:
   next: Next page
   pagination: Pagination
   filter: Filter by tag
+  sort: Sort
+  sort_default: Default
+  sort_name_asc: Name ↑
+  sort_name_desc: Name ↓
 
 introduction:
   landscape: A brand new default theme for Hexo.
