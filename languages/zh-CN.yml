@@ -48,6 +48,10 @@ open:
   next: 下一页
   pagination: 分页
   filter: 按标签筛选
+  sort: 排序
+  sort_default: 默认
+  sort_name_asc: 名称 ↑
+  sort_name_desc: 名称 ↓
 
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。

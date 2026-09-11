@@ -37,7 +37,9 @@
 
     // 手机端卡片展开/收起：同步所有卡片，避免同行等高拉伸留白
     var toggles = document.querySelectorAll('.open-toggle');
-    var cards = document.querySelectorAll('.open-card');
+    // 卡片顺序：数组与 DOM 保持同步重排（⑥ 排序依赖二者一致，分页按数组顺序切页）
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.open-card'));
+    var originalCards = cards.slice(); // 默认顺序（ejs 按 order 升序输出）
     function setAllExpanded(on) {
         cards.forEach(function (c) { c.classList.toggle('expanded', on); });
         toggles.forEach(function (t) {
@@ -139,12 +141,51 @@
         });
     }
 
+    // 排序（⑥）：默认（ejs 的 order 升序）/ 名称升序 / 名称降序；整体重排 DOM 并同步 cards 数组，
+    // 保证分页按同一顺序切页；状态只随 URL ?sort= 走，不写本地存储
+    var SORT_MODES = ['order', 'name', 'name_desc'];
+    var sortSelect = document.querySelector('.open-sort');
+    var sortMode = 'order';
+    function applySort() {
+        var ordered;
+        if (sortMode === 'name' || sortMode === 'name_desc') {
+            // 降序把比较结果取反；同序兜底仍按原始顺序，保证结果稳定不抖动
+            var dir = sortMode === 'name_desc' ? -1 : 1;
+            ordered = cards.slice().sort(function (a, b) {
+                var an = a.querySelector('.open-name');
+                var bn = b.querySelector('.open-name');
+                an = an ? an.textContent.trim() : '';
+                bn = bn ? bn.textContent.trim() : '';
+                // numeric 让带数字的名称按数值比较（Hexo8 < Hexo10）
+                return an.localeCompare(bn, 'zh-Hans-CN', { sensitivity: 'base', numeric: true }) * dir
+                    || (originalCards.indexOf(a) - originalCards.indexOf(b));
+            });
+        } else {
+            ordered = originalCards.slice();
+        }
+        // 顺序未变化时跳过 DOM 重排，避免无谓的 reflow
+        if (ordered.every(function (c, i) { return c === cards[i]; })) return;
+        ordered.forEach(function (c) { list.appendChild(c); });
+        cards = ordered;
+    }
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function () {
+            // 只接受已知模式，异常值回退默认
+            sortMode = SORT_MODES.indexOf(sortSelect.value) !== -1 ? sortSelect.value : 'order';
+            applySort();
+            // 用户主动改排序：回到第 1 页并同步 URL（keepPage 缺省即重置页码）
+            applySearch(true);
+        });
+    }
+
     // URL 同步（③）：?q=搜索词&tag=标签&page=页码；replaceState 不产生历史记录，刷新/分享可还原，前进后退由 popstate 处理
     function writeUrl() {
         if (!window.URLSearchParams || !window.history || !history.replaceState) return;
         var params = new URLSearchParams(location.search);
         if (input.value.trim()) params.set('q', input.value.trim()); else params.delete('q');
         if (activeTag) params.set('tag', activeTag); else params.delete('tag');
+        // 排序仅在非默认时写入
+        if (sortMode !== 'order') params.set('sort', sortMode); else params.delete('sort');
         // 页码仅在启用分页且不在第 1 页时写入，还原时越界值由 applyPage 收敛
         if (pageSize > 0 && currentPage > 1) params.set('page', currentPage); else params.delete('page');
         var qs = params.toString();
@@ -168,7 +209,12 @@
         // 页码还原：非法/缺省回第 1 页，越界值由 applyPage 收敛到实际总页数
         var pg = parseInt(params.get('page'), 10);
         currentPage = pg > 1 ? pg : 1;
+        // 排序还原：仅接受已知模式，非法/缺省回默认（旧的 ?sort=name 仍兼容）
+        var sp = params.get('sort');
+        sortMode = SORT_MODES.indexOf(sp) !== -1 ? sp : 'order';
+        if (sortSelect) sortSelect.value = sortMode;
         syncTagbar();
+        applySort();
     }
 
     // keepPage=true 时保留 currentPage（初始加载 / popstate 从 URL 还原页码），用户主动改筛选仍回第 1 页

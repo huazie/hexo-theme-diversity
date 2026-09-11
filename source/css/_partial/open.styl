@@ -74,6 +74,22 @@
         .open-ico
             fill #fff
 
+// 排序下拉：位于筛选栏行内、靠右；尺寸与标签 chip 对齐，避免把该行撑高；默认 order 不写入 URL
+.open-sort
+    font-family font-page
+    font-size 0.8em
+    height 30px
+    padding 0 6px
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    cursor pointer
+    transition border-color 0.2s
+    &:hover
+    &:focus
+        border-color color-link
+
 .open-ico
     width 18px
     height 18px
@@ -203,19 +219,29 @@
         background-color color-link
         color #fff
 
-// 标签筛选栏：常用标签 chips（被 ≥2 个项目使用的标签），与 .open-tagchip 同风格单选高亮
-// 有筛选栏时（open.ejs 注入 has-tagbar 类）收掉 article-header 的 20px 下内边距，
-// 间距统一由 tagbar 自身 margin 控制；无筛选栏的页面保持原间距不受影响
+// 筛选栏行：常用标签 chips（被 ≥2 个项目使用的标签，与 .open-tagchip 同风格单选高亮）居左 +
+// 排序下拉靠右，同一行展示。该行由 open.ejs 恒渲染（无常用标签时只剩排序下拉），
+// 故 has-tagbar 常驻：收掉 article-header 的 20px 下内边距，间距统一由本行 margin 控制
 .open-page .article-header.has-tagbar
     padding-bottom 0
-.open-tagbar
+.open-filterbar
     display flex
-    flex-wrap wrap
     align-items center
     gap 8px
     max-width 1600px
     // 上 4px（+标题行 8px 行间距 = 12）与下 12px 对齐
     margin 4px auto 12px
+.open-tagbar
+    display flex
+    flex-wrap wrap
+    align-items center
+    gap 8px
+    // 占满剩余宽度，把排序下拉挤到行尾；min-width 0 允许窄屏下收缩换行
+    flex 1 1 auto
+    min-width 0
+.open-filterbar .open-sort
+    // 排序下拉不参与收缩，窄屏下始终完整可点
+    flex-shrink 0
 
 .open-tagchip
     font-family font-page
@@ -614,6 +640,10 @@
         grid-row 1
         grid-column 2
         justify-self end
+    // 手机端排序下拉紧凑化（与标签 chip 同高）
+    .open-sort
+        height 28px
+        font-size 0.78em
     .open-search-input
         font-size 0.85em
         padding 7px 30px
@@ -628,10 +658,12 @@
             width 64px
         .open-no-body
             gap 8px
-    // 标签筛选栏：手机端紧凑化（搜索框 margin-bottom 12px 在 grid 行内，与下方 12px 对齐）
-    .open-tagbar
+    // 筛选栏行：手机端紧凑化（搜索框 margin-bottom 12px 在 grid 行内，与下方 12px 对齐）
+    .open-filterbar
         gap 6px
         margin 0 0 12px
+    .open-tagbar
+        gap 6px
     .open-tagchip
         font-size 0.75em
         padding 5px 10px
