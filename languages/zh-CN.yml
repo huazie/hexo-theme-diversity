@@ -52,6 +52,8 @@ open:
   sort_default: 默认
   sort_name_asc: 名称 ↑
   sort_name_desc: 名称 ↓
+  tags_more: 展开全部标签
+  tags_less: 收起标签
 
 introduction:
   landscape: Hexo 中的一个全新的默认主题，需要 Hexo 2.4 或者 更高的版本。

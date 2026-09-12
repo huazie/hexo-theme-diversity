@@ -74,10 +74,13 @@
         .open-ico
             fill #fff
 
-// 排序下拉：位于筛选栏行内、靠右；尺寸与标签 chip 对齐，避免把该行撑高；默认 order 不写入 URL
+// 排序下拉：位于筛选栏行内、靠右；默认 order 不写入 URL
+// 筛选行三种控件（.open-tagchip / .open-tagbar-more / .open-sort）必须等高：PC 30px、手机 28px
+// —— 高度一律用显式 height + border-box 定死，垂直 padding 归零，改一处需同步另外两处
 .open-sort
     font-family font-page
     font-size 0.8em
+    box-sizing border-box
     height 30px
     padding 0 6px
     border 1px solid var(--header-divider-color)
@@ -220,25 +223,34 @@
         color #fff
 
 // 筛选栏行：常用标签 chips（被 ≥2 个项目使用的标签，与 .open-tagchip 同风格单选高亮）居左 +
-// 排序下拉靠右，同一行展示。该行由 open.ejs 恒渲染（无常用标签时只剩排序下拉），
+// 右侧控件组（折叠按钮 + 排序下拉）靠右。该行由 open.ejs 恒渲染（无常用标签时只剩排序下拉），
 // 故 has-tagbar 常驻：收掉 article-header 的 20px 下内边距，间距统一由本行 margin 控制
 .open-page .article-header.has-tagbar
     padding-bottom 0
+// 控件组浮动到右上（DOM 中前置于标签行）→ 标签行为块级行内流：首行避让控件宽度，
+// 第二行起占满整行，标签按自身宽度密排，窄屏下不再出现大片空白。
+// overflow hidden 负责包住浮动（行高正确，也不会压住下方元素）
 .open-filterbar
-    display flex
-    align-items center
-    gap 8px
+    display block
+    overflow hidden
     max-width 1600px
     // 上 4px（+标题行 8px 行间距 = 12）与下 12px 对齐
     margin 4px auto 12px
+// 标签行：块级容器 + 行内级 chip（间距由 chip 自身 margin 提供，行内布局没有 gap）
 .open-tagbar
+    display block
+    // 抵消最后一行 chip 的下外边距，避免尾部多出空白
+    margin-bottom -8px
+    // is-collapsed 仅作状态标记（open.js 维护）：折叠时多余 chip 已隐藏，该行恒为一行高
+// 控件组：折叠按钮（open.js 注入到本组首位）+ 排序下拉，二者恒在同一行；
+// 浮动到右上后标签自动绕排，标签展开成多行时控件也不会被挤走
+.open-filter-tools
     display flex
-    flex-wrap wrap
     align-items center
     gap 8px
-    // 占满剩余宽度，把排序下拉挤到行尾；min-width 0 允许窄屏下收缩换行
-    flex 1 1 auto
-    min-width 0
+    float right
+    // 与标签之间的最小间隙（浮动元素不参与标签行的间距）
+    margin-left 8px
 .open-filterbar .open-sort
     // 排序下拉不参与收缩，窄屏下始终完整可点
     flex-shrink 0
@@ -247,10 +259,21 @@
     font-family font-page
     font-size 0.8em
     line-height 1
-    padding 6px 12px
+    // 高度定死（与「+N」按钮、排序下拉等高，见 .open-sort 上方说明）：垂直 padding 归零，
+    // 文案由 align-items center 居中，不靠 padding 撑高（否则字号一变高度就不一致）
+    box-sizing border-box
+    height 30px
+    padding 0 12px
     display inline-flex
     align-items center
     gap 6px
+    // 行内级排列（标签行是块级容器）：与「+N」按钮基线一致；间距由 margin 提供（行内布局没有 gap）
+    vertical-align middle
+    margin-right 8px
+    margin-bottom 8px
+    // 标签文案不换行：chip 内是 flex 容器，文本是匿名 flex item，空间紧张时会被压到
+    // min-content（中文可达单字）而折成多行（如「分库分表」→「分库/分表」）
+    white-space nowrap
     border 1px solid var(--header-divider-color)
     border-radius 999px
     background-color var(--content-bg-color)
@@ -283,6 +306,36 @@
         .open-tagchip-x
             display inline-flex
             opacity 0.85
+
+// 标签折叠按钮「+N」（展开态为「−」）：外观与 .open-tagchip 对齐，虚线边框区分「筛选」与「展开更多」
+.open-tagbar-more
+    font-family font-page
+    font-size 0.8em
+    line-height 1
+    // 高度定死，与 chip / 排序下拉等高（见 .open-sort 上方说明）
+    box-sizing border-box
+    height 30px
+    padding 0 12px
+    display inline-flex
+    align-items center
+    border 1px dashed var(--header-divider-color)
+    border-radius 999px
+    background-color var(--content-bg-color)
+    color var(--text-color)
+    cursor pointer
+    // 不参与收缩，保证「+N」始终完整可点
+    flex-shrink 0
+    // 文案不换行：+N / − 恒为单行
+    white-space nowrap
+    transition all 0.2s
+    user-select none
+    -webkit-tap-highlight-color transparent
+    &:hover
+        border-color color-link
+        color color-link
+    // 必须写在 display:inline-flex 之后：作者样式会盖掉浏览器默认的 [hidden]{display:none}
+    &[hidden]
+        display none
 
 .open-links
     display flex
@@ -640,7 +693,7 @@
         grid-row 1
         grid-column 2
         justify-self end
-    // 手机端排序下拉紧凑化（与标签 chip 同高）
+    // 手机端排序下拉紧凑化：与 chip、「+N」按钮统一 28px（三者必须同高）
     .open-sort
         height 28px
         font-size 0.78em
@@ -660,13 +713,25 @@
             gap 8px
     // 筛选栏行：手机端紧凑化（搜索框 margin-bottom 12px 在 grid 行内，与下方 12px 对齐）
     .open-filterbar
-        gap 6px
         margin 0 0 12px
     .open-tagbar
+        margin-bottom -6px
+    // 控件组同间距紧凑化（与 chip 间距一致）
+    .open-filter-tools
         gap 6px
+        margin-left 6px
     .open-tagchip
         font-size 0.75em
-        padding 5px 10px
+        // 与排序下拉、「+N」按钮同高（28px）；垂直 padding 归零
+        height 28px
+        padding 0 10px
+        margin-right 6px
+        margin-bottom 6px
+    // 折叠按钮与 chip 同尺寸紧凑化
+    .open-tagbar-more
+        font-size 0.75em
+        height 28px
+        padding 0 10px
     // 分页：手机端按钮紧凑化
     .open-pagination
         margin 16px auto 8px

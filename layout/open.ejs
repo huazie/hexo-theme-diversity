@@ -35,19 +35,23 @@
                                     </div>
                                 </div>
                             </header>
-                            <%# 筛选栏：常用标签 chips 居左 + 排序下拉靠右（同一行）；点击标签与搜索取交集，卡片内标签也可点击筛选。
-                                始终渲染——排序控件常驻，无常用标签时该行只剩排序下拉 %>
+                            <%# 筛选栏：常用标签 chips 居左 + 右侧控件组（折叠按钮 + 排序下拉）靠右；
+                                点击标签与搜索取交集，卡片内标签也可点击筛选。
+                                始终渲染——排序控件常驻，无常用标签时该行只剩排序下拉。
+                                控件组在 DOM 中前置于标签行、浮动到右上角，标签行为块级、chip 为行内级：
+                                第一行标签自动避让控件，其后的行占满整行，标签按自身宽度密排不留大片空白。
+                                标签过多时由 open.js 折叠为「+N」（展开/收起文案经 data 属性注入） %>
                             <div class="open-filterbar">
-                                <div class="open-tagbar"<% if (hotTags.length) { %> role="group" aria-label="<%= __('open.filter') %>"<% } %>>
-                                    <% hotTags.forEach(function (t) { %>
-                                    <button type="button" class="open-tagchip" data-tag="<%= t %>" aria-pressed="false"><%= t %><span class="open-tagchip-n"><%= tagCount[t] %></span></button>
-                                    <% }); %>
+                                <%# 控件组：折叠「+N」按钮（由 open.js 注入到本组内、排序下拉之前）+ 排序下拉 %>
+                                <div class="open-filter-tools">
+                                    <select class="open-sort" aria-label="<%= __('open.sort') %>">
+                                        <option value="order"><%= __('open.sort_default') %></option>
+                                        <option value="name"><%= __('open.sort_name_asc') %></option>
+                                        <option value="name_desc"><%= __('open.sort_name_desc') %></option>
+                                    </select>
                                 </div>
-                                <select class="open-sort" aria-label="<%= __('open.sort') %>">
-                                    <option value="order"><%= __('open.sort_default') %></option>
-                                    <option value="name"><%= __('open.sort_name_asc') %></option>
-                                    <option value="name_desc"><%= __('open.sort_name_desc') %></option>
-                                </select>
+                                <%# chip 之间不能有空白字符：行内级元素之间的空白会叠加成额外间隙（间距改由 chip 自身 margin 提供） %>
+                                <div class="open-tagbar" data-more-label="<%= __('open.tags_more') %>" data-less-label="<%= __('open.tags_less') %>"<% if (hotTags.length) { %> role="group" aria-label="<%= __('open.filter') %>"<% } %>><% hotTags.forEach(function (t) { %><button type="button" class="open-tagchip" data-tag="<%= t %>" aria-pressed="false"><%= t %><span class="open-tagchip-n"><%= tagCount[t] %></span></button><% }); %></div>
                             </div>
                             <p class="open-status" data-result="<%= __('open.result') %>" role="status" aria-live="polite" hidden></p>
                             <div id="open-list" class="open-<%= openDisplay %>" data-more="<%= __('open.more') %>" data-collapse="<%= __('open.collapse') %>" data-page-size="<%= openPageSize %>">
