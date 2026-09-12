@@ -139,6 +139,125 @@
                 x.parentNode.removeChild(x);
             }
         });
+        // chip 数量或宽度变化后重算折叠（选中态以 × 替换 count 徽标，宽度与未选中不同）
+        applyTagCollapse();
+    }
+
+    // 筛选栏标签折叠：常用标签过多时，首行放不下的 chip 收进「+N」按钮（点击展开/收起）；
+    // 无 JS 时退化为自然换行（渐进增强）
+    var TAG_GAP_FALLBACK = 8;
+    var tagMoreBtn = null;
+    var tagsExpanded = false;
+    // 控件组（折叠按钮 + 排序下拉）：浮动在标签行右上角，首行标签避让它、其后各行占满整行
+    var filterbar = tagbar ? tagbar.parentNode : null;
+    var tagTools = filterbar ? filterbar.querySelector('.open-filter-tools') : null;
+
+    // chip 间距（PC 8 / 手机 6）：行内级排列下间距由 chip 的 margin 提供，直接从实际样式读取
+    function tagGap() {
+        var c = tagbar.querySelector('.open-tagchip');
+        var m = c ? parseFloat(window.getComputedStyle(c).marginRight) : 0;
+        return m > 0 ? m : TAG_GAP_FALLBACK;
+    }
+
+    function tagbarChips() {
+        return Array.prototype.slice.call(tagbar.querySelectorAll('.open-tagchip'));
+    }
+
+    function ensureMoreBtn() {
+        if (tagMoreBtn) return tagMoreBtn;
+        tagMoreBtn = document.createElement('button');
+        tagMoreBtn.type = 'button';
+        tagMoreBtn.className = 'open-tagbar-more';
+        tagMoreBtn.hidden = true;
+        tagMoreBtn.setAttribute('aria-expanded', 'false');
+        tagMoreBtn.addEventListener('click', function () {
+            tagsExpanded = !tagsExpanded;
+            applyTagCollapse();
+        });
+        return tagMoreBtn;
+    }
+
+    function applyTagCollapse() {
+        if (!tagbar) return;
+        var chips = tagbarChips();
+        var btn = ensureMoreBtn();
+        // 无常用标签：该行只剩排序下拉，按钮不留在 DOM 里
+        if (!chips.length) {
+            if (btn.parentNode) btn.parentNode.removeChild(btn);
+            tagbar.classList.remove('is-collapsed');
+            return;
+        }
+        // 按钮恒居控件组首位（排序下拉之前）
+        if (tagTools) {
+            if (btn.parentNode !== tagTools || tagTools.firstElementChild !== btn) {
+                tagTools.insertBefore(btn, tagTools.firstElementChild);
+            }
+        } else if (btn.parentNode !== tagbar) {
+            tagbar.appendChild(btn);
+        }
+
+        // 测量前复位：chip 全部可见、按钮隐藏
+        chips.forEach(function (c) { c.style.display = ''; });
+        btn.hidden = true;
+
+        // 展开态：全部展示，按钮退化为「−」收起
+        if (tagsExpanded) {
+            tagbar.classList.remove('is-collapsed');
+            btn.hidden = false;
+            btn.textContent = '−';
+            btn.setAttribute('aria-expanded', 'true');
+            btn.setAttribute('aria-label', tagbar.dataset.lessLabel || '收起标签');
+            return;
+        }
+
+        var gap = tagGap();
+
+        // 首行可完整容纳（全部 chip + 控件组）：交回自然排列（不浪费空间），无需折叠
+        var total = 0;
+        chips.forEach(function (c, i) { total += c.offsetWidth + (i ? gap : 0); });
+        if (total + (tagTools ? gap + tagTools.offsetWidth : 0) <= tagbar.clientWidth) {
+            tagbar.classList.remove('is-collapsed');
+            return;
+        }
+
+        // 需要折叠：控件组浮动在标签行右上，首行需让出它的宽度；
+        // 按钮文案（+N 的位数）会改变控件组宽度，故按最终文案再算一趟（首趟占位文案偏宽，会少放一个）
+        var shown = 0;
+        for (var pass = 0; pass < 2; pass++) {
+            chips.forEach(function (c) { c.style.display = ''; });
+            var limit = tagbar.clientWidth - (tagTools ? tagTools.offsetWidth + gap : 0);
+            var acc = 0;
+            shown = 0;
+            for (var i = 0; i < chips.length; i++) {
+                var need = chips[i].offsetWidth + (i ? gap : 0);
+                if (acc + need > limit) break;
+                acc += need;
+                shown++;
+            }
+            if (shown < 1) shown = 1; // 至少保留一个 chip，避免整行只剩按钮
+            btn.hidden = false;
+            btn.textContent = '+' + (chips.length - shown);
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', tagbar.dataset.moreLabel || '展开全部标签');
+        }
+        tagbar.classList.add('is-collapsed');
+
+        var visible = chips.map(function (_, idx) { return idx < shown; });
+        // 选中态 chip 不能被折叠隐藏（否则 × 清除筛选的入口不可见）：与最后一个可见 chip 互换可见性
+        var activeIdx = -1;
+        chips.forEach(function (c, idx) { if (activeIdx < 0 && c.classList.contains('active')) activeIdx = idx; });
+        if (activeIdx >= shown) {
+            visible[shown - 1] = false;
+            visible[activeIdx] = true;
+        }
+
+        var hiddenN = 0;
+        chips.forEach(function (c, idx) {
+            c.style.display = visible[idx] ? '' : 'none';
+            if (!visible[idx]) hiddenN++;
+        });
+        btn.textContent = '+' + hiddenN;
+        btn.hidden = hiddenN <= 0;
     }
 
     // 排序（⑥）：默认（ejs 的 order 升序）/ 名称升序 / 名称降序；整体重排 DOM 并同步 cards 数组，
@@ -480,8 +599,8 @@
         });
     }
 
-    window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); });
-    window.addEventListener('load', function () { requestAnimationFrame(applyClamp); });
+    window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); requestAnimationFrame(applyTagCollapse); });
+    window.addEventListener('load', function () { requestAnimationFrame(applyClamp); requestAnimationFrame(applyTagCollapse); });
     // 浏览器前进/后退时按 URL 还原筛选与页码状态
     window.addEventListener('popstate', function () {
         initFromUrl();

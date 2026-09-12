@@ -52,6 +52,8 @@ open:
   sort_default: Default
   sort_name_asc: Name ↑
   sort_name_desc: Name ↓
+  tags_more: Show all tags
+  tags_less: Collapse tags
 
 introduction:
   landscape: A brand new default theme for Hexo.
