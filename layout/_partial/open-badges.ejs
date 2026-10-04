@@ -1,0 +1,7 @@
+<%# 开源详情页徽章行（作者 / 语言 / 协议）：open-detail.ejs 的 README 模式与降级模式共用；
+    参数：p = 项目数据 %>
+<div class="open-meta">
+    <% if (p.author) { %><% if (p.author_url) { %><a class="open-badge-link" href="<%= p.author_url %>" target="_blank" rel="noopener"><% } %><span class="open-badge open-badge-author"><span class="open-badge-label"><%= __('open.author') %></span><span class="open-badge-value"><%= p.author %></span></span><% if (p.author_url) { %></a><% } %><% } %>
+    <% if (p.language) { %><% var langs = Array.isArray(p.language) ? p.language : [p.language]; %><span class="open-badge open-badge-lang"><span class="open-badge-label"><%= __('open.language') %></span><% langs.forEach(function (lang) { %><span class="open-badge-value"><%= lang %></span><% }); %></span><% } %>
+    <% if (p.license) { %><% var licUrl = p.license_url || (p.source ? p.source + '/blob/main/LICENSE' : ''); %><% if (licUrl) { %><a class="open-badge-link" href="<%= licUrl %>" target="_blank" rel="noopener"><% } %><span class="open-badge open-badge-license"><span class="open-badge-label"><%= __('open.license') %></span><span class="open-badge-value"><%= p.license %></span></span><% if (licUrl) { %></a><% } %><% } %>
+</div>

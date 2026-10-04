@@ -19,4 +19,6 @@ module.exports = (ctx, theme) => {
     }
     generator.register('page', require('./page'));
     generator.register('asset', require('./asset'));
+    // 开源项目详情页（⑦）：为 source/_data/open/*.yml 各项目生成详情页；站点无 open 列表页时自动跳过
+    generator.register('open', require('./open'));
 };

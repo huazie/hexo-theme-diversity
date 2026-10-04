@@ -1,0 +1,5 @@
+<%# 开源详情页标签行（点击回跳列表页并按该标签筛选 ?tag=）：open-detail.ejs 的 README 模式与降级模式共用；
+    参数：p = 项目数据，listUrl = 列表页地址 %>
+<% if (p.tags && p.tags.length) { %>
+<div class="open-tags"><% p.tags.forEach(function (t) { %><a class="open-tag" href="<%= listUrl %>?tag=<%= encodeURIComponent(t) %>" aria-label="<%= __('open.filter') %>: <%= t %>"><%= t %></a><% }); %></div>
+<% } %>

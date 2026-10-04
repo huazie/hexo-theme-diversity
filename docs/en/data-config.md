@@ -181,7 +181,22 @@ layout: open
 
 `display` available values: `grid` | `list`. When absent, it falls back to `open.display` in the theme's `_config.yml`, then to `grid`.
 
-### 4. Quick Sync
+### 4. Project Detail Pages
+
+The theme automatically generates a standalone detail page for each open source project — no manual pages required:
+
+- **Path rule**: `<showcase page directory>/{key}/`. With the showcase page at `source/diversity/open/index.md`, the detail page of `open/flea-game.yml` is `/diversity/open/flea-game/`
+- **Entry**: the project name and Logo on each card link to its detail page
+- **Content**: full project description (not clamped), author / language / license badges, all tags, and Source / Demo / Docs links
+- **Tag jump-back**: tags on the detail page link back to the showcase page with that tag pre-filtered (`?tag=`); a "Back" link returns to the showcase page
+- **README body**: the project's GitHub `README.md` is fetched at build time and rendered into the detail page (same typography as blog articles):
+  - After the first successful fetch, the raw markdown is cached to `source/_data/open-readme/<key>.md`; later builds read the cache with no network requests
+  - Force refresh: delete the cache file and rebuild; the cache file can also be hand-edited (manual maintenance supported)
+  - Relative image/link paths inside the README are rewritten to absolute GitHub URLs (raw for images, blob for links)
+  - When the fetch fails or the repo has no README, the detail page degrades to card-style content (full description + badges + links); the build is never broken by network issues
+- Detail pages are not generated when the site has no `layout: open` showcase page
+
+### 5. Quick Sync
 
 Data file templates are included in the theme's `other/source/_data/open/` directory. Execute the sync command to use them:
 

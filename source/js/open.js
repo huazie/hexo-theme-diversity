@@ -69,7 +69,9 @@
     // 参与高亮的元素：缓存原始文本，避免高亮标签叠加
     var marks = [];
     cards.forEach(function (card) {
-        card.querySelectorAll('.open-name, .open-desc, .open-tag, .open-badge-value').forEach(function (n) {
+        // 高亮目标是 .open-name-link（项目名链接）而非 .open-name 容器：markText 会重写 innerHTML，
+        // 若高亮容器本身，链接锚点会被抹掉
+        card.querySelectorAll('.open-name-link, .open-desc, .open-tag, .open-badge-value').forEach(function (n) {
             if (n.dataset.raw === undefined) n.dataset.raw = n.textContent;
             marks.push(n);
         });

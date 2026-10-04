@@ -1,0 +1,139 @@
+// 开源项目详情页（⑦）：复用开源页卡片视觉与 CSS 变量，颜色全部走 var() 适配 light/dark
+
+// 返回链接：README 模式下面包屑式嵌入名称行左端（原顶部孤行已删），降级模式下独占一行
+.open-back
+    display inline-flex
+    align-items center
+    gap 6px
+    font-family font-page
+    font-size 0.95em
+    color var(--text-color)
+    text-decoration none
+    transition color 0.2s
+    &:hover
+        color color-link
+    svg
+        width 1em
+        height 1em
+
+// 降级模式（无 README）的返回行：卡片内首行
+.open-back-row
+    margin-bottom 16px
+
+// 详情主体：单列窄容器，与项目卡片同风格
+.open-detail
+    max-width 960px
+    margin 0 auto
+    background-color var(--content-bg-color)
+    border 1px solid var(--header-divider-color)
+    border-radius 8px
+    padding 24px
+    box-shadow 0 3px 8px 6px rgba(7, 17, 27, 0.09)
+
+.open-detail-head
+    display flex
+    align-items flex-start
+    gap 20px
+    margin-bottom 16px
+    .open-logo
+        width 72px
+        height 72px
+        border-radius 16px
+        flex-shrink 0
+    .open-detail-head-body
+        min-width 0
+        .open-name
+            margin 0 0 8px
+            font-size 1.5em
+        // 详情页描述完整展示（不截断），复用卡片描述样式但放宽行高
+        .open-desc
+            margin 0
+            line-height 1.7
+
+// 卡片入口链接（open.ejs）：项目名 hover 高亮、logo 链接不改变布局
+.open-name-link
+    color inherit
+    text-decoration none
+    transition color 0.2s
+    &:hover
+        color color-link
+.open-logo-link
+    display inline-flex
+    flex-shrink 0
+
+// 详情页内复用的卡片类微调
+.open-detail
+    // 标签是回跳列表筛选的链接（?tag=），去掉按钮类自带的下划线
+    .open-tag
+        text-decoration none
+
+// README 模式：自有区精简为紧凑元信息条（标题/logo/简介由 README 自带，这里不重复展示）
+// 行间距刻意放松：名称行 / 徽章行 / 标签行各留呼吸感，避免挤成一坨
+.open-detail-meta
+    // 与 README 正文之间由 .open-readme 的 border-top 分隔
+    margin-bottom 24px
+    .open-detail-meta-head
+        display flex
+        align-items center
+        gap 8px 16px
+        flex-wrap wrap
+        margin-bottom 14px
+        // 面包屑式返回：淡化为主，hover 恢复链接色
+        .open-back
+            flex-shrink 0
+            color color-gray
+            &:hover
+                color color-link
+        .open-name
+            margin 0
+            font-size 1.4em
+        // 链接按钮组靠右、不占满整行（覆盖卡片流里的 width 100%）
+        .open-links
+            width auto
+            margin-left auto
+        // 源码/演示/文档按钮化：描边胶囊，hover 淡底填充（仅详情页 meta 条内，不影响列表卡片流）
+        .open-link
+            padding 5px 14px
+            border 1px solid rgba(color-gray, 0.45)
+            border-radius 16px
+            transition color 0.2s, border-color 0.2s, background-color 0.2s
+            &:hover
+                text-decoration none
+                border-color color-link
+                background rgba(color-link, 0.08)
+    // 元信息条内的行距（默认 margin 供卡片流使用）
+    .open-meta
+        margin-bottom 12px
+    .open-tags
+        margin-bottom 0
+
+// README 正文：排版复用 .article-content，这里只补与详情头部的衔接
+.open-readme
+    margin-top 0
+    padding-top 20px
+    // 分隔线用文本灰半透明：--header-divider-color 暗色下与卡片底同为 #444 会隐身，
+    // rgba 由 color-gray 变量编译期推导，亮/暗模式都自然可见
+    border-top 1px solid rgba(color-gray, 0.4)
+    img
+        border-radius 8px
+    h1:first-child
+    h2:first-child
+        margin-top 0
+
+@media mq-mobile
+    .open-detail
+        padding 16px
+    .open-detail-meta .open-detail-meta-head .open-name
+        font-size 1.25em
+    // 手机端名称行放不下链接按钮组：换行后靠左排列（margin-left auto 会把整组推到行尾右侧）
+    .open-detail-meta .open-detail-meta-head .open-links
+        margin-left 0
+    .open-detail-head
+        gap 14px
+        .open-logo
+            width 56px
+            height 56px
+            border-radius 12px
+        .open-detail-head-body
+            .open-name
+                font-size 1.25em
