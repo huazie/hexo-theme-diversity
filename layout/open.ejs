@@ -54,16 +54,19 @@
                                 <div class="open-tagbar" data-more-label="<%= __('open.tags_more') %>" data-less-label="<%= __('open.tags_less') %>"<% if (hotTags.length) { %> role="group" aria-label="<%= __('open.filter') %>"<% } %>><% hotTags.forEach(function (t) { %><button type="button" class="open-tagchip" data-tag="<%= t %>" aria-pressed="false"><%= t %><span class="open-tagchip-n"><%= tagCount[t] %></span></button><% }); %></div>
                             </div>
                             <p class="open-status" data-result="<%= __('open.result') %>" role="status" aria-live="polite" hidden></p>
-                            <div id="open-list" class="open-<%= openDisplay %>" data-more="<%= __('open.more') %>" data-collapse="<%= __('open.collapse') %>" data-page-size="<%= openPageSize %>">
-                                <% projects.forEach(function (p) { %>
-                                <% var sp = [p.key, p.name, p.description, p.author, p.license]; if (p.language) sp = sp.concat(Array.isArray(p.language) ? p.language : [p.language]); if (p.tags) sp = sp.concat(p.tags); %>
-                                <div class="open-card" data-search="<%= sp.filter(Boolean).join(' ') %>" data-tags="<%= (p.tags || []).join('|') %>">
-                                    <div class="open-card-head">
-                                        <% if (p.logo) { %><img class="open-logo" src="<%= p.logo %>" alt="<%= p.name %>" loading="lazy"><% } else { %><svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/><text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif"><%= (p.name || '?').trim().charAt(0).toUpperCase() %></text></svg><% } %>
-                                        <h3 class="open-name"><%= p.name %></h3>
-                                    </div>
-                                    <div class="open-card-body">
-                                        <h3 class="open-name"><%= p.name %></h3>
+<%# 详情页根路径：当前列表页路径去掉文件名（⑦ 卡片名/图标进详情页的链接用） %>
+<% const detailBase = (page.path || '').replace(/[^/]+$/, ''); %>
+<div id="open-list" class="open-<%= openDisplay %>" data-more="<%= __('open.more') %>" data-collapse="<%= __('open.collapse') %>" data-page-size="<%= openPageSize %>">
+    <% projects.forEach(function (p) { %>
+    <% var dUrl = url_for(detailBase + p.key + '/'); %>
+    <% var sp = [p.key, p.name, p.description, p.author, p.license]; if (p.language) sp = sp.concat(Array.isArray(p.language) ? p.language : [p.language]); if (p.tags) sp = sp.concat(p.tags); %>
+    <div class="open-card" data-search="<%= sp.filter(Boolean).join(' ') %>" data-tags="<%= (p.tags || []).join('|') %>">
+        <div class="open-card-head">
+            <a class="open-logo-link" href="<%= dUrl %>" aria-label="<%= __('open.detail') %>: <%= p.name %>"><% if (p.logo) { %><img class="open-logo" src="<%= p.logo %>" alt="<%= p.name %>" loading="lazy"><% } else { %><svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/><text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif"><%= (p.name || '?').trim().charAt(0).toUpperCase() %></text></svg><% } %></a>
+            <h3 class="open-name"><a class="open-name-link" href="<%= dUrl %>"><%= p.name %></a></h3>
+        </div>
+        <div class="open-card-body">
+            <h3 class="open-name"><a class="open-name-link" href="<%= dUrl %>"><%= p.name %></a></h3>
                                         <% if (p.description) { %><p class="open-desc"><%= p.description %></p><% } %>
                                         <div class="open-meta">
                                             <% if (p.author) { %><% if (p.author_url) { %><a class="open-badge-link" href="<%= p.author_url %>" target="_blank" rel="noopener"><% } %><span class="open-badge open-badge-author"><span class="open-badge-label"><%= __('open.author') %></span><span class="open-badge-value"><%= p.author %></span></span><% if (p.author_url) { %></a><% } %><% } %>

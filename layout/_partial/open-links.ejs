@@ -1,0 +1,7 @@
+<%# 开源详情页链接按钮（源码 / 演示 / 文档）：open-detail.ejs 的 README 模式与降级模式共用；
+    参数：p = 项目数据 %>
+<div class="open-links">
+    <% if (p.source) { %><a class="open-link" href="<%= p.source %>" target="_blank" rel="noopener"><%= __('open.source') %></a><% } %>
+    <% if (p.demo) { %><a class="open-link" href="<%= p.demo %>" target="_blank" rel="noopener"><%= __('open.demo') %></a><% } %>
+    <% if (p.doc) { %><a class="open-link" href="<%= p.doc %>" target="_blank" rel="noopener"><%= __('open.doc') %></a><% } %>
+</div>
