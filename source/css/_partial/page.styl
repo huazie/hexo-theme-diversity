@@ -219,9 +219,10 @@ note-warn = hsl(0, 100%, 50%)
         display block
         font-size 1.3em
         font-weight bold
+    // 边框与斑马纹用 color-gray 的半透明推导：随明暗底色自适应（编译期固定亮色在暗色下不可读）
     table
         max-width 100%
-        border 1px solid color-pale-gray1
+        border 1px solid rgba(color-gray, 0.3)
         display block
         overflow auto
         th
@@ -230,7 +231,7 @@ note-warn = hsl(0, 100%, 50%)
             padding 5px 15px
         tr
             &:nth-child(2n)
-              	background color-pale-gray
+              	background rgba(color-gray, 0.12)
 
 .article-footer
     clearfix()
