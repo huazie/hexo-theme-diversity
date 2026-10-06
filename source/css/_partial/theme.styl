@@ -33,6 +33,13 @@ arrow-size = 50px
     opacity 1
     backface-visibility hidden
     transform-origin 50% 50%
+    // 中间卡片实际位于 ring 平面后方（ring 初始 rotateY(180) 翻转了 z 轴），
+    // ring 的透明平面会截走其区域的鼠标事件导致 :hover 失效：
+    // ring 不参与命中，由卡片自身平面接管（其背面因 backface-visibility hidden 不可命中，不影响）
+    pointer-events auto
+
+.ring
+    pointer-events none
 
 .card-container
     position relative
