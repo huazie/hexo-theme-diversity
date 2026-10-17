@@ -170,6 +170,9 @@
 .open-meta
     display flex
     flex-wrap wrap
+    // 语言徽章是裸 span（无 <a> 包裹），作为 flex 子项会被块化并按默认 stretch 拉高，
+    // 与作者/协议（有 <a> 包裹、内容自然高）不一致 → 统一顶对齐按内容高
+    align-items flex-start
     gap 6px
     margin-bottom 10px
 
@@ -201,6 +204,9 @@
     background-color #fe7d37
 
 .open-badge-link
+    // flex 容器：徽章在 <a> 内不参与行盒基线排版（行高继承会把徽章压低 ~5px，
+    // 与裸 span 的语言徽章错位），转 flex 后与语言徽章同高同位
+    display flex
     text-decoration none
     &:hover
         opacity 0.85
