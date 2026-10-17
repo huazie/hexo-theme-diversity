@@ -11,7 +11,10 @@
     "_config.diversity.yml",
     "_config.yml"
   ],
-  "repository": "huazie/hexo-theme-diversity",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huazie/hexo-theme-diversity.git"
+  },
   "keywords": [
     "hexo",
     "theme",
