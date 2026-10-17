@@ -33,7 +33,9 @@ async function openDetailGenerator(locals) {
                 // 详情页数据与列表页路径（layout 内拼「返回列表」「标签回跳」链接用）
                 project: p,
                 list_path: openPage.path,
-                readme
+                readme,
+                // 评论接入开关：与留言页同机制（page.ejs 中 page.comments 控制），项目 yml 可置 false 关闭
+                comments: p.comments !== false
             }
         };
     }));

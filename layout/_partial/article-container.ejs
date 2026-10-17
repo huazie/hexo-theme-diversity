@@ -1,0 +1,48 @@
+<%# 文章页通用壳：page.ejs / open-detail.ejs 共用（评论/大标题/更新时间/TOC 全部复用）。
+    所有参数由调用方显式传入（不做 undefined 分支，避免渲染上下文变量未定义报错）：
+    - bodyClass   外层 content-wrap 的附加 class，无则传 ''
+    - title       大标题文本
+    - contentHtml 正文 HTML
+    - footerHtml  页脚 HTML，传 '' 不显示
+    - tocHtml     TOC 侧栏内容 HTML %>
+<div id="content-wrap"<% if (bodyClass) { %> class="<%= bodyClass %>"<% } %>>
+    <div id="content" class="wrapper">
+        <div id="content-inner">
+            <article class="article-container" itemscope itemtype="http://schema.org/Article">
+                <div class="article-inner">
+                    <div class="article">
+                        <div class="inner">
+                            <% if (title) { %>
+                            <header class="article-header">
+                                <h1 class="article-title" itemprop="name"><%= title %></h1>
+                            </header>
+                            <% } %>
+                            <div class="article-content" itemprop="articleBody">
+                                <%- contentHtml %>
+                            </div>
+                            <% if (footerHtml) { %>
+                            <footer class="article-footer">
+                                <%- footerHtml %>
+                            </footer>
+                            <% } %>
+                            <% if (page.comments) { %>
+                                <% try { %>
+                                    <%- partial(theme.comments.layout || 'comments') %>
+                                <% } catch(e) { %>
+                                    <!-- Comments layout not found -->
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <aside id="article-toc" role="navigation">
+                        <div id="article-toc-inner">
+                            <strong class="article-toc-title"><%= __('page.contents') %></strong>
+                            <%- tocHtml %>
+                            <a href="#" id="article-toc-top"><%= __('page.back_to_top') %></a>
+                        </div>
+                    </aside>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
