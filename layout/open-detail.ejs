@@ -1,70 +1,61 @@
 <%# 开源项目详情页（⑦）：由 scripts/generator/open.js 生成，page.project 为项目数据、page.list_path 为列表页路径；
+    外壳/评论/大标题/TOC 复用 _partial/article-container（与 page.ejs 同布局），此处只组装详情正文；
     复用开源页的卡片类名（open-badge / open-tag / open-link）与 CSS 变量，保证明暗主题与视觉风格一致 %>
 <% var p = page.project || {}; %>
 <% var listBase = (page.list_path || '').replace(/[^/]+$/, ''); %>
 <% var listUrl = url_for(listBase); %>
-<div id="content-wrap" class="open-page open-detail-page">
-    <div id="content" class="wrapper">
-        <div id="content-inner">
-            <article class="article-container" itemscope itemtype="http://schema.org/Article">
-                <div class="article-inner">
-                    <div class="article">
-                        <div class="inner">
-                            <div id="open-detail" class="open-detail" itemprop="articleBody">
-                                <% if (p.name) { %>
-                                <% var badgesHtml = partial('_partial/open-badges', { p: p }); %>
-                                <% var linksHtml = partial('_partial/open-links', { p: p }); %>
-                                <% var tagsHtml = partial('_partial/open-tags', { p: p, listUrl: listUrl }); %>
-                                <% if (page.readme) { %>
-                                <%# README 模式：标题/logo/简介由 README 自带，自有区精简为紧凑元信息条
-                                    （名称 + 链接按钮 + 徽章行 + 标签行），避免与大标题重复 %>
-                                <div class="open-detail-meta">
-                                    <%# 返回为面包屑式（GitHub 仓库页风格）：与名称同行，替代原顶部孤行 %>
-                                    <div class="open-detail-meta-head">
-                                        <a class="open-back" href="<%= listUrl %>">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
-                                            <span><%= __('open.back') %></span>
-                                        </a>
-                                        <h1 class="open-name" itemprop="name"><%= p.name %></h1>
-                                        <%- linksHtml %>
-                                    </div>
-                                    <%- badgesHtml %>
-                                    <%- tagsHtml %>
-                                </div>
-                                <%# README 正文：generator 构建时渲染（本地缓存优先，详见 scripts/lib/readme.js）；
-                                    复用博客文章排版类 .article-content（标题/列表/表格/引用/图片自适应），零重复样式 %>
-                                <div class="open-readme article-content">
-                                    <%- page.readme %>
-                                </div>
-                                <% } else { %>
-                                <%# 降级模式（无 README）：完整头部 大 logo + 名称 + 完整描述 + 元信息 %>
-                                <div class="open-back-row">
-                                    <a class="open-back" href="<%= listUrl %>">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
-                                        <span><%= __('open.back') %></span>
-                                    </a>
-                                </div>
-                                <div class="open-detail-head">
-                                    <% if (p.logo) { %><img class="open-logo" src="<%= p.logo %>" alt="<%= p.name %>"><% } else { %><svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/><text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif"><%= (p.name || '?').trim().charAt(0).toUpperCase() %></text></svg><% } %>
-                                    <div class="open-detail-head-body">
-                                        <h1 class="open-name" itemprop="name"><%= p.name %></h1>
-                                        <% if (p.description) { %><p class="open-desc"><%= p.description %></p><% } %>
-                                    </div>
-                                </div>
-                                <%- badgesHtml %>
-                                <%- tagsHtml %>
-                                <%- linksHtml %>
-                                <% } %>
-                                <% } else { %>
-                                <p class="open-empty"><%= __('open.no_result') %></p>
-                                <p class="open-empty-tip"><%= __('open.no_result_tip') %></p>
-                                <a class="open-back" href="<%= listUrl %>"><span><%= __('open.back') %></span></a>
-                                <% } %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </div>
-</div>
+<%
+    var backHtml = '<a class="open-back" href="' + listUrl + '">'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>'
+        + '<span>' + __('open.back') + '</span></a>';
+    var detailHtml = '<div class="open-detail">';
+    if (p.name) {
+        if (page.readme) {
+            /* README 模式：README 完整保留（含自带 h1 标题/logo），不另设大标题避免重复；
+               元信息条（返回 + 链接按钮 + 徽章 + 标签）在 README 上方 */
+            var badgesHtml = partial('_partial/open-badges', { p: p });
+            var linksHtml = partial('_partial/open-links', { p: p });
+            var tagsHtml = partial('_partial/open-tags', { p: p, listUrl: listUrl });
+            detailHtml += '<div class="open-detail-meta">'
+                + '<div class="open-detail-meta-head">' + backHtml + linksHtml + '</div>'
+                + badgesHtml + tagsHtml + '</div>';
+            /* README 正文：generator 构建时渲染（本地缓存优先，详见 scripts/lib/readme.js） */
+            detailHtml += '<div class="open-readme">' + page.readme + '</div>';
+        } else {
+            /* 降级模式（无 README）：返回 + 大 logo + 描述 + 徽章/标签/链接 */
+            var badgesHtml = partial('_partial/open-badges', { p: p });
+            var linksHtml = partial('_partial/open-links', { p: p });
+            var tagsHtml = partial('_partial/open-tags', { p: p, listUrl: listUrl });
+            var logoHtml;
+            if (p.logo) {
+                logoHtml = '<img class="open-logo" src="' + p.logo + '" alt="' + p.name + '">';
+            } else {
+                logoHtml = '<svg class="open-logo open-logo-default" viewBox="0 0 100 100" aria-hidden="true">'
+                    + '<rect width="100" height="100" rx="20" fill="var(--content-bg-color)" stroke="var(--text-color)" stroke-width="3" stroke-opacity="0.3"/>'
+                    + '<text x="50" y="50" dy="0.35em" text-anchor="middle" font-size="52" font-weight="bold" fill="var(--text-color)" font-family="system-ui, -apple-system, sans-serif">'
+                    + (p.name || '?').trim().charAt(0).toUpperCase() + '</text></svg>';
+            }
+            detailHtml += '<div class="open-back-row">' + backHtml + '</div>'
+                + '<div class="open-detail-head">' + logoHtml
+                + '<div class="open-detail-head-body">'
+                + (p.description ? '<p class="open-desc">' + p.description + '</p>' : '')
+                + '</div></div>'
+                + badgesHtml + tagsHtml + linksHtml;
+        }
+        /* 评论区分隔由 page 布局的 footer 提供，不再插 hr */
+    } else {
+        detailHtml += '<p class="open-empty">' + __('open.no_result') + '</p>'
+            + '<p class="open-empty-tip">' + __('open.no_result_tip') + '</p>'
+            + backHtml;
+    }
+    detailHtml += '</div>';
+%>
+<%# 外壳与 page 布局完全一致：不加 open-page/open-detail-page hook（不走全屏/收紧），footer 显示更新时间；
+    README 模式标题传 ''（README 自带 h1，shell 对空标题不渲染 header），降级模式用项目名 %>
+<%- partial('_partial/article-container', {
+    bodyClass: '',
+    title: (p.name && !page.readme) ? p.name : '',
+    contentHtml: detailHtml,
+    footerHtml: '<time class="article-footer-updated" datetime="' + date(page.updated) + '" itemprop="dateModified">' + __('page.last_updated', date(page.updated)) + '</time>',
+    tocHtml: p.name ? toc(detailHtml, {list_number: false}) : ''
+}) %>

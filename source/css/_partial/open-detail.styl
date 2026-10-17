@@ -20,16 +20,8 @@
 .open-back-row
     margin-bottom 16px
 
-// 详情主体：单列窄容器，与项目卡片同风格
-.open-detail
-    max-width 960px
-    margin 0 auto
-    background-color var(--content-bg-color)
-    border 1px solid var(--header-divider-color)
-    border-radius 8px
-    padding 24px
-    box-shadow 0 3px 8px 6px rgba(7, 17, 27, 0.09)
-
+// 详情内容容器：外壳/背景/排版/目录/评论全部复用 article-shell（page 同布局），无特有布局样式
+// ⚠️ 不留空的 .open-detail 选择器行：stylus 会把它与下一个选择器合并成选择器组
 .open-detail-head
     display flex
     align-items flex-start
@@ -67,11 +59,12 @@
     .open-tag
         text-decoration none
 
-// README 模式：自有区精简为紧凑元信息条（标题/logo/简介由 README 自带，这里不重复展示）
-// 行间距刻意放松：名称行 / 徽章行 / 标签行各留呼吸感，避免挤成一坨
+// README 模式：元信息条（返回 + 链接按钮 + 徽章 + 标签），位于 README 正文上方
+// clear both 防御：page 布局的 article-container/article 均为浮动布局，防止条被挤成侧栏
 .open-detail-meta
-    // 与 README 正文之间由 .open-readme 的 border-top 分隔
-    margin-bottom 24px
+    clear both
+    // 与 README 的间距由 .open-readme 的 border-top + padding-top 统一控制，这里不再另加
+    margin-bottom 0
     .open-detail-meta-head
         display flex
         align-items center
@@ -84,9 +77,6 @@
             color color-gray
             &:hover
                 color color-link
-        .open-name
-            margin 0
-            font-size 1.4em
         // 链接按钮组靠右、不占满整行（覆盖卡片流里的 width 100%）
         .open-links
             width auto
@@ -107,33 +97,48 @@
     .open-tags
         margin-bottom 0
 
-// README 正文：排版复用 .article-content，这里只补与详情头部的衔接
+// README 正文：排版/间距与 page 正文完全一致（外层 .article-content 提供），仅图片圆角为项目页特有微调
 .open-readme
+    clear both
+    // 与上方 meta 条的分隔：rgba 由 color-gray 编译期推导，亮/暗模式都自然可见
     margin-top 0
     padding-top 20px
-    // 分隔线用文本灰半透明：--header-divider-color 暗色下与卡片底同为 #444 会隐身，
-    // rgba 由 color-gray 变量编译期推导，亮/暗模式都自然可见
     border-top 1px solid rgba(color-gray, 0.4)
     img
         border-radius 8px
+    // README 首元素（现保留自带 h1）在 article-content 里有 2.2em 上外边距，
+    // 会与分隔线 padding 叠出大空隙，首元素归零贴线
     h1:first-child
     h2:first-child
+    h3:first-child
         margin-top 0
+    // 手机端长代码防撑宽：行内 code 长串（URL/script 标签）在任意字符处断行，代码块横向滚动不出格
+    code
+        overflow-wrap anywhere
+    pre
+    figure.highlight
+        overflow-x auto
+        pre
+            overflow-x visible
+    // 表格防挤压：同代码块思路，超出容器横向滚动，列宽按内容自然排布不被压缩
+    // 覆盖规则必须收在 .open-table-wrap 内（readme.js 构建时包层）：
+    // ① overflow 在 display:block 表格上不能裁剪内部表格盒，滚动只能由外层 div 承担；
+    // ② 若 wrapper 缺失（如 hexo s 未重启、generator 未重跑），表格回退 page.styl 的
+    //    display:block 行为（挤压但不会撑宽页面），保证 CSS 与 DOM 结构原子绑定
+    .open-table-wrap
+        overflow-x auto
+        -webkit-overflow-scrolling touch
+        table
+            display table
+            width max-content
+            max-width none
+            overflow visible
 
 @media mq-mobile
-    .open-detail
-        padding 16px
-    .open-detail-meta .open-detail-meta-head .open-name
-        font-size 1.25em
-    // 手机端名称行放不下链接按钮组：换行后靠左排列（margin-left auto 会把整组推到行尾右侧）
-    .open-detail-meta .open-detail-meta-head .open-links
-        margin-left 0
+    // 手机端链接按钮组与 PC 一致靠右（meta-head flex-wrap，放不下时整组换行仍靠右）
     .open-detail-head
         gap 14px
         .open-logo
             width 56px
             height 56px
             border-radius 12px
-        .open-detail-head-body
-            .open-name
-                font-size 1.25em

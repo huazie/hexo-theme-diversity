@@ -65,7 +65,11 @@ async function loadReadme(ctx, cachedHtml, p, key) {
             fs.writeFileSync(path.join(dir, key + '.md'), md);
         } catch (e) { /* ignore */ }
     }
-    return rewritePaths(html, repo);
+    // README 完整保留（含自带 h1 标题/logo），详情页不再另设大标题避免重复；
+    // 表格包一层滚动容器：overflow 在 display:block 表格上不能裁剪内部表格盒（thead 会画出容器外撑宽页面），
+    // 必须由外层 div 负责横向滚动
+    return rewritePaths(html, repo).replace(/<table>/gi, '<div class="open-table-wrap"><table>')
+        .replace(/<\/table>/gi, '</table></div>');
 }
 
 module.exports = { loadReadme, parseRepo };
