@@ -45,25 +45,40 @@ function rewritePaths(html, repo) {
     return html;
 }
 
-// 取项目 README 渲染后的 HTML；cachedHtml 为 site.data 命中的已渲染 HTML，未命中时联网拉取并写缓存
-async function loadReadme(ctx, cachedHtml, p, key) {
+// md → HTML：走 hexo 标准文章渲染管线（直连 renderSync 不经过渲染 filter，
+// 反引号代码块不会高亮成 figure.highlight，外链等后处理也缺失，与站内文章样式不一致）。
+// mermaid 围栏由 filter 插件（scripts/filter/mermaid.js）在渲染前后处理，本模块不再单独操心
+async function renderMarkdown(ctx, md) {
+    const pre = { content: md };
+    await ctx.extend.filter.exec('before_post_render', pre, { context: ctx });
+    const html = ctx.render.renderSync({ text: pre.content, engine: 'markdown' });
+    const post = { content: html };
+    await ctx.extend.filter.exec('after_post_render', post, { context: ctx });
+    return post.content;
+}
+
+// 取项目 README 渲染后的 HTML；cachedData 为 site.data 命中的缓存（<key>.json，{content: md 原文}）。
+// ⚠️ 缓存不能用 .md：data processor 会直渲染成缺 filter 管线的 HTML；也不能用 .txt 等无渲染器的扩展名
+// （file.render 返回 null，site.data 根本不载入）；.json 渲染为对象、md 原文存 content，渲染统一走 renderMarkdown
+async function loadReadme(ctx, cachedData, p, key) {
     const repo = parseRepo(p.source);
     if (!repo) return null;
-    let html = typeof cachedHtml === 'string' ? cachedHtml : '';
-    if (!html) {
-        const md = await fetchText('https://raw.githubusercontent.com/' + repo.owner + '/' + repo.repo + '/HEAD/README.md');
+    let md = cachedData && typeof cachedData.content === 'string' ? cachedData.content : '';
+    if (!md) {
+        md = await fetchText('https://raw.githubusercontent.com/' + repo.owner + '/' + repo.repo + '/HEAD/README.md');
         if (!md) return null;
-        try {
-            html = ctx.render.renderSync({ text: md, engine: 'markdown' });
-        } catch (e) {
-            return null;
-        }
-        // 写回缓存（下次构建由 data processor 载入 site.data，不再走网络）；写失败不影响本次渲染
+        // 写回缓存（.json 存原文，下次构建命中后统一走 renderMarkdown 管线）；写失败不影响本次渲染
         try {
             const dir = path.join(ctx.base_dir, 'source', '_data', 'open-readme');
             fs.mkdirSync(dir, { recursive: true });
-            fs.writeFileSync(path.join(dir, key + '.md'), md);
+            fs.writeFileSync(path.join(dir, key + '.json'), JSON.stringify({ content: md }));
         } catch (e) { /* ignore */ }
+    }
+    let html;
+    try {
+        html = await renderMarkdown(ctx, md);
+    } catch (e) {
+        return null;
     }
     // README 完整保留（含自带 h1 标题/logo），详情页不再另设大标题避免重复；
     // 表格包一层滚动容器：overflow 在 display:block 表格上不能裁剪内部表格盒（thead 会画出容器外撑宽页面），
