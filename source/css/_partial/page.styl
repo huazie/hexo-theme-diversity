@@ -39,6 +39,9 @@ note-warn = hsl(0, 100%, 50%)
     float left
     width 100%
     padding 40px 0
+    // 手机端收紧上下留白（与开源列表页 .open-page .article 的 20px 对齐），内容贴近 header
+    @media mq-mobile
+        padding 20px 0
     @media print
         padding 0
 
