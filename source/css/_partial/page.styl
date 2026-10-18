@@ -197,6 +197,22 @@ note-warn = hsl(0, 100%, 50%)
             margin 1em 0
     img, video
       	max-width 100%
+    // mermaid 图渲染容器（构建期 filter 插件生成占位、mermaid-render.js 填充）：居中展示，超宽横向滚动不出格
+    .mermaid-holder
+        margin 1em 0
+        overflow-x auto
+        text-align center
+        svg
+            max-width 100%
+            height auto
+        // 渲染失败回退：以代码块形式展示图源（mermaid-render.js 加 mermaid-fallback）
+        &.mermaid-fallback
+            text-align left
+            white-space pre
+            font-family font-mono
+            font-size 0.85em
+            line-height 1.6
+            color color-gray
     blockquote
         padding 0 20px
         position relative
