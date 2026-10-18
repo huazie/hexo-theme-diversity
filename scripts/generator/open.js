@@ -2,8 +2,8 @@
 // 开源项目详情页生成器（⑦）：
 // 以 layout: open 的列表页所在目录为根，为 site.data 中 open/ 前缀的每个项目生成 <列表页目录>/<key>/ 详情页；
 // 新增 source/_data/open/*.yml 数据文件后详情页自动带出，无需手写页面；站点无 open 列表页时整体跳过。
-// README（方案 A）：本地缓存 site.data['open-readme/<key>']（data processor 渲染好的 HTML）优先，
-// 未命中时从 GitHub raw 拉取并写回缓存（详见 lib/readme.js）；无 README 时详情页降级为卡片式内容。
+// README（方案 A）：本地缓存 site.data['open-readme/<key>']（<key>.json，{content: md 原文}，渲染统一走
+// lib/readme.js 的 filter 管线），未命中时从 GitHub raw 拉取并写回缓存；无 README 时详情页降级为卡片式内容。
 const { loadReadme } = require('../lib/readme');
 
 async function openDetailGenerator(locals) {
@@ -24,7 +24,7 @@ async function openDetailGenerator(locals) {
         .sort((a, b) => (a.order || 0) - (b.order || 0));
     const ctx = this;
     return Promise.all(projects.map(async (p) => {
-        const readme = await loadReadme(ctx, data['open-readme/' + p.key], p, p.key);
+        const readme = await loadReadme(ctx, data["open-readme/" + p.key], p, p.key);
         return {
             path: base + p.key + '/index.html',
             layout: ['open-detail', 'page', 'index'],
