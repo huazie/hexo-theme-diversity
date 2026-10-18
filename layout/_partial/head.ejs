@@ -35,3 +35,7 @@
 
 <%- diversity_data('main', diversity_config()) %>
 <%- js('js/diversity') %>
+<% /* mermaid 渲染脚本：仅正文（page.content）或 README（page.readme，开源详情页）含 mermaid 占位时注入，其余页面零请求；脚本内部对 mermaid 库（CDN）也是按需加载 */ %>
+<% if (((page.content || '') + (page.readme || '')).indexOf('data-mermaid') !== -1) { %>
+<%- js('js/mermaid-render') %>
+<% } %>
