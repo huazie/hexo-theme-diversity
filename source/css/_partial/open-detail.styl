@@ -104,19 +104,24 @@
     margin-top 0
     padding-top 20px
     border-top 1px solid rgba(color-gray, 0.4)
+    // 手机端防撑宽总开关：overflow-wrap 可继承，链接（README 里大量超长 URL 分类跳转）、
+    // 段落/列表/标题/引用中的长串一律任意字符断行；代码块与表格两类场景在下方恢复 normal 走各自滚动方案
+    overflow-wrap anywhere
     img
         border-radius 8px
+    // iframe 无全局 max-width（img/video 在 article-content 已有），嵌入帧兜底不撑宽
+    iframe
+        max-width 100%
     // README 首元素（现保留自带 h1）在 article-content 里有 2.2em 上外边距，
     // 会与分隔线 padding 叠出大空隙，首元素归零贴线
     h1:first-child
     h2:first-child
     h3:first-child
         margin-top 0
-    // 手机端长代码防撑宽：行内 code 长串（URL/script 标签）在任意字符处断行，代码块横向滚动不出格
-    code
-        overflow-wrap anywhere
+    // 代码块恢复 normal（抵消继承的 anywhere）：保持代码单行，超宽走自身横向滚动
     pre
     figure.highlight
+        overflow-wrap normal
         overflow-x auto
         pre
             overflow-x visible
@@ -124,8 +129,10 @@
     // 覆盖规则必须收在 .open-table-wrap 内（readme.js 构建时包层）：
     // ① overflow 在 display:block 表格上不能裁剪内部表格盒，滚动只能由外层 div 承担；
     // ② 若 wrapper 缺失（如 hexo s 未重启、generator 未重跑），表格回退 page.styl 的
-    //    display:block 行为（挤压但不会撑宽页面），保证 CSS 与 DOM 结构原子绑定
+    //    display:block 行为（挤压但不会撑宽页面），保证 CSS 与 DOM 结构原子绑定；
+    // ③ 恢复 normal（抵消继承的 anywhere），max-content 才能算出真实自然宽度
     .open-table-wrap
+        overflow-wrap normal
         overflow-x auto
         -webkit-overflow-scrolling touch
         table
