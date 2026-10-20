@@ -50,7 +50,8 @@ body
     display none
 
 .loading
-    background url(../images/loading.svg) center no-repeat fixed
+    // 底色 + 居中旋转 spinner（SVG 内置 SMIL 动画，作为 background-image 原生播放）
+    background #eee url(../images/loading.svg) center no-repeat fixed
 
 a
     color color-bright-sky-blue
