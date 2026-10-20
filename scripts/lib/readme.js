@@ -81,10 +81,19 @@ async function loadReadme(ctx, cachedData, p, key) {
         return null;
     }
     // README 完整保留（含自带 h1 标题/logo），详情页不再另设大标题避免重复；
-    // 表格包一层滚动容器：overflow 在 display:block 表格上不能裁剪内部表格盒（thead 会画出容器外撑宽页面），
-    // 必须由外层 div 负责横向滚动
-    return rewritePaths(html, repo).replace(/<table>/gi, '<div class="open-table-wrap"><table>')
-        .replace(/<\/table>/gi, '</table></div>');
+    // 数据表格包一层滚动容器：overflow 在 display:block 表格上不能裁剪内部表格盒（thead 会画出容器外撑宽页面），
+    // 必须由外层 div 负责横向滚动。
+    // ⚠️ figure.highlight 内的行号表格必须排除：包上 wrap 会被 .open-table-wrap table 的
+    // width max-content 收缩成紧贴内容，而 page 正文（留言页）的代码块 table 被
+    // .article-content table 的 display block 撑成全宽——两页代码块形态就不一致了
+    return rewritePaths(html, repo).replace(
+        /<figure class="highlight[\s\S]*?<\/figure>|<table>|<\/table>/gi,
+        function (m) {
+            const head = m.slice(0, 7).toLowerCase();
+            if (head === '<figure' || head === '</figur') return m; // 代码块整体原样（内部 table 已随之跳过）
+            return head === '<table>' ? '<div class="open-table-wrap"><table>' : '</table></div>';
+        }
+    );
 }
 
 module.exports = { loadReadme, parseRepo };
