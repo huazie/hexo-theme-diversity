@@ -9,7 +9,8 @@ transition-duration = 0.4s
     width mobile-nav-width
     left @width * -1
     height 100%
-    background color-navy
+    // 侧滑导航底色跟随明暗模式，取 body 底色与白色正文容器拉开层次；文字色同步适配见 .mobile-nav-link
+    background var(--body-bg-color)
     transition transition-duration
     .mobile-nav-on &
         transform translateX(100%)
@@ -67,23 +68,37 @@ transition-duration = 0.4s
 
 .mobile-nav-li
     display flex
-    padding 15px 0
-    align-items center  
+    // 行距改由 .mobile-nav-link 的纵向 padding 提供，使整行（含行距）均为可点区域
+    align-items center
     text-align center
     justify-content center
+    transition 0.2s
+    // 点击反馈：hover/按压态整行淡蓝底（覆盖整个 li）
+    &:hover, &:active
+        background rgba(color-link, 0.08)
+    // 当前选中项：与按压态一致的整行淡蓝底（文字色由 .active .mobile-nav-link 处理）
+    &.active
+        background rgba(color-link, 0.08)
     a
         font-family font-nav
         font-size font-nav-size
         font-weight bold
 
 .mobile-nav-link
-    width auto
-    color color-white
+    width 100%
+    color var(--text-color)
     text-decoration none
     line-height 1
     white-space nowrap
     overflow hidden
     text-overflow ellipsis
+    padding 15px 0
+    transition 0.2s
+    // 去除移动端浏览器默认点击高亮，按压反馈由 li 的背景承担
+    -webkit-tap-highlight-color transparent
+    tap-highlight-color transparent
+    &:hover, &:active
+        color color-link-hover
     .active &
         color color-link-hover
 
