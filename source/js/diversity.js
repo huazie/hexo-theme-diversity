@@ -3,6 +3,41 @@
     const staticConfig = {};
     let otherConfig = {};
 
+    // 原生 Cookie 实现（替代原 js.cookie 2.2.1 依赖）
+    // 仅在浏览器不支持 localStorage 时，作为 Diversity.data 的降级存储使用（现代浏览器极少走此分支）。
+    // API 对齐 js.cookie 子集：get(name) / set(name, value, options) / remove(name, options)
+    // options 支持：expires(number 天数 | Date) / path / domain / secure / sameSite
+    const Cookies = {
+        get(name) {
+            const pairs = document.cookie ? document.cookie.split('; ') : [];
+            for (const pair of pairs) {
+                const idx = pair.indexOf('=');
+                if (idx === -1) continue;
+                if (decodeURIComponent(pair.slice(0, idx)) === name) {
+                    return decodeURIComponent(pair.slice(idx + 1));
+                }
+            }
+            return null;
+        },
+        set(name, value, options) {
+            options = options || {};
+            let str = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+            str += ';path=' + (options.path || '/');
+            if (options.domain) str += ';domain=' + options.domain;
+            if (options.expires != null) {
+                const exp = options.expires;
+                const date = typeof exp === 'number' ? new Date(Date.now() + exp * 864e5) : (exp.toUTCString ? exp : new Date(exp));
+                str += ';expires=' + date.toUTCString();
+            }
+            if (options.secure) str += ';secure';
+            if (options.sameSite) str += ';samesite=' + options.sameSite;
+            document.cookie = str;
+        },
+        remove(name, options) {
+            this.set(name, '', Object.assign({}, options, { expires: new Date(0) }));
+        }
+    };
+
     const parse = text => JSON.parse(text || '{}');
 
     const update = name => {
