@@ -70,16 +70,20 @@ font-nav-size = 1em
 font-nav-size = get_font_config('nav', 'size') if get_font_config('nav', 'size')
 
 // Font Family
-// Western
+// 西文字体 Western
 font-western = 'Helvetica Neue', Helvetica, Arial
 font-western = get_font_config('western', 'family'), font-western if get_font_config('western', 'family');
 
-// Chinese
+// 中文字体 Chinese
 font-chinese = 'PingFang SC', 'Microsoft YaHei'
 font-chinese = get_font_config('chinese', 'family'), font-chinese if get_font_config('chinese', 'family');
 
 // 无衬线字体（优先西文，中文作为补充）
 font-sans    = font-western, font-chinese, sans-serif
+
+// 代码字体（代码块/行内代码），可经 font.code.family 覆盖
+font-code    = Consolas, 'Liberation Mono', Menlo, Courier, 'Courier New', monospace
+font-code    = get_font_config('code', 'family'), font-code if get_font_config('code', 'family');
 
 // 导航栏字体
 font-nav     = font-sans

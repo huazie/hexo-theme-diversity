@@ -93,6 +93,16 @@ font:
     # 页面字体类型，可选值参考上述西文和中文字体类型
     # Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
     family:
+  # 代码字体配置
+  # Code font configuration
+  code:
+    # 代码字体类型（等宽字体），可选值： Consolas | Monaco | Menlo | 'Liberation Mono' | 'Courier New' | 'Fira Code' | 'JetBrains Mono' | 'Source Code Pro'
+    # 单个场景，如： Consolas 或 'Fira Code'
+    # 多个场景，如： 'Fira Code, Consolas, monospace'
+    # Code font family (monospace). Available values: Consolas | Monaco | Menlo | 'Liberation Mono' | 'Courier New' | 'Fira Code' | 'JetBrains Mono' | 'Source Code Pro'
+    # Single font example: Consolas or 'Fira Code'
+    # Multiple fonts example: 'Fira Code, Consolas, monospace'
+    family:
 
 # 开源项目展示页配置
 # Open source projects showcase page configuration
