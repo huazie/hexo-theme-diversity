@@ -1,3 +1,6 @@
+<% /* jQuery 仅本页（主题展示页）需要：theme-rotate.js / gritter / theme.js 均依赖 $；
+      置于所有 defer 脚本之前，保证按文档序最先执行；其他页面不再加载 */ %>
+<script src="<%- url_for('js/jquery-3.6.0.min.js') %>" defer></script>
 <div class="theme-wrap">
     <div class="theme-inner">
         <%
@@ -29,4 +32,5 @@
 <%- partial('_partial/footer', {footerId: "theme-footer"}) %>
 
 <script src="<%- url_for('js/jquery.gritter-1.7.4.min.js') %>" defer></script>
-<%- js('js/theme') %>
+<% /* theme.js 依赖 jQuery（IIFE 传参 + 立即选择器绑定），与 jQuery 同批 defer 按文档序执行 */ %>
+<%- js({src: 'js/theme', defer: true}) %>
