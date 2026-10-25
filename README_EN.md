@@ -113,10 +113,11 @@ For a detailed understanding, please refer to the articles in the [[Blog Framewo
 
 The following are standalone Hexo plugins extracted from the Diversity theme. You are welcome to try them out:
 
-- [hexo-hot-config](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-hot-config/README.md) - Hexo hot configuration plugin, supporting real-time configuration updates.
-- [hexo-generator-comments](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-generator-comments/README.md) - Hexo multi-comment system generator plugin, supporting integration and switching of multiple comment systems, providing a unified comment interface.
-- [hexo-comments-utterances](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-utterances/README.md) - Hexo Utterances comment plugin, supporting integration of Utterances comment system.
-- [hexo-comments-gitalk](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitalk/README.md) - Hexo Gitalk comment plugin, supporting integration of Gitalk comment system.
-- [hexo-comments-giscus](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-giscus/README.md) - Hexo Giscus comment plugin, supporting integration of Giscus comment system.
+- [hexo-hot-config](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-hot-config/README_EN.md) - Hexo hot configuration plugin, supporting real-time configuration updates.
+- [hexo-generator-comments](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-generator-comments/README_EN.md) - Hexo multi-comment system generator plugin, supporting integration and switching of multiple comment systems, providing a unified comment interface.
+- [hexo-comments-utterances](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-utterances/README_EN.md) - Hexo Utterances comment plugin, supporting integration of Utterances comment system.
+- [hexo-comments-gitalk](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitalk/README_EN.md) - Hexo Gitalk comment plugin, supporting integration of Gitalk comment system.
+- [hexo-comments-giscus](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-giscus/README_EN.md) - Hexo Giscus comment plugin, supporting integration of Giscus comment system.
 - [hexo-comments-twikoo](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-twikoo/README_EN.md) - Hexo Twikoo comment plugin, supporting integration of Twikoo comment system
 - [hexo-comments-gitment](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-gitment/README_EN.md) - Hexo Gitment comment plugin, supporting integration of Gitment comment system
+- [hexo-comments-waline](https://github.com/huazie/diversity-plugins/tree/main/packages/hexo-comments-waline/README_EN.md) - Hexo Waline comment plugin, supporting integration of Waline comment system
