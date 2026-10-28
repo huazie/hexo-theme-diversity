@@ -356,8 +356,10 @@ Diversity.utils = {
         let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (!isDarkMode)
             isDarkMode = document.documentElement.classList.contains('dark-theme');
-        if (!isDarkMode && conf && conf.comments && conf.comments.darkClass) 
-            isDarkMode = document.documentElement.classList.contains(conf.comments.darkClass);
+        // conf 由 hexo-generator-comments 插件注入（window.conf），仅评论页存在；
+        // 用 window.conf 访问避免非评论页 ReferenceError
+        if (!isDarkMode && window.conf && window.conf.comments && window.conf.comments.darkClass)
+            isDarkMode = document.documentElement.classList.contains(window.conf.comments.darkClass);
         if (config.darkmode === 1)
             isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         else if (config.darkmode === 2)
