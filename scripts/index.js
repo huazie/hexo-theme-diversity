@@ -82,6 +82,9 @@ if (Util.isMatchCmd(cmd)) {
         require('./config')(hexo1, themeConfig);
         hexo1.init()
             .then(() => require('./helper')(hexo1, themeName))
+            // 多主题子实例同样注册过滤器：文章页渲染需要 mermaid 等处理
+            // （template_locals 内部有 diversity 主题守卫，其他主题自动跳过）
+            .then(() => require('./filter')(hexo1, themeName))
             .then(() => require('./generator')(hexo1, themeName))
             .then(() => require('./injector')(hexo1))
             .then(() => hexo1.call(cmd, args))
