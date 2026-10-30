@@ -42,7 +42,9 @@
     }
 
     function init() {
-        var holders = document.querySelectorAll('.article-content .mermaid-holder[data-mermaid]');
+        // 不限定父容器：文章页由多主题子实例渲染，各主题正文容器 class 不同
+        // （diversity 为 .article-content），mermaid-holder 是 filter 生成的专属 class，全局查找无误匹配
+        var holders = document.querySelectorAll('.mermaid-holder[data-mermaid]');
         if (!holders.length) return;
         loadMermaid(function () {
             var blocks = [];
