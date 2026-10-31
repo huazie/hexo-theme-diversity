@@ -86,7 +86,7 @@ if (Util.isMatchCmd(cmd)) {
             // （template_locals 内部有 diversity 主题守卫，其他主题自动跳过）
             .then(() => require('./filter')(hexo1, themeName))
             .then(() => require('./generator')(hexo1, themeName))
-            .then(() => require('./injector')(hexo1))
+            .then(() => require('./injector')(hexo1, themeConfig))
             .then(() => hexo1.call(cmd, args))
             .then(() => hexo1.exit())
             .catch(err => hexo1.exit(err));

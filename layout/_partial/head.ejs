@@ -36,3 +36,7 @@
 <% if (((page.content || '') + (page.readme || '')).indexOf('data-mermaid') !== -1) { %>
 <%- js('js/mermaid-render') %>
 <% } %>
+<% /* 图片放大查看：仅正文（page.content）或 README（page.readme）含 <img> 时注入；自带图片放大的主题已在 scripts/injector 构建期跳过 */ %>
+<% if (((page.content || '') + (page.readme || '')).indexOf('<img') !== -1) { %>
+<%- js('js/image-lightbox') %>
+<% } %>

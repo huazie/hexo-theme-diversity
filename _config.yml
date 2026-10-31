@@ -34,6 +34,11 @@ page:
   # 滚动页面高度大于等于配置高度，隐藏菜单导航栏
   # 滚动页面高度小于配置高度，显示菜单导航栏
   blog_scroll_height: 200
+  # 文章图片放大查看（lightbox）
+  # 仅当子主题未自带图片放大能力、需要添加查看脚本时，才把主题名加入列表
+  # 自带方案无需配置：landscape/light/phase = fancybox；icarus = lightGallery；next = Fancybox v5
+  # 主实例（diversity）README 详情页按页面内容自动注入，无需配置
+  image_zoom: []
 
 # 返回顶部按钮配置
 back2top:
