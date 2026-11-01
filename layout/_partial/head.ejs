@@ -50,3 +50,7 @@
 <% if (((page.content || '') + (page.readme || '')).indexOf('<img') !== -1) { %>
 <%- js('js/image-lightbox') %>
 <% } %>
+<% /* 代码块增强（语言标签/复制按钮）：仅正文或 README 含代码块时注入；子主题实例由 scripts/injector 全局内联注入 */ %>
+<% if (((page.content || '') + (page.readme || '')).indexOf('<figure class="highlight') !== -1) { %>
+<%- js('js/code-copy') %>
+<% } %>

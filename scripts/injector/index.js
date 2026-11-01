@@ -19,6 +19,10 @@ module.exports = function injector(ctx, themeConfig) {
     // 脚本自带零开销守卫：页面无 mermaid 占位容器时直接返回，不加载 mermaid 库
     const mermaidSrc = fs.readFileSync(path.join(__dirname, '../../source/js/mermaid-render.js'), 'utf8');
     injector.register('body_end', '<script>' + mermaidSrc + '<' + '/script>');
+    // 注册 body_end 注入点：代码块增强（语言标签/复制按钮，内联，与主题 source/js/code-copy.js 同源）。
+    // 全局注入，脚本自带零开销守卫：页面无代码块时直接返回，不注入任何样式/节点
+    const codeCopySrc = fs.readFileSync(path.join(__dirname, '../../source/js/code-copy.js'), 'utf8');
+    injector.register('body_end', '<script>' + codeCopySrc + '<' + '/script>');
     // 注册 body_end 注入点：文章图片放大查看（内联，与主题 source/js/image-lightbox.js 同源）。
     // 白名单机制：仅 page.image_zoom 中列出的子主题注入查看脚本（未自带图片放大能力、
     // 需要添加的主题才配置）；自带放大能力的主题（如 landscape/light/phase = fancybox、
