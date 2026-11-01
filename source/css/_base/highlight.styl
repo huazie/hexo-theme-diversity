@@ -1,19 +1,20 @@
 // https://github.com/chriskempson/tomorrow-theme
+// 色板经 CSS 变量驱动（见 _colors.styl）：浅色 = Tomorrow，暗色 = Tomorrow Night
 highlight-background = var(--body-bg-color)
-highlight-foreground = #950f0f
-highlight-comment = #8e908c
+highlight-foreground = var(--hl-foreground)
+highlight-comment = var(--hl-comment)
 highlight-black = var(--text-color)
-highlight-red = #c82829
-highlight-orange = #f5871f
-highlight-yellow = #eab700
-highlight-green = #718c00
-highlight-aqua = #3e999f
-highlight-blue = #4271ae
-highlight-purple = #8959a8
+highlight-red = var(--hl-red)
+highlight-orange = var(--hl-orange)
+highlight-yellow = var(--hl-yellow)
+highlight-green = var(--hl-green)
+highlight-aqua = var(--hl-aqua)
+highlight-blue = var(--hl-blue)
+highlight-purple = var(--hl-purple)
 
 pre, code
     font-family font-code
-    background #f7e6e6
+    background var(--code-inline-bg)
     font-size 0.95em
 
 code
@@ -31,10 +32,15 @@ pre
 
 .highlight
     background highlight-background
-    padding 10px 15px
+    // 底部间距由 td 的 5px 提供，figure 不再叠加（否则底部 ≈19px，明显大于左右 15px）
+    padding 10px 15px 0
     color highlight-foreground
     overflow auto
     margin 0
+    // 边框画在 figure 外框（连同顶部工具条区域一起框住）：
+    // page.styl .article-content table（0,1,1）会把边框/内边距落到代码块 table 上，
+    // 本文件在 _base 先于 _partial 加载、同特异性会输，故 table/td 覆盖一律用 figure.highlight 前缀提高特异性
+    border 1px solid rgba(color-gray, 0.3)
     table
         margin 0 !important
         border 0
@@ -53,6 +59,16 @@ pre
         background none
     .line
         height 22px
+
+// 行号列：收窄内边距让行号靠左，并与代码列之间加明显分隔线
+// （覆盖 page.styl .article-content table 的边框与 td 的 padding 5px 15px，特异性 0,1,2+/0,2,2 > 0,1,1/0,1,2）
+figure.highlight table
+    border 0
+    td.gutter
+        padding 5px 6px
+        border-right 1px solid rgba(color-gray, 0.3)
+    td.code
+        padding 5px 10px
 
 pre
     .comment
@@ -108,8 +124,8 @@ pre
         color rgba(255, 255, 255, 0.8)
     // https://github.com/primer/github-syntax-light
     .deletion
-        background #ffeef0
-        color #b31d28
+        background var(--hl-deletion-bg)
+        color var(--hl-deletion-color)
     .addition
-        background #f0fff4
-        color #22863a
+        background var(--hl-addition-bg)
+        color var(--hl-addition-color)
