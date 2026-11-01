@@ -13,5 +13,8 @@ module.exports = (ctx, theme) => {
     if (ctx.config.theme === theme) {
     	// 添加模板的局部变量的过滤器，用于修改模板的局部变量
         filter.register('template_locals', require('./locals'));
+    } else {
+        // 子主题页面自引用 canonical 注入（主实例页面由 head.ejs 直接输出，无需注入）
+        filter.register('_after_html_render', require('./canonical')(ctx));
     }
 };
