@@ -30,6 +30,7 @@ source:
 page:
   header_nav_position: 
   blog_scroll_height: 200
+  image_zoom: []
 
 back2top:
   enable: true
@@ -48,6 +49,8 @@ font:
     family: 
     size: 
   page:
+    family:
+  code:
     family:
 
 open:
@@ -130,6 +133,10 @@ giscus:
   - **blog_scroll_height** - 博客页滚动高度【单位：`px`】
     - 滚动页面高度大于等于配置高度，隐藏菜单导航栏
     - 滚动页面高度小于配置高度，显示菜单导航栏
+  - **image_zoom** - 文章图片放大查看【子主题名列表】
+    - 仅当子主题未自带图片放大能力、需要添加查看脚本时，才把主题名加入列表
+    - 自带方案无需配置：`landscape`/`light`/`phase` = fancybox；`icarus` = lightGallery；`next` = Fancybox v5
+    - 主实例（`diversity`）README 详情页按页面内容自动注入，无需配置
 - **back2top** - 返回顶部按钮配置
   - **enable** - 是否启用，可选值： `true` | `false`
   - **enable_scroll_percent** - 返回顶部按钮中是否启用展示滚动百分比，可选值： `true` | `false`
@@ -151,8 +158,13 @@ giscus:
     - **size** - 导航栏字体大小(参考示例： `1.1em` 或 `17px`)
   - **page** - 页面字体配置
     - **family** - 页面字体类型，可选值参考上述西文和中文字体类型
+  - **code** - 代码字体配置
+    - **family** - 代码字体类型（等宽字体），可选值： `Consolas` | `Monaco` | `Menlo` | `Liberation Mono` | `Courier New` | `Fira Code` | `JetBrains Mono` | `Source Code Pro`
+      - 单个场景，如： Consolas 或 'Fira Code'
+      - 多个场景，如： 'Fira Code, Consolas, monospace'
 - **open** - 开源项目展示页配置（数据来源：`source/_data/open/*.yml`，详见 [data-config.md](data-config.md)）
   - **display** - 默认展示模式，可选值： `grid`（方格） | `list`（列表）。页面 front-matter 中指定 `display` 时优先于此处配置
+  - **page_size** - 每页展示条数（分页），`0` 或不配置表示不分页、全量展示。页面 front-matter 中指定 `page_size` 时优先于此处配置
 - **comments** - 评论系统配置
   - **title** - 自定义评论标题（可选，默认为"Comments"）
   - **layout** - 自定义评论布局文件名（可选，不包含扩展名）

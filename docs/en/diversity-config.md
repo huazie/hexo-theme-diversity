@@ -30,6 +30,7 @@ source:
 page:
   header_nav_position: 
   blog_scroll_height: 200
+  image_zoom: []
 
 back2top:
   enable: true
@@ -48,6 +49,8 @@ font:
     family: 
     size: 
   page:
+    family:
+  code:
     family:
 
 open:
@@ -129,6 +132,10 @@ giscus:
   - **blog_scroll_height** - Scroll Height for Blog Page (Unit: `px`)
     - Hide Menu Navigation Bar when Scroll Height is Greater Than or Equal to Configured Height
     - Show Menu Navigation Bar when Scroll Height is Less Than Configured Height
+  - **image_zoom** - Image lightbox for articles [List of sub-theme names]
+    - Only add the theme name to the list when the sub-theme has no built-in image zoom capability and needs the viewer script
+    - Themes with built-in solutions need no configuration: `landscape`/`light`/`phase` = fancybox; `icarus` = lightGallery; `next` = Fancybox v5
+    - The main instance (`diversity`) README detail pages are injected automatically based on page content, no configuration needed
 - **back2top** - B2t Configuration
   - **enable** - Whether to enable. Available values: `true` | `false`
   - **enable_scroll_percent** - Whether to enable displaying the scroll percent label in b2t button. Available values: `true` | `false`
@@ -150,8 +157,13 @@ giscus:
     - **size** - Navigation bar font size (Example: `1.1em` or `17px`)
   - **page** - Page font configuration
     - **family** - Page font family. Optional values refer to the Chinese and Western font familys mentioned above.
+  - **code** - Code font configuration
+    - **family** - Code font family (monospace). Available values: `Consolas` | `Monaco` | `Menlo` | `Liberation Mono` | `Courier New` | `Fira Code` | `JetBrains Mono` | `Source Code Pro`
+      - Single font example: Consolas or 'Fira Code'
+      - Multiple fonts example: 'Fira Code, Consolas, monospace'
 - **open** - Open source projects showcase page configuration (data source: `source/_data/open/*.yml`, see [data-config.md](data-config.md))
   - **display** - Default display mode. Available values: `grid` | `list`. Takes lower priority than the `display` set in the page front-matter.
+  - **page_size** - Number of items per page (pagination). `0` or unset means no pagination. Takes lower priority than the `page_size` set in the page front-matter.
 - **comments** - Comment System Configuration
   - **title** - Custom comment section title (optional, defaults to "Comments")
   - **layout** - Custom comment layout filename (optional, without file extension)
