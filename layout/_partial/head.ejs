@@ -25,6 +25,7 @@
 <meta property="og:type" content="website"/>
 <% if (ogDesc){ %><meta property="og:description" content="<%= ogDesc %>"/><% } %>
 <% if (config.url){ %><meta property="og:url" content="<%= full_url_for(page.path.replace(/(index\.html)$/, '')) %>"/><% } %>
+<% if (config.url){ %><link rel="canonical" href="<%= full_url_for(page.path.replace(/(index\.html)$/, '')) %>"/><% } %>
 <% if (ogImage){ %><meta property="og:image" content="<%= full_url_for(ogImage) %>"/><% } %>
 <meta property="og:site_name" content="<%= config.title %>"/>
 <meta name="twitter:card" content="<%= isPageImage ? 'summary_large_image' : 'summary' %>"/>
