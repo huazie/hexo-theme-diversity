@@ -9,19 +9,28 @@
 <title><%= title %></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <% if (config.author){ %><meta name="author" content="<%= config.author %>"><% } %>
-<% if (theme.description){ %>
-<meta name="description" content="<%= theme.description %>">
-<% } else if (config.description){ %>
-<meta name="description" content="<%= config.description %>">
-<% } %>
-
-<% if (theme.title){ %><meta property="og:title" content="<%= theme.title %>"/><% } %>
+<%
+    /* og/twitter meta：按页面动态生成（页面用自身标题/摘要，未配置时回退站点默认值）。
+       og:type 恒为 website：本主题主实例只渲染 page 类页面（post 生成器为空，文章详情由子主题各自的 head 输出） */
+    var ogTitle = page.title || config.title || theme.title;
+    var ogDesc = page.description || '';
+    if (!ogDesc && page.excerpt) ogDesc = page.excerpt.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!ogDesc) ogDesc = config.description || theme.description || '';
+    if (ogDesc.length > 200) ogDesc = ogDesc.substring(0, 200) + '…';
+    var ogImage = page.cover || page.image || theme.image || config.image || '';
+    var isPageImage = !!(page.cover || page.image);
+%>
+<% if (ogDesc){ %><meta name="description" content="<%= ogDesc %>"><% } %>
+<meta property="og:title" content="<%= ogTitle %>"/>
+<meta property="og:type" content="website"/>
+<% if (ogDesc){ %><meta property="og:description" content="<%= ogDesc %>"/><% } %>
+<% if (config.url){ %><meta property="og:url" content="<%= full_url_for(page.path.replace(/(index\.html)$/, '')) %>"/><% } %>
+<% if (ogImage){ %><meta property="og:image" content="<%= full_url_for(ogImage) %>"/><% } %>
 <meta property="og:site_name" content="<%= config.title %>"/>
-<% if(theme.image) { %>
-<meta property="og:image" content="<%= theme.image %>" />
-<% } else { %>
-<meta property="og:image" content="<%= config.image %>"/>
-<% } %>
+<meta name="twitter:card" content="<%= isPageImage ? 'summary_large_image' : 'summary' %>"/>
+<meta name="twitter:title" content="<%= ogTitle %>"/>
+<% if (ogDesc){ %><meta name="twitter:description" content="<%= ogDesc %>"/><% } %>
+<% if (ogImage && isPageImage){ %><meta name="twitter:image" content="<%= full_url_for(ogImage) %>"/><% } %>
 
 <% if (theme.favicon){ %>
 <%- favicon_tag(theme.favicon) %>
