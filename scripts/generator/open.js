@@ -30,6 +30,8 @@ async function openDetailGenerator(locals) {
             layout: ['open-detail', 'page', 'index'],
             data: {
                 title: p.name,
+                // 项目描述：head.ejs 的 meta description / og:description 按页面描述优先取值
+                description: p.description,
                 // 详情页数据与列表页路径（layout 内拼「返回列表」「标签回跳」链接用）
                 project: p,
                 list_path: openPage.path,
