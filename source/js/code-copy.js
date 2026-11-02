@@ -195,6 +195,22 @@
         if (!figures.length) return;
         injectStyle();
         Array.prototype.forEach.call(figures, enhance);
+        watchThemeChange();
+    }
+
+    // 主题切换时重算深色块标记：hl-dark-box 在 enhance 时按当时背景采样定死，
+    // 而 main 实例代码块背景跟随页面主题（暗色下加载 → 加了类 → 切亮后类残留，
+    // 浅色图标落在亮背景上隐形），故监听 html class 变化动态摘/挂
+    function watchThemeChange() {
+        if (typeof MutationObserver === 'undefined') return;
+        new MutationObserver(function () {
+            Array.prototype.forEach.call(
+                document.querySelectorAll('figure.highlight.hl-enhanced'),
+                function (figure) {
+                    figure.classList.toggle('hl-dark-box', isDarkBox(figure));
+                }
+            );
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
 
     if (document.readyState === 'loading') {
