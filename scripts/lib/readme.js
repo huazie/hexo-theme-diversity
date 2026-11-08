@@ -1,8 +1,8 @@
 "use strict";
 // 开源项目详情页 README 获取（⑦ 方案 A：拉取 + 本地缓存）：
-// 1. 缓存命中：source/_data/open-readme/<key>.md 存在时，hexo data processor（pattern: _data/*path，跨目录）
-//    会把它渲染为 HTML 载入 site.data['open-readme/<key>']，generator 直接取用，零网络依赖
-// 2. 缓存未命中：从 raw.githubusercontent.com 拉取 README.md，渲染为 HTML，并把 md 原文写回缓存
+// 1. 缓存命中：source/_data/open-readme/<key>.json（{content: md 原文}）由 hexo data processor 载入
+//    site.data['open-readme/<key>']，generator 传给 loadReadme 后统一走 renderMarkdown 管线，零网络依赖
+// 2. 缓存未命中：从 raw.githubusercontent.com 拉取 README.md，把 md 原文写回 <key>.json
 //    （下次构建命中 1）；强制更新 = 删除缓存文件后重新构建
 // 3. 无 GitHub source / 拉取失败 → 返回 null，详情页降级为卡片式内容，构建不因网络问题中断
 const https = require('https');
