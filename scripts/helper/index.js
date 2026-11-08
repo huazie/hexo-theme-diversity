@@ -111,7 +111,7 @@ function config() {
  * @returns {string} - 将查找到的对应注入点下的所有内容项经过渲染处理后拼接而成的字符串
  */
 function inject(point) {
-    return this.theme.injects[point]
+    return (this.theme.injects[point] || [])
         .map(item => this.partial(item.layout, item.locals, item.options))
         .join('');
 }
