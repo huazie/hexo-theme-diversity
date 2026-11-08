@@ -130,6 +130,8 @@ function pageAnchor(str) {
 
     headings.each(function() {
         const id = $(this).attr('id');
+        // 无 id 的标题不生成锚点，避免出现 href="#undefined"
+        if (!id) return;
         $(this)
             .addClass('article-heading')
             .append(`<a class="article-anchor" href="#${id}" aria-hidden="true"></a>`);
