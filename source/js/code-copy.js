@@ -3,7 +3,7 @@
  * 对页面中的 <figure class="highlight <lang>">（hexo highlight.js 渲染产物）右上角
  * 叠加语言标签与复制按钮：点击复制代码列文本，成功后图标短暂切换为对勾。
  * 页面无代码块时零开销（不注入任何样式/节点）；颜色全部走 CSS 变量，暗色模式自动跟随。
- * 主实例由 head.ejs 按内容条件引入，子主题实例经 injector 全局内联注入（mermaid 同模式）。
+ * 主实例由 head.ejs 按内容条件引入，子主题实例经 injector 全局外链注入（mermaid 同模式）。
  */
 (function () {
     'use strict';
