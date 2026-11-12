@@ -520,9 +520,13 @@
     // 卡片 stagger 入场：逐个延迟淡入上浮，动画由 CSS .anim-in 定义（尊重系统减弱动态效果设置）
     function replayCardAnim() {
         var visible = list.querySelectorAll('.open-card:not(.is-hidden)');
-        visible.forEach(function (card, i) {
+        if (!visible.length) return;
+        // 写（移除类）→ 读（单次强制 reflow）→ 写（恢复类+延迟），N 张卡只回流 1 次
+        visible.forEach(function (card) {
             card.classList.remove('anim-in');
-            void card.offsetWidth; // 强制 reflow 重启动画
+        });
+        void visible[0].offsetWidth; // 强制 reflow 重启动画
+        visible.forEach(function (card, i) {
             card.style.animationDelay = Math.min(i * 40, 320) + 'ms';
             card.classList.add('anim-in');
         });
@@ -564,6 +568,9 @@
     // 描述两行省略 + 「更多>>」展开/收起（无溢出时不渲染占位，不占用空间）
     function applyClamp() {
         var descs = list.querySelectorAll('.open-desc');
+        // 批量测量：写（清理按钮+恢复未省略态）→ 读（完整高度）→ 写（加省略态）→ 读（省略态高度），
+        // 两轮读各只回流 1 次，避免逐个「写→读」交错的 layout thrashing
+        var targets = [];
         descs.forEach(function (desc) {
             // 被搜索过滤掉的卡片无需测量（display:none 下高度恒为 0）
             var card = desc.closest('.open-card');
@@ -571,13 +578,15 @@
             // 清理旧的「更多」按钮
             var old = desc.parentNode.querySelector(':scope > .open-more');
             if (old) old.remove();
-
-            // 先恢复未省略态，测量完整高度与省略态高度
             desc.classList.remove('clamp');
-            var full = desc.scrollHeight;
-            desc.classList.add('clamp');
-            var clamped = desc.clientHeight;
-            var overflow = full > clamped + 2;
+            targets.push(desc);
+        });
+        if (!targets.length) return;
+        var fulls = targets.map(function (desc) { return desc.scrollHeight; });
+        targets.forEach(function (desc) { desc.classList.add('clamp'); });
+        var clampedHeights = targets.map(function (desc) { return desc.clientHeight; });
+        targets.forEach(function (desc, i) {
+            var overflow = fulls[i] > clampedHeights[i] + 2;
 
             var expanded = desc.dataset.expanded === '1';
             if (overflow) {
@@ -601,7 +610,19 @@
         });
     }
 
-    window.addEventListener('resize', function () { requestAnimationFrame(applyGridCols); requestAnimationFrame(applyClamp); requestAnimationFrame(applyTagCollapse); });
+    // 布局刷新合并调度：三步并入单个 rAF 按序执行；pending 标记保证高频 resize 每帧最多跑一次
+    var layoutRefreshPending = false;
+    function scheduleLayoutRefresh() {
+        if (layoutRefreshPending) return;
+        layoutRefreshPending = true;
+        requestAnimationFrame(function () {
+            layoutRefreshPending = false;
+            applyGridCols();
+            applyClamp();
+            applyTagCollapse();
+        });
+    }
+    window.addEventListener('resize', scheduleLayoutRefresh);
     window.addEventListener('load', function () { requestAnimationFrame(applyClamp); requestAnimationFrame(applyTagCollapse); });
     // 浏览器前进/后退时按 URL 还原筛选与页码状态
     window.addEventListener('popstate', function () {
