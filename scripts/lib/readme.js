@@ -1,13 +1,22 @@
 "use strict";
 // 开源项目详情页 README 获取（⑦ 方案 A：拉取 + 本地缓存）：
-// 1. 缓存命中：source/_data/open-readme/<key>.json（{content: md 原文}）由 hexo data processor 载入
-//    site.data['open-readme/<key>']，generator 传给 loadReadme 后统一走 renderMarkdown 管线，零网络依赖
-// 2. 缓存未命中：从 raw.githubusercontent.com 拉取 README.md，把 md 原文写回 <key>.json
+// 1. 缓存命中且未过期（TTL 见 CACHE_TTL）：source/_data/open-readme/<key>.json（{content: md 原文, fetchedAt}）
+//    由 hexo data processor 载入 site.data['open-readme/<key>']，generator 传给 loadReadme 后统一走 renderMarkdown 管线，零网络依赖
+// 2. 缓存缺失或过期：从 raw.githubusercontent.com 拉取 README.md（带重试），成功后写回 <key>.json
 //    （下次构建命中 1）；强制更新 = 删除缓存文件后重新构建
-// 3. 无 GitHub source / 拉取失败 → 返回 null，详情页降级为卡片式内容，构建不因网络问题中断
+// 3. 过期缓存刷新失败 → 降级用旧缓存渲染，并把 fetchedAt 顺延（TTL 兼作刷新尝试最小间隔，
+//    避免断网期间每次构建都卡在慢重试上）
+// 4. 无 GitHub source / 拉取失败且无旧缓存 → 返回 null，详情页降级为卡片式内容，构建不因网络问题中断
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+
+// 缓存有效期 30 天；过期后构建时尝试刷新（兼作刷新失败后的最小重试间隔）
+const CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
+// 拉取重试间隔（ms）：首次失败后按此序列补试
+const RETRY_DELAYS = [500, 1000, 2000];
+
+function sleep(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
 
 // 从 GitHub 仓库地址解析 owner/repo（支持 .git 后缀与 git@ 形式）
 function parseRepo(url) {
@@ -28,6 +37,26 @@ function fetchText(url) {
         req.setTimeout(10000, function () { req.destroy(); resolve(null); });
         req.on('error', function () { resolve(null); });
     });
+}
+
+// 带重试的拉取：瞬时网络抖动/超时按 RETRY_DELAYS 自动补试，全部失败返回 null
+async function fetchTextRetry(url) {
+    for (let i = 0; ; i++) {
+        const text = await fetchText(url);
+        if (text !== null) return text;
+        if (i >= RETRY_DELAYS.length) return null;
+        await sleep(RETRY_DELAYS[i]);
+    }
+}
+
+// 写缓存：<key>.json 存 md 原文 + fetchedAt（.json 渲染为对象、md 原文存 content，
+// 渲染统一走 renderMarkdown）；写失败不影响本次渲染
+function writeCache(ctx, key, md) {
+    try {
+        const dir = path.join(ctx.base_dir, 'source', '_data', 'open-readme');
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(path.join(dir, key + '.json'), JSON.stringify({ content: md, fetchedAt: Date.now() }));
+    } catch (e) { /* ignore */ }
 }
 
 // README 内相对路径改写为 GitHub 绝对地址：图片走 raw（可外链直显）、链接走 blob（可浏览）；
@@ -57,22 +86,23 @@ async function renderMarkdown(ctx, md) {
     return post.content;
 }
 
-// 取项目 README 渲染后的 HTML；cachedData 为 site.data 命中的缓存（<key>.json，{content: md 原文}）。
+// 取项目 README 渲染后的 HTML；cachedData 为 site.data 命中的缓存（<key>.json，{content: md 原文, fetchedAt}）。
 // ⚠️ 缓存不能用 .md：data processor 会直渲染成缺 filter 管线的 HTML；也不能用 .txt 等无渲染器的扩展名
 // （file.render 返回 null，site.data 根本不载入）；.json 渲染为对象、md 原文存 content，渲染统一走 renderMarkdown
 async function loadReadme(ctx, cachedData, p, key) {
     const repo = parseRepo(p.source);
     if (!repo) return null;
-    let md = cachedData && typeof cachedData.content === 'string' ? cachedData.content : '';
-    if (!md) {
-        md = await fetchText('https://raw.githubusercontent.com/' + repo.owner + '/' + repo.repo + '/HEAD/README.md');
+    const cached = cachedData && typeof cachedData.content === 'string' ? cachedData : null;
+    // fetchedAt 缺失视为过期（含旧版缓存文件），构建时尝试刷新补齐
+    const fresh = cached && typeof cached.fetchedAt === 'number' && Date.now() - cached.fetchedAt < CACHE_TTL;
+    let md = cached ? cached.content : '';
+    if (!fresh) {
+        // 缓存缺失/过期：拉取（带重试）；有旧缓存时失败降级用旧内容
+        const text = await fetchTextRetry('https://raw.githubusercontent.com/' + repo.owner + '/' + repo.repo + '/HEAD/README.md');
+        if (text) md = text;
         if (!md) return null;
-        // 写回缓存（.json 存原文，下次构建命中后统一走 renderMarkdown 管线）；写失败不影响本次渲染
-        try {
-            const dir = path.join(ctx.base_dir, 'source', '_data', 'open-readme');
-            fs.mkdirSync(dir, { recursive: true });
-            fs.writeFileSync(path.join(dir, key + '.json'), JSON.stringify({ content: md }));
-        } catch (e) { /* ignore */ }
+        // 成功 → 写新内容；失败但有旧缓存 → 仅顺延 fetchedAt（TTL 兼作刷新尝试间隔，构建不被反复拖慢）
+        if (text || cached) writeCache(ctx, key, md);
     }
     let html;
     try {

@@ -6,6 +6,23 @@
 // lib/readme.js 的 filter 管线），未命中时从 GitHub raw 拉取并写回缓存；无 README 时详情页降级为卡片式内容。
 const { loadReadme } = require('../lib/readme');
 
+// 缓存未命中的项目同时最多 3 个走网络，避免对 raw.githubusercontent 的突发并发
+const FETCH_LIMIT = 3;
+
+// 限并发 map：limit 个 worker 共享任务队列，结果按原顺序返回
+async function mapLimit(items, limit, fn) {
+    const results = new Array(items.length);
+    let next = 0;
+    async function worker() {
+        while (next < items.length) {
+            const i = next++;
+            results[i] = await fn(items[i], i);
+        }
+    }
+    await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+    return results;
+}
+
 async function openDetailGenerator(locals) {
     const pages = Array.isArray(locals.pages) ? locals.pages : locals.pages.toArray();
     // 列表页：layout 为 open 的站点页面（如 source/diversity/open/index.md）
@@ -23,7 +40,7 @@ async function openDetailGenerator(locals) {
         })
         .sort((a, b) => (a.order || 0) - (b.order || 0));
     const ctx = this;
-    return Promise.all(projects.map(async (p) => {
+    return mapLimit(projects, FETCH_LIMIT, async (p) => {
         const readme = await loadReadme(ctx, data["open-readme/" + p.key], p, p.key);
         return {
             path: base + p.key + '/index.html',
@@ -40,6 +57,6 @@ async function openDetailGenerator(locals) {
                 comments: p.comments !== false
             }
         };
-    }));
+    });
 }
 module.exports = openDetailGenerator;
