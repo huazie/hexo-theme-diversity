@@ -74,9 +74,9 @@
     &.active
         border-color color-link
         background-color color-link
-        color #fff
+        color color-white
         .open-ico
-            fill #fff
+            fill color-white
 
 // 排序下拉：位于筛选栏行内、靠右；默认 order 不写入 URL
 // 筛选行三种控件（.open-tagchip / .open-tagbar-more / .open-sort）必须等高：PC 30px、手机 28px
@@ -187,10 +187,10 @@
     .open-badge-label
         padding 4px 6px
         background-color #586069
-        color #fff
+        color color-white
     .open-badge-value
         padding 4px 6px
-        color #fff
+        color color-white
 
 .open-badge-author .open-badge-value
     background-color #a371f7
@@ -199,7 +199,7 @@
 // 竖线只加在语言值之间（Language 标签与首个语言之间不加）
 // 用 border-left 实现：不撑高行高，左右间隔由相邻 value 的 padding 对称
 .open-badge-lang .open-badge-value + .open-badge-value
-    border-left 1px solid rgba(255, 255, 255, 0.55)
+    border-left 1px solid rgba(color-white, 0.55)
 .open-badge-license .open-badge-value
     background-color #fe7d37
 
@@ -230,7 +230,7 @@
     -webkit-tap-highlight-color transparent
     &:hover
         background-color color-link
-        color #fff
+        color color-white
 
 // 筛选栏行：常用标签 chips（被 ≥2 个项目使用的标签，与 .open-tagchip 同风格单选高亮）居左 +
 // 右侧控件组（折叠按钮 + 排序下拉）靠右。该行由 open.ejs 恒渲染（无常用标签时只剩排序下拉），
@@ -310,7 +310,7 @@
     &.active
         border-color color-link
         background-color color-link
-        color #fff
+        color color-white
         .open-tagchip-n
             display none
         .open-tagchip-x
@@ -555,7 +555,7 @@
     &.active
         border-color color-link
         background-color color-link
-        color #fff
+        color color-white
     &:disabled
         opacity 0.4
         cursor default
