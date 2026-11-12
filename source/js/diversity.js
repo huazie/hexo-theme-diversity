@@ -353,18 +353,18 @@ Diversity.utils = {
      * @returns {boolean} - 如果处于暗色模式，则返回true，否则返回false
      */
     isDarkMode() {
-        let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (!isDarkMode)
-            isDarkMode = document.documentElement.classList.contains('dark-theme');
+        // darkmode: 1 = 跟随系统、2 = 手动切换（.dark-theme 类）、未配置 = 自动（系统优先，手动类兜底）
+        if (config.darkmode === 1)
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (config.darkmode === 2)
+            return document.documentElement.classList.contains('dark-theme');
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches
+            || document.documentElement.classList.contains('dark-theme'))
+            return true;
         // conf 由 hexo-generator-comments 插件注入（window.conf），仅评论页存在；
         // 用 window.conf 访问避免非评论页 ReferenceError
-        if (!isDarkMode && window.conf && window.conf.comments && window.conf.comments.darkClass)
-            isDarkMode = document.documentElement.classList.contains(window.conf.comments.darkClass);
-        if (config.darkmode === 1)
-            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        else if (config.darkmode === 2)
-            isDarkMode = document.documentElement.classList.contains('dark-theme');
-        return isDarkMode;
+        return !!(window.conf && window.conf.comments && window.conf.comments.darkClass
+            && document.documentElement.classList.contains(window.conf.comments.darkClass));
     },
     /**
      * 切换明暗色模式
