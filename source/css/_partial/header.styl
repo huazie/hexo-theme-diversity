@@ -127,8 +127,14 @@ transition = all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)
     // 用于去除移动端浏览器在用户点击元素时默认显示的高亮效果
     -webkit-tap-highlight-color transparent
     tap-highlight-color transparent
-    &:hover
-        transform rotate(-15deg)
+    // hover 旋转仅在支持悬浮的设备（鼠标）生效：触屏 tap 也会触发 :hover 且
+    // 状态滞留（sticky hover），按钮会保持 rotate(-15deg) 直到点击别处，
+    // 视觉上呈「点击后上偏、失焦恢复」；叠加 mq-normal 双保险——部分手机
+    // 浏览器会误报 (hover: hover)，phone 断点（≤768px）一律禁用旋转
+    @media mq-normal
+        @media (hover: hover)
+            &:hover
+                transform rotate(-15deg)
     @media mq-mobile
         position absolute
         top 0
